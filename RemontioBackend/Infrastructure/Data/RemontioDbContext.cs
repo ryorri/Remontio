@@ -15,5 +15,18 @@ namespace Infrastructure.Data
         public RemontioDbContext(DbContextOptions<RemontioDbContext> options) : base(options) { }
         public override DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get ; set; }
+        public DbSet<Budget> Budgets { get; set; }
+        public DbSet<Calculations> Calculations { get; set; }
+        public DbSet<Photos> Photos { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<ShoppingList> ShoppingLists { get; set; }
+        public DbSet<Domain.Entities.Task> Tasks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RemontioDbContext).Assembly);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Infrastructure
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;
-            }).AddEntityFrameworkStores<RemontioDbContext>();  // Powiązanie z RemontioDbContext
+            }).AddEntityFrameworkStores<RemontioDbContext>(); 
 
         }
     }

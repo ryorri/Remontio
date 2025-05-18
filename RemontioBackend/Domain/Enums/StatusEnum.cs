@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    enum StatusEnum
+    public enum StatusEnum
     {
-        ToDo = 1,
-        InProgress = 2,
-        Done = 3,
-        Aborted = 4
+        ToDo = 0,
+        InProgress = 1,
+        Done = 2,
+        Aborted = 3
     }
 }

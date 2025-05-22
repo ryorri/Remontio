@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data.TableConfigurations
 {
-    public class TaskTableConfig : IEntityTypeConfiguration<Domain.Entities.Task>
+    public class TaskTableConfig : IEntityTypeConfiguration<Tasks>
     {
 
-        public void Configure(EntityTypeBuilder<Domain.Entities.Task> builder)
+        public void Configure(EntityTypeBuilder<Tasks> builder)
         {
             builder.HasKey(p => p.Id);
             builder.Property(p => p.Name).IsRequired().HasMaxLength(50);

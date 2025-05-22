@@ -1,0 +1,22 @@
+[
+  {
+    "ContainingType": "Presentation.Controllers.TokenController",
+    "Method": "GenerateRefreshToken",
+    "RelativePath": "api/Token/generate-refresh-token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Presentation.Controllers.TokenController",
+    "Method": "GenerateToken",
+    "RelativePath": "api/Token/generate-token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

@@ -7,12 +7,36 @@
       "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\remontiobackend.presentation\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|solutionrelative:remontiobackend.presentation\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\data\\dbinitialiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\data\\dbinitialiser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\remontiobackend.presentation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|solutionrelative:remontiobackend.presentation\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\application\\applicationinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|solutionrelative:application\\applicationinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\seeders\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\seeders\\roleseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\seeders\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\seeders\\userseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\remontiobackend.presentation\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|solutionrelative:remontiobackend.presentation\\controllers\\tokencontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\application\\interfaces\\databaseinterfaces\\seederinterfaces\\iuserseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|solutionrelative:application\\interfaces\\databaseinterfaces\\seederinterfaces\\iuserseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\domain\\enums\\rolesenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|solutionrelative:domain\\enums\\rolesenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,19 +46,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 331,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ApplicationInjection.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\ApplicationInjection.cs",
+              "RelativeDocumentMoniker": "Application\\ApplicationInjection.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\ApplicationInjection.cs",
+              "RelativeToolTip": "Application\\ApplicationInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T14:58:28.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RoleSeeder.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Seeders\\RoleSeeder.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Seeders\\RoleSeeder.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Seeders\\RoleSeeder.cs",
+              "RelativeToolTip": "Infrastructure\\Seeders\\RoleSeeder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T14:35:11.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IUserSeeder.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Interfaces\\DatabaseInterfaces\\SeederInterfaces\\IUserSeeder.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\DatabaseInterfaces\\SeederInterfaces\\IUserSeeder.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Interfaces\\DatabaseInterfaces\\SeederInterfaces\\IUserSeeder.cs",
+              "RelativeToolTip": "Application\\Interfaces\\DatabaseInterfaces\\SeederInterfaces\\IUserSeeder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T14:41:20.34Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "DbInitialiser.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Data\\DbInitialiser.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Data\\DbInitialiser.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Data\\DbInitialiser.cs",
+              "RelativeToolTip": "Infrastructure\\Data\\DbInitialiser.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAYwCkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T14:31:54.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "TokenController.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\TokenController.cs",
               "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Controllers\\TokenController.cs",
               "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\TokenController.cs",
               "RelativeToolTip": "RemontioBackend.Presentation\\Controllers\\TokenController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-22T13:31:25.952Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RolesEnum.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Enums\\RolesEnum.cs",
+              "RelativeDocumentMoniker": "Domain\\Enums\\RolesEnum.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Enums\\RolesEnum.cs",
+              "RelativeToolTip": "Domain\\Enums\\RolesEnum.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T14:18:46.235Z",
               "EditorCaption": ""
             },
             {
@@ -45,7 +134,7 @@
               "RelativeDocumentMoniker": "Infrastructure\\InfrastructureInjection.cs",
               "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\InfrastructureInjection.cs",
               "RelativeToolTip": "Infrastructure\\InfrastructureInjection.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAiwBcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-22T12:39:09.2Z",
               "EditorCaption": ""
@@ -58,9 +147,22 @@
               "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Program.cs",
               "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Program.cs",
               "RelativeToolTip": "RemontioBackend.Presentation\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD0AAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-22T13:18:18.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UserSeeder.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Seeders\\UserSeeder.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Seeders\\UserSeeder.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Seeders\\UserSeeder.cs",
+              "RelativeToolTip": "Infrastructure\\Seeders\\UserSeeder.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACsAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-22T14:40:58.255Z",
               "EditorCaption": ""
             }
           ]
@@ -76,10 +178,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
             }
           ]
         }

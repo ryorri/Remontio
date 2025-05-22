@@ -1,6 +1,8 @@
-﻿using Application.Interfaces.ServiceInterfaces;
+﻿using Application.Interfaces.DatabaseInterfaces.SeederInterfaces;
+using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Seeders;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Security.Claims;
 using System.Text;
 
@@ -19,6 +22,9 @@ namespace Infrastructure
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             #region Scopes
+            services.AddScoped<DatabaseInitialiser>();
+            services.AddScoped<IRoleSeeder, RoleSeeder>();
+            services.AddScoped<IUserSeeder, UserSeeder>();
 
             services.AddScoped<ITokenService, TokenService>();
 
@@ -29,16 +35,10 @@ namespace Infrastructure
             services.AddDbContext<RemontioDbContext>(options =>
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
+            services.AddIdentity<User, IdentityRole>()
+                    .AddEntityFrameworkStores<RemontioDbContext>()
+                    .AddDefaultTokenProviders();
 
-            services.AddIdentityCore<User>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-            }).AddEntityFrameworkStores<RemontioDbContext>();
 
             #endregion
 

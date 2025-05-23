@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {}
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Rafal\\.nuget\\packages\\",
-        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\obj\\",
+        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "H:\\VSCommunity\\Shared\\NuGetPackages"

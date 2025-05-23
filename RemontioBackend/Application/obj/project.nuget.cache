@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/12e47IePzE=",
+  "dgSpecHash": "IizztFKyBSw=",
   "success": true,
-  "projectFilePath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj",
+  "projectFilePath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafal\\.nuget\\packages\\automapper\\14.0.0\\automapper.14.0.0.nupkg.sha512",
     "C:\\Users\\Rafal\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

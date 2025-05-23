@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.UserDTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
@@ -15,9 +16,9 @@ namespace Presentation.Controllers
         }
 
         [HttpGet("generate-token")]
-        public IActionResult GenerateToken(/* need to add userDTO*/)
+        public IActionResult GenerateToken(UserDataDTO user)
         {
-            var token = _tokenService.GenerateToken(/* need to add userDTO*/);
+            var token = _tokenService.GenerateToken(user);
             return Ok(new { Token = token });
         }
 

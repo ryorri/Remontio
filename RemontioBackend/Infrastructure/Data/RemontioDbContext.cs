@@ -20,7 +20,7 @@ namespace Infrastructure.Data
         public DbSet<Photos> Photos { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
-        public DbSet<Domain.Entities.Task> Tasks { get; set; }
+        public DbSet<Tasks> Tasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

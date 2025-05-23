@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.UserDTO;
 using Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,13 +21,19 @@ namespace Infrastructure.Services
 
         public string GenerateRefreshToken()
         {
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+        }
+
+        public string GenerateToken(UserDataDTO user)
+        {
+            
+
             var claims = new List<Claim>
             {
-                //TO DO
 
-                //new Claim(ClaimTypes.NameIdentifier, user.Id ?? throw new ArgumentNullException(nameof(user.Id))),
-                //new Claim(ClaimTypes.Name, user.UserName ?? throw new ArgumentNullException(nameof(user.UserName))),
-                //new Claim(ClaimTypes.Role, user.Role ?? throw new ArgumentNullException(nameof(user.Role)))
+                new Claim(ClaimTypes.NameIdentifier, user.Id ?? throw new ArgumentNullException(nameof(user.Id))),
+                new Claim(ClaimTypes.Name, user.UserName ?? throw new ArgumentNullException(nameof(user.UserName))),
+                new Claim(ClaimTypes.Role, user.Role ?? throw new ArgumentNullException(nameof(user.Role)))
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
@@ -41,11 +48,6 @@ namespace Infrastructure.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public string GenerateToken()
-        {
-            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         }
     }
 }

@@ -58,8 +58,7 @@
               "RelativeToolTip": "Application\\ApplicationInjection.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T14:58:28.252Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T14:58:28.252Z"
             },
             {
               "$type": "Document",
@@ -71,8 +70,7 @@
               "RelativeToolTip": "Infrastructure\\Seeders\\RoleSeeder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T14:35:11.154Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T14:35:11.154Z"
             },
             {
               "$type": "Document",
@@ -84,8 +82,7 @@
               "RelativeToolTip": "Application\\Interfaces\\DatabaseInterfaces\\SeederInterfaces\\IUserSeeder.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T14:41:20.34Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T14:41:20.34Z"
             },
             {
               "$type": "Document",
@@ -97,8 +94,7 @@
               "RelativeToolTip": "Infrastructure\\Data\\DbInitialiser.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAYwCkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T14:31:54.691Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T14:31:54.691Z"
             },
             {
               "$type": "Document",
@@ -110,8 +106,7 @@
               "RelativeToolTip": "RemontioBackend.Presentation\\Controllers\\TokenController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T13:31:25.952Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T13:31:25.952Z"
             },
             {
               "$type": "Document",
@@ -123,8 +118,7 @@
               "RelativeToolTip": "Domain\\Enums\\RolesEnum.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T14:18:46.235Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T14:18:46.235Z"
             },
             {
               "$type": "Document",
@@ -149,8 +143,7 @@
               "RelativeToolTip": "RemontioBackend.Presentation\\Program.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T13:18:18.341Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T13:18:18.341Z"
             },
             {
               "$type": "Document",
@@ -162,8 +155,7 @@
               "RelativeToolTip": "Infrastructure\\Seeders\\UserSeeder.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAACsAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T14:40:58.255Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T14:40:58.255Z"
             }
           ]
         },

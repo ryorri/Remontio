@@ -1,0 +1,25 @@
+[33m5006104[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/19-create-user-controller[m[33m, [m[1;32m19-create-user-controller[m[33m, [m[1;32m11-create-identityuser[m[33m)[m HEAD@{0}: pull origin dev: Fast-forward
+[33m37824fd[m[33m ([m[1;32mmain[m[33m)[m HEAD@{1}: checkout: moving from 11-create-identityuser to dev
+[33m5006104[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/19-create-user-controller[m[33m, [m[1;32m19-create-user-controller[m[33m, [m[1;32m11-create-identityuser[m[33m)[m HEAD@{2}: reset: moving to HEAD
+[33m5006104[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/19-create-user-controller[m[33m, [m[1;32m19-create-user-controller[m[33m, [m[1;32m11-create-identityuser[m[33m)[m HEAD@{3}: pull origin dev: Fast-forward
+[33m6ebc5c7[m[33m ([m[1;31morigin/11-create-identityuser[m[33m)[m HEAD@{4}: checkout: moving from 19-create-user-controller to 11-create-identityuser
+[33m5006104[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;31morigin/19-create-user-controller[m[33m, [m[1;32m19-create-user-controller[m[33m, [m[1;32m11-create-identityuser[m[33m)[m HEAD@{5}: checkout: moving from 10-adding-jwt to 19-create-user-controller
+[33m7acdfc6[m[33m ([m[1;32m10-adding-jwt[m[33m)[m HEAD@{6}: reset: moving to HEAD
+[33m7acdfc6[m[33m ([m[1;32m10-adding-jwt[m[33m)[m HEAD@{7}: checkout: moving from 11-create-identityuser to 10-adding-jwt
+[33m6ebc5c7[m[33m ([m[1;31morigin/11-create-identityuser[m[33m)[m HEAD@{8}: commit: Create roles and seed admin user
+[33m113d7e5[m HEAD@{9}: checkout: moving from 10-adding-jwt to 11-create-identityuser
+[33m7acdfc6[m[33m ([m[1;32m10-adding-jwt[m[33m)[m HEAD@{10}: commit: Creating roles and seeding admin user
+[33m634a238[m[33m ([m[1;31morigin/10-adding-jwt[m[33m)[m HEAD@{11}: commit: JWT
+[33m113d7e5[m HEAD@{12}: checkout: moving from 16-create-tables-to-database to 10-adding-jwt
+[33m8c7980c[m[33m ([m[1;31morigin/16-create-tables-to-database[m[33m, [m[1;32m16-create-tables-to-database[m[33m)[m HEAD@{13}: commit: Tables
+[33mdaef3ec[m HEAD@{14}: checkout: moving from 3-creating-database to 16-create-tables-to-database
+[33me336f4e[m[33m ([m[1;31morigin/3-creating-database[m[33m, [m[1;32m3-creating-database[m[33m)[m HEAD@{15}: commit: Creating DBContext
+[33m05e9c3f[m HEAD@{16}: checkout: moving from 4-setting-clean-architecture to 3-creating-database
+[33mb74d1e3[m[33m ([m[1;31morigin/4-setting-clean-architecture[m[33m, [m[1;32m4-setting-clean-architecture[m[33m)[m HEAD@{17}: commit: Setting clean arch
+[33mfb933ee[m HEAD@{18}: checkout: moving from 2-creating-frontend-repo to 4-setting-clean-architecture
+[33m0f1241b[m[33m ([m[1;31morigin/2-creating-frontend-repo[m[33m, [m[1;32m2-creating-frontend-repo[m[33m)[m HEAD@{19}: commit: Create frontend project
+[33m3e1603d[m HEAD@{20}: checkout: moving from 1-creating-backend-repo to 2-creating-frontend-repo
+[33m246a533[m[33m ([m[1;31morigin/1-creating-backend-repo[m[33m, [m[1;32m1-creating-backend-repo[m[33m)[m HEAD@{21}: commit: Creating backend project
+[33m37824fd[m[33m ([m[1;32mmain[m[33m)[m HEAD@{22}: checkout: moving from main to 1-creating-backend-repo
+[33m37824fd[m[33m ([m[1;32mmain[m[33m)[m HEAD@{23}: checkout: moving from dev to main
+[33m37824fd[m[33m ([m[1;32mmain[m[33m)[m HEAD@{24}: commit (initial): Init

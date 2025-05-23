@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Task
+    public class Tasks
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

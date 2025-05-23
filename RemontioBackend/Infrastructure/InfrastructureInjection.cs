@@ -1,6 +1,9 @@
-﻿using Application.Interfaces.ServiceInterfaces;
+﻿using Application.Interfaces.SeederInterfaces;
+using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Extensions;
+using Infrastructure.Seeders;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -19,8 +22,14 @@ namespace Infrastructure
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             #region Scopes
+            services.AddScoped<DatabaseInitialiser>();
+            services.AddScoped<RoleExtension>();
+
+            services.AddScoped<IRoleSeeder, RoleSeeder>();
+            services.AddScoped<IUserSeeder, UserSeeder>();
 
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
 
             #endregion
 
@@ -30,15 +39,9 @@ namespace Infrastructure
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
 
-            services.AddIdentityCore<User>(options =>
-            {
-                options.User.RequireUniqueEmail = true;
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-            }).AddEntityFrameworkStores<RemontioDbContext>();
+            services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<RemontioDbContext>()
+            .AddDefaultTokenProviders();
 
             #endregion
 

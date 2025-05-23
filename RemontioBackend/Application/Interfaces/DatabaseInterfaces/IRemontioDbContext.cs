@@ -12,6 +12,6 @@ namespace Application.Interfaces.DatabaseInterfaces
         DbSet<Photos> Photos { get; set; }
         DbSet<Room> Rooms { get; set; }
         DbSet<ShoppingList> ShoppingLists { get; set; }
-        DbSet<Domain.Entities.Task> Tasks { get; set; }
+        DbSet<Tasks> Tasks { get; set; }
     }
 }

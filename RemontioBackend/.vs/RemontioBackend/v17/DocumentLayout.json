@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontio\\remontiobackend\\application\\interfaces\\serviceinterfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|solutionrelative:application\\interfaces\\serviceinterfaces\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontio\\remontiobackend\\infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -22,11 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 331,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Interfaces\\ServiceInterfaces\\IUserService.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\ServiceInterfaces\\IUserService.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Interfaces\\ServiceInterfaces\\IUserService.cs",
+              "RelativeToolTip": "Application\\Interfaces\\ServiceInterfaces\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-23T22:03:06.547Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "TokenController.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\TokenController.cs",
               "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Controllers\\TokenController.cs",
@@ -38,7 +55,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "InfrastructureInjection.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\InfrastructureInjection.cs",
               "RelativeDocumentMoniker": "Infrastructure\\InfrastructureInjection.cs",
@@ -46,12 +63,11 @@
               "RelativeToolTip": "Infrastructure\\InfrastructureInjection.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-22T12:39:09.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-22T12:39:09.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Program.cs",
               "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Program.cs",

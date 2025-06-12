@@ -319,3 +319,6 @@ G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\Remontio\RemontioBackend\RemontioB
 G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\Remontio\RemontioBackend\RemontioBackend.Presentation\obj\Debug\net8.0\Presenta.BC777DBE.Up2Date
 G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\Remontio\RemontioBackend\RemontioBackend.Presentation\obj\Debug\net8.0\Presentation.genruntimeconfig.cache
 G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\Remontio\RemontioBackend\RemontioBackend.Presentation\obj\Debug\net8.0\ref\Presentation.dll
+G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\RemontioBackend\RemontioBackend.Presentation\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\RemontioBackend\RemontioBackend.Presentation\bin\Debug\net8.0\FluentValidation.dll
+G:\Studia\Semestr VI\P1\Projekt\Apka\Remontio\RemontioBackend\RemontioBackend.Presentation\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll

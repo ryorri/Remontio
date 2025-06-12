@@ -23,7 +23,7 @@ namespace Infrastructure
         {
             #region Scopes
             services.AddScoped<DatabaseInitialiser>();
-            services.AddScoped<RoleExtension>();
+            services.AddScoped<UserExtension>();
 
             services.AddScoped<IRoleSeeder, RoleSeeder>();
             services.AddScoped<IUserSeeder, UserSeeder>();
@@ -39,7 +39,14 @@ namespace Infrastructure
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+            })
             .AddEntityFrameworkStores<RemontioDbContext>()
             .AddDefaultTokenProviders();
 

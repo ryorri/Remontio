@@ -1,4 +1,5 @@
-﻿using Application.Objects.DTOs.UserDTO;
+﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.UserDTO;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -10,16 +11,18 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Extensions
 {
-    public class RoleExtension
+    public class UserExtension
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        public RoleExtension(UserManager<User> userManager, IMapper mapper)
+        private readonly ITokenService _tokenService;
+        public UserExtension(UserManager<User> userManager, IMapper mapper, ITokenService tokenService)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
-        public async Task<UserDataDTO> AssignRoles(User user)
+        public async Task<UserDataDTO> AssignRolesAsync(User user)
         {
             var userDto = _mapper.Map<UserDataDTO>(user);
 
@@ -33,6 +36,13 @@ namespace Infrastructure.Extensions
             }
 
             return userDto;
+        }
+
+        public async Task<UserDataDTO> AssignRefreshToken(User user)
+        {
+            user.RefreshToken = _tokenService.GenerateRefreshToken();
+            await _userManager.UpdateAsync(user);
+            return _mapper.Map<UserDataDTO>(user);
         }
     }
 }

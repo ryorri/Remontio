@@ -17,5 +17,8 @@ namespace Application.Interfaces.ServiceInterfaces
         Task<List<UserDataDTO>> GetAllUsersAsync();
         Task<bool> ChangeRoleAsync(string id, string newRole);
         Task<bool> ChangePasswordAsync(string id, string oldPassword, string newPassword);
+        Task<bool> CheckRefreshTokenAsync(string userId, string refreshToken);
+        Task<bool> AssignNewRefreshTokenAsync(string userId, string refreshToken);
+        Task<string> GetRefreshTokenFromDBAsync(string userId);
     }
 }

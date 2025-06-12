@@ -21,7 +21,8 @@ namespace Infrastructure.Services
 
         public string GenerateRefreshToken()
         {
-            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+           return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+            
         }
 
         public string GenerateToken(UserDataDTO user)

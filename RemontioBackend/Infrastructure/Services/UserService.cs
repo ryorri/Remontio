@@ -15,16 +15,18 @@ namespace Infrastructure.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleExtension _roleExtension;
+        private readonly UserExtension _userExtension;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ITokenService _tokenService;
 
-        public UserService(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager, RoleExtension roleExtension, RoleManager<IdentityRole> roleManager)
+        public UserService(UserManager<User> userManager, IMapper mapper, SignInManager<User> signInManager, UserExtension userExtension, RoleManager<IdentityRole> roleManager, ITokenService tokenService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _signInManager = signInManager;
-            _roleExtension = roleExtension;
+            _userExtension = userExtension;
             _roleManager = roleManager;
+            _tokenService = tokenService;
         }
 
         public async Task<bool> ChangePasswordAsync(string id, string oldPassword, string newPassword)
@@ -115,9 +117,11 @@ namespace Infrastructure.Services
             }
 
             var result = await _userManager.CreateAsync(userDto, user.Password);
+
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(userDto, user.Role);
+                await _userExtension.AssignRefreshToken(userDto);
                 return true;
             }
             else
@@ -129,6 +133,38 @@ namespace Infrastructure.Services
                 return false;
             }
                 
+        }
+        public async Task<bool> CheckRefreshTokenAsync(string userId, string refreshToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null && user.RefreshToken == refreshToken)
+                return true;
+
+            return false;
+        }
+        public async Task<bool> AssignNewRefreshTokenAsync(string userId, string refreshToken)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = refreshToken;
+                return true;
+            }
+
+            else
+                return false;
+        }
+
+        public async Task<string> GetRefreshTokenFromDBAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+
+                return user.RefreshToken;
+            }
+            else
+                return string.Empty;
         }
 
         public async Task<bool> DeleteUserAsync(string id)
@@ -159,7 +195,7 @@ namespace Infrastructure.Services
 
             foreach (var user in users)
             {
-                userDto.Add(await _roleExtension.AssignRoles(user));
+                userDto.Add(await _userExtension.AssignRolesAsync(user));
             }
             return userDto;
         }
@@ -171,7 +207,7 @@ namespace Infrastructure.Services
 
             if (user != null)
             {
-                await _roleExtension.AssignRoles(user);
+                await _userExtension.AssignRolesAsync(user);
             }
             else
                 throw new Exception("User not found");
@@ -188,7 +224,7 @@ namespace Infrastructure.Services
             else
             {
                 var userExist = await _userManager.FindByNameAsync(username);
-                var user = await _roleExtension.AssignRoles(userExist!);
+                var user = await _userExtension.AssignRolesAsync(userExist!);
                 return user;
             }
         }

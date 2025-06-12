@@ -11,5 +11,6 @@ namespace Application.Interfaces.ServiceInterfaces
     {
         string GenerateToken(UserDataDTO user);
         string GenerateRefreshToken();
+
     }
 }

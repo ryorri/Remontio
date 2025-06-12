@@ -26,6 +26,37 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Presentation.Controllers.TokenController",
+    "Method": "GetByRefreshToken",
+    "RelativePath": "api/Token/get-refresh-token",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "refreshToken",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "Presentation.Controllers.UserController",
     "Method": "ChangeUserPassword",
     "RelativePath": "api/User/change-user-password",

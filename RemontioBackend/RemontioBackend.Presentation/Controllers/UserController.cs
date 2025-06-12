@@ -41,7 +41,7 @@ namespace Presentation.Controllers
                 if (result != null)
                 {
                     var token = _tokenService.GenerateToken(result);
-                    var refreshToken = _tokenService.GenerateRefreshToken();
+                    var refreshToken = _userService.GetRefreshTokenFromDBAsync(result.Id);
                     return Ok(new { result, token, refreshToken });
                 }
                 else

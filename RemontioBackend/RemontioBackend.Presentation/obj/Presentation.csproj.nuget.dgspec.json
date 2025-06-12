@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj": {}
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj": {}
   },
   "projects": {
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj": {
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj",
+        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj",
         "projectName": "Application",
-        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj",
+        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj",
         "packagesPath": "C:\\Users\\Rafal\\.nuget\\packages\\",
-        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\obj\\",
+        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "H:\\VSCommunity\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
-                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj"
+              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
+                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj"
               }
             }
           }
@@ -57,6 +57,10 @@
             "AutoMapper": {
               "target": "Package",
               "version": "[14.0.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.0.0, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -99,14 +103,14 @@
         }
       }
     },
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Rafal\\.nuget\\packages\\",
-        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\obj\\",
+        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "H:\\VSCommunity\\Shared\\NuGetPackages"
@@ -176,14 +180,14 @@
         }
       }
     },
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj": {
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Rafal\\.nuget\\packages\\",
-        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\obj\\",
+        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "H:\\VSCommunity\\Shared\\NuGetPackages"
@@ -204,8 +208,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj": {
-                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj"
+              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj": {
+                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj"
               }
             }
           }
@@ -275,14 +279,14 @@
         }
       }
     },
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj": {
+    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj",
+        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj",
         "projectName": "Presentation",
-        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj",
+        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Presentation.csproj",
         "packagesPath": "C:\\Users\\Rafal\\.nuget\\packages\\",
-        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\obj\\",
+        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "H:\\VSCommunity\\Shared\\NuGetPackages"
@@ -303,11 +307,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj": {
-                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Application\\Application.csproj"
+              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj": {
+                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Application.csproj"
               },
-              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj"
+              "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }

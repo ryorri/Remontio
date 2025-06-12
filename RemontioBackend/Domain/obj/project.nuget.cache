@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "y92q0qnrCMM=",
+  "dgSpecHash": "HvZjw7JMEN4=",
   "success": true,
-  "projectFilePath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+  "projectFilePath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rafal\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Rafal\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.15\\microsoft.aspnetcore.cryptography.internal.8.0.15.nupkg.sha512",

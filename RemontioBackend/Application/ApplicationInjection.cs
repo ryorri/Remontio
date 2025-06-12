@@ -1,10 +1,8 @@
 ﻿using Application.Mapping;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using FluentValidation;
+
 
 namespace Application
 {
@@ -13,6 +11,9 @@ namespace Application
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
 
         }
     }

@@ -8,9 +8,9 @@ namespace Domain.Enums
 {
     public enum PriorityEnum
     {
-        Low = 0,
-        Medium = 1,
-        High = 2,
-        Critical = 3
+        Low ,
+        Medium ,
+        High,
+        Critical
     }
 }

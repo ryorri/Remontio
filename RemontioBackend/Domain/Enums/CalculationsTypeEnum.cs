@@ -8,8 +8,8 @@ namespace Domain.Enums
 {
     public enum CalculationsTypeEnum
     {
-        Walls = 0,
-        Floor = 1,
-        Other = 2,
+        Walls,
+        Floor,
+        Other,
     }
 }

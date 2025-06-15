@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.SeederInterfaces;
+﻿using Application.Interfaces.DatabaseInterfaces;
+using Application.Interfaces.SeederInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
 using Infrastructure.Data;
@@ -22,14 +23,16 @@ namespace Infrastructure
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
             #region Scopes
-            services.AddScoped<DatabaseInitialiser>();
-            services.AddScoped<UserExtension>();
+            services.AddTransient<DatabaseInitialiser>();
+            services.AddSingleton<UserExtension>();
+            services.AddScoped<IRemontioDbContext, RemontioDbContext>();
 
             services.AddScoped<IRoleSeeder, RoleSeeder>();
             services.AddScoped<IUserSeeder, UserSeeder>();
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             #endregion
 

@@ -10,9 +10,9 @@ namespace Domain.Entities
     public class Project
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public required string Name { get; set; }
         public string Description { get; set; } = string.Empty;
-        public DateTime CreateAt { get; set; }
+        public required DateTime CreateAt { get; set; } = DateTime.UtcNow;
         public DateTime ClosedAt { get; set; }
         public StatusEnum Status { get; set; }
         public string UserId { get; set; } = string.Empty; // FK

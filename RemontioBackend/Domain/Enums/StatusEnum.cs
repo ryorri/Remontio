@@ -8,9 +8,9 @@ namespace Domain.Enums
 {
     public enum StatusEnum
     {
-        ToDo = 0,
-        InProgress = 1,
-        Done = 2,
-        Aborted = 3
+        ToDo,
+        InProgress,
+        Done,
+        Aborted
     }
 }

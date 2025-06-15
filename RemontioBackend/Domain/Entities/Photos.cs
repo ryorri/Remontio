@@ -11,7 +11,7 @@ namespace Domain.Entities
         public Guid Id { get; set; }
         public string Url { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public DateTime CreateAt { get; set; }
+        public DateTime CreateAt { get; set; } = DateTime.UtcNow;
 
         public Guid RoomId { get; set; } // FK
         public Room? Room { get; set; }  // Nav

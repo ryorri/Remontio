@@ -14,7 +14,7 @@ namespace Domain.Entities
         public string Description { get; set; } = string.Empty;
         public StatusEnum Status { get; set; }
         public PriorityEnum Priority { get; set; }
-        public DateTime CreateAt { get; set; }
+        public required DateTime CreateAt { get; set; } = DateTime.UtcNow;
         public DateTime StartAt { get; set; }
         public DateTime ClosedAt { get; set; }
 

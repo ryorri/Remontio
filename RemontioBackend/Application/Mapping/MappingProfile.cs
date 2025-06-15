@@ -1,4 +1,5 @@
-﻿using Application.Objects.DTOs.UserDTO;
+﻿using Application.Objects.DTOs.ProjectDTO;
+using Application.Objects.DTOs.UserDTO;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -27,6 +28,25 @@ namespace Application.Mapping
                         }
                         return result;
                     });
+            #endregion
+
+            #region ProjectMapping
+
+            CreateMap<CreateProjectDTO, Project>();
+            CreateMap<ProjectDataDTO, Project>();
+            CreateMap<Project,  ProjectDataDTO>();
+            CreateMap<List<Project>, List<ProjectDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<ProjectDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<ProjectDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
             #endregion
         }
     }

@@ -1,12 +1,10 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Domain.Entities;
-using Microsoft.Extensions.Configuration;
 using Application.Objects.DTOs.UserDTO;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Infrastructure.Services
 {

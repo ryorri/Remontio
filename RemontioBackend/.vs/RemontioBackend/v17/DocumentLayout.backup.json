@@ -3,6 +3,18 @@
   "WorkspaceRootPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\domain\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\remontiobackend.presentation\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|solutionrelative:remontiobackend.presentation\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -29,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\domain\\entities\\budget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\budget.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\domain\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DE48C58D-89DA-458E-AE8F-39ED8D260F28}|Domain\\Domain.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\domain\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,10 +83,6 @@
       "RelativeMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|solutionrelative:application\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\infrastructureinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\application\\objects\\dtos\\projectdto\\projectdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|solutionrelative:application\\objects\\dtos\\projectdto\\projectdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -94,11 +98,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 331,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "UserExtension.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Extensions\\UserExtension.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Extensions\\UserExtension.cs",
@@ -111,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "UserDataDTO.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Objects\\DTOs\\UserDTO\\UserDataDTO.cs",
               "RelativeDocumentMoniker": "Application\\Objects\\DTOs\\UserDTO\\UserDataDTO.cs",
@@ -124,7 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "ShoppingList.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Entities\\ShoppingList.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\ShoppingList.cs",
@@ -137,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "Photos.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Entities\\Photos.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Photos.cs",
@@ -150,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "Budget.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Entities\\Budget.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Budget.cs",
@@ -163,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Room.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Entities\\Room.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Room.cs",
@@ -176,7 +180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "CreateUserValid.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Validators\\UserValidator\\CreateUserValid.cs",
               "RelativeDocumentMoniker": "Application\\Validators\\UserValidator\\CreateUserValid.cs",
@@ -189,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "IProjectService.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Interfaces\\ServiceInterfaces\\IProjectService.cs",
               "RelativeDocumentMoniker": "Application\\Interfaces\\ServiceInterfaces\\IProjectService.cs",
@@ -202,7 +206,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "Project.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Entities\\Project.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Project.cs",
@@ -215,7 +219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ProjectService.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Services\\ProjectService.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Services\\ProjectService.cs",
@@ -242,7 +246,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Services\\UserService.cs",
+              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Services\\UserService.cs",
+              "RelativeToolTip": "Infrastructure\\Services\\UserService.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAkwAABAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-15T17:34:55.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "UserController.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Controllers\\UserController.cs",
@@ -255,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "CalculationsTypeEnum.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Enums\\CalculationsTypeEnum.cs",
               "RelativeDocumentMoniker": "Domain\\Enums\\CalculationsTypeEnum.cs",
@@ -268,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "PriorityEnum.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Enums\\PriorityEnum.cs",
               "RelativeDocumentMoniker": "Domain\\Enums\\PriorityEnum.cs",
@@ -281,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "RolesEnum.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Enums\\RolesEnum.cs",
               "RelativeDocumentMoniker": "Domain\\Enums\\RolesEnum.cs",
@@ -294,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "StatusEnum.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Enums\\StatusEnum.cs",
               "RelativeDocumentMoniker": "Domain\\Enums\\StatusEnum.cs",
@@ -307,7 +324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "User.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Entities\\User.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\User.cs",
@@ -320,20 +337,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 0,
               "Title": "InfrastructureInjection.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\InfrastructureInjection.cs",
               "RelativeDocumentMoniker": "Infrastructure\\InfrastructureInjection.cs",
               "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\InfrastructureInjection.cs",
               "RelativeToolTip": "Infrastructure\\InfrastructureInjection.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAgwBQAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-15T16:37:00.648Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "ProjectController.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\ProjectController.cs",
               "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Controllers\\ProjectController.cs",
@@ -346,7 +363,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "MappingProfile.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Mapping\\MappingProfile.cs",
               "RelativeDocumentMoniker": "Application\\Mapping\\MappingProfile.cs",
@@ -359,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "ProjectDataDTO.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Objects\\DTOs\\ProjectDTO\\ProjectDataDTO.cs",
               "RelativeDocumentMoniker": "Application\\Objects\\DTOs\\ProjectDTO\\ProjectDataDTO.cs",
@@ -372,7 +389,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "CreateProjectDTO.cs",
               "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Objects\\DTOs\\ProjectDTO\\CreateProjectDTO.cs",
               "RelativeDocumentMoniker": "Application\\Objects\\DTOs\\ProjectDTO\\CreateProjectDTO.cs",

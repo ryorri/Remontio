@@ -41,7 +41,7 @@ namespace Presentation.Controllers
                 if (result != null)
                 {
                     var token = _tokenService.GenerateToken(result);
-                    var refreshToken = _userService.GetRefreshTokenFromDBAsync(result.Id);
+                    var refreshToken = await _userService.GetRefreshTokenFromDBAsync(result.Id);
                     return Ok(new { result, token, refreshToken });
                 }
                 else
@@ -93,7 +93,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpDelete("delete-user")]
-        public async Task<ActionResult<UserDataDTO>> RemoveUser(string id)
+        public async Task<ActionResult<bool>> RemoveUser(string id)
         {
 
             try
@@ -110,7 +110,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpPut("update-user")]
-        public async Task<ActionResult<UserDataDTO>> UpdateUser(string id, UserDataDTO user)
+        public async Task<ActionResult<bool>> UpdateUser(string id, UserDataDTO user)
         {
 
             try
@@ -127,7 +127,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpPut("change-user-password")]
-        public async Task<ActionResult<UserDataDTO>> ChangeUserPassword(string id, string oldPassword, string newPassword)
+        public async Task<ActionResult<bool>> ChangeUserPassword(string id, string oldPassword, string newPassword)
         {
 
             try
@@ -144,7 +144,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpPut("change-user-role")]
-        public async Task<ActionResult<UserDataDTO>> ChangeUserRole(string id, string newRole)
+        public async Task<ActionResult<bool>> ChangeUserRole(string id, string newRole)
         {
 
             try

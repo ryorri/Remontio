@@ -62,10 +62,13 @@ namespace Infrastructure.Data
         public async Task SeedRolesAsync()
         {
             await _roleSeeder.SeedRolesAsync();
+
+
         }
         public async Task SeedUsersAsync()
         {
             await _userSeeder.SeedUsersAsync();
+
         }
 
     }

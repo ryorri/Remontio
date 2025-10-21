@@ -36,7 +36,7 @@ namespace Infrastructure.Seeders
                     UserName = "admin",
                     Name = "Admin",
                     Surname = "Admin",
-                    Password = "Admin1!",
+                    Password = "Admin1234!",
                     Role = "Admin",
                 };
 

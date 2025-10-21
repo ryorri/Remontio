@@ -1,22 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\",
+  "WorkspaceRootPath": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{92E5FEAC-00B2-4FAC-86DF-9CCF3F29B443}|UnitTests\\UnitTests.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\unittests\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{92E5FEAC-00B2-4FAC-86DF-9CCF3F29B443}|UnitTests\\UnitTests.csproj|solutionrelative:unittests\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1BA6584D-1AAA-4EF9-A7CA-F4C8D0285D0D}|UnitTests\\UnitTests.csproj|e:\\studia\\semestr vii\\p2\\projekt\\apka\\remontio\\remontiobackend\\unittests\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1BA6584D-1AAA-4EF9-A7CA-F4C8D0285D0D}|UnitTests\\UnitTests.csproj|solutionrelative:unittests\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\remontiobackend.presentation\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{ACFD9E6E-72E3-4911-A1D5-4EEA13D080E3}|RemontioBackend.Presentation\\Presentation.csproj|solutionrelative:remontiobackend.presentation\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{90C18982-7453-4357-B032-6FC11AD5B680}|Presentation\\Presentation.csproj|e:\\studia\\semestr vii\\p2\\projekt\\apka\\remontio\\remontiobackend\\presentation\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90C18982-7453-4357-B032-6FC11AD5B680}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\projectcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\infrastructure\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3A2A5E20-DCBC-437F-AB72-0ED859E14DC5}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|g:\\studia\\semestr vi\\p1\\projekt\\apka\\remontio\\remontiobackend\\application\\objects\\dtos\\userdto\\userdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D57178B-B29E-4772-8883-4E88E00DF1A8}|Application\\Application.csproj|solutionrelative:application\\objects\\dtos\\userdto\\userdatadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{90C18982-7453-4357-B032-6FC11AD5B680}|Presentation\\Presentation.csproj|e:\\studia\\semestr vii\\p2\\projekt\\apka\\remontio\\remontiobackend\\presentation\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{90C18982-7453-4357-B032-6FC11AD5B680}|Presentation\\Presentation.csproj|solutionrelative:presentation\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,72 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 331,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UserDataDTO.cs",
-              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Objects\\DTOs\\UserDTO\\UserDataDTO.cs",
-              "RelativeDocumentMoniker": "Application\\Objects\\DTOs\\UserDTO\\UserDataDTO.cs",
-              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Application\\Objects\\DTOs\\UserDTO\\UserDataDTO.cs",
-              "RelativeToolTip": "Application\\Objects\\DTOs\\UserDTO\\UserDataDTO.cs",
+              "DocumentIndex": 1,
+              "Title": "ProjectController.cs",
+              "DocumentMoniker": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Presentation\\Controllers\\ProjectController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\ProjectController.cs",
+              "ToolTip": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Presentation\\Controllers\\ProjectController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\ProjectController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T15:25:16.98Z",
+              "WhenOpened": "2025-10-21T12:38:24.58Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Presentation\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Presentation\\Controllers\\UserController.cs",
+              "ToolTip": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Presentation\\Controllers\\UserController.cs",
+              "RelativeToolTip": "Presentation\\Controllers\\UserController.cs",
+              "ViewState": "AgIAAHsAAAAAAAAAAAAUwKMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T12:31:28.25Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "UserControllerTests.cs",
-              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\UnitTests\\UserControllerTests.cs",
+              "DocumentMoniker": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\UnitTests\\UserControllerTests.cs",
               "RelativeDocumentMoniker": "UnitTests\\UserControllerTests.cs",
-              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\UnitTests\\UserControllerTests.cs*",
-              "RelativeToolTip": "UnitTests\\UserControllerTests.cs*",
-              "ViewState": "AgIAAPoAAAAAAAAAAAAkwCcBAAAJAAAAAAAAAA==",
+              "ToolTip": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\UnitTests\\UserControllerTests.cs",
+              "RelativeToolTip": "UnitTests\\UserControllerTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAO8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T15:02:30.182Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TokenService.cs",
-              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Services\\TokenService.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Services\\TokenService.cs",
-              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Infrastructure\\Services\\TokenService.cs",
-              "RelativeToolTip": "Infrastructure\\Services\\TokenService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T15:01:47.563Z",
-              "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 331,
-          "SelectedChildIndex": 2,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "RemontioBackend.Presentation\\Controllers\\UserController.cs",
-              "ToolTip": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\RemontioBackend.Presentation\\Controllers\\UserController.cs",
-              "RelativeToolTip": "RemontioBackend.Presentation\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAkwJEAAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-22T15:07:17.963Z",
+              "WhenOpened": "2025-10-21T12:11:03.649Z",
               "EditorCaption": ""
             }
           ]

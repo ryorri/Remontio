@@ -24,7 +24,7 @@ namespace Infrastructure
         {
             #region Scopes
             services.AddTransient<DatabaseInitialiser>();
-            services.AddSingleton<UserExtension>();
+            services.AddTransient<UserExtension>();
             services.AddScoped<IRemontioDbContext, RemontioDbContext>();
 
             services.AddScoped<IRoleSeeder, RoleSeeder>();

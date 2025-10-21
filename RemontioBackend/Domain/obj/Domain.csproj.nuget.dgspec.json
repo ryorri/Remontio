@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {}
+    "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
+    "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+        "projectUniqueName": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
+        "projectPath": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\Rafal\\.nuget\\packages\\",
-        "outputPath": "G:\\Studia\\Semestr VI\\P1\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\obj\\",
+        "outputPath": "E:\\Studia\\Semestr VII\\P2\\Projekt\\Apka\\Remontio\\RemontioBackend\\Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "H:\\VSCommunity\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\Rafal\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -44,21 +44,39 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+            "AutoMapper": {
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[15.0.1, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.21, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.15, )"
+              "version": "[8.0.21, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.21, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.21, )"
             }
           },
           "imports": [
@@ -77,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

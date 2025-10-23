@@ -8,7 +8,7 @@ using Moq;
 using NUnit.Framework;
 using Presentation.Controllers;
 
-namespace UnitTests
+namespace UnitTests.Controller
 {
     [TestFixture]
     public class UserControllerTests
@@ -35,7 +35,7 @@ namespace UnitTests
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
-            var message = ok!.Value.GetType().GetProperty("message")!.GetValue(ok.Value) as string;
+            var message = ok?.Value?.GetType().GetProperty("message")!.GetValue(ok.Value) as string;
             Assert.That(message, Is.EqualTo("User created successfully"));
         }
 
@@ -49,7 +49,7 @@ namespace UnitTests
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
             var bad = result.Result as BadRequestObjectResult;
-            var message = bad!.Value.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
+            var message = bad?.Value?.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
             Assert.That(message, Is.EqualTo("fail"));
         }
 
@@ -65,9 +65,9 @@ namespace UnitTests
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
-            var token = ok!.Value.GetType().GetProperty("token")!.GetValue(ok.Value) as string;
-            var refresh = ok.Value.GetType().GetProperty("refreshToken")!.GetValue(ok.Value) as string;
-            var returnedUser = ok.Value.GetType().GetProperty("result")!.GetValue(ok.Value) as UserDataDTO;
+            var token = ok?.Value?.GetType().GetProperty("token")!.GetValue(ok.Value) as string;
+            var refresh = ok?.Value?.GetType().GetProperty("refreshToken")!.GetValue(ok.Value) as string;
+            var returnedUser = ok?.Value?.GetType().GetProperty("result")!.GetValue(ok.Value) as UserDataDTO;
 
             Assert.That(token, Is.EqualTo("token123"));
             Assert.That(refresh, Is.EqualTo("refresh123"));
@@ -84,7 +84,7 @@ namespace UnitTests
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
             var bad = result.Result as BadRequestObjectResult;
-            var message = bad!.Value.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
+            var message = bad?.Value?.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
             Assert.That(message, Is.EqualTo("Invalid username or password"));
         }
 
@@ -97,7 +97,7 @@ namespace UnitTests
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
             var bad = result.Result as BadRequestObjectResult;
-            var message = bad!.Value.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
+            var message = bad?.Value?.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
             Assert.That(message, Is.EqualTo("err"));
         }
 

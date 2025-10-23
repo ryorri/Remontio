@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities.Items;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,5 +25,6 @@ namespace Domain.Entities
         public ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
         public ICollection<Budget> Budgets { get; set; } = new List<Budget>();
         public ICollection<Photos> Photos { get; set; } = new List<Photos>();
+        public List<WallItem> Walls { get; set; } = new List<WallItem>();
     }
 }

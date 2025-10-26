@@ -19,14 +19,13 @@ namespace Infrastructure.Data.TableConfigurations
             builder.Property(p => p.CreateAt).IsRequired();
             builder.Property(p => p.Status)
                   .IsRequired()
-                  .HasConversion<string>(); 
+                  .HasConversion<string>();
 
 
 
-           builder.HasOne(p => p.User)
-                   .WithMany(u => u.Projects)
-                   .HasForeignKey(p => p.UserId)
-                   .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(p => p.User)
+                    .WithMany(u => u.Projects)
+                    .HasForeignKey(p => p.UserId);
         }
     
     

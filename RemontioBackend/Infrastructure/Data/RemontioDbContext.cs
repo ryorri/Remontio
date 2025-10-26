@@ -21,7 +21,8 @@ namespace Infrastructure.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<ShoppingList> ShoppingLists { get; set; }
         public DbSet<Tasks> Tasks { get; set; }
-
+        public DbSet<Wall> Walls { get; set; }
+        public DbSet<Floor> Floors { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

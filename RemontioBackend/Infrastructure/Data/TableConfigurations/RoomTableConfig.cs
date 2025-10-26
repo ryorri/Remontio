@@ -27,7 +27,10 @@ namespace Infrastructure.Data.TableConfigurations
             builder.HasOne(p => p.Project)
                    .WithMany(u => u.Rooms)
                    .HasForeignKey(p => p.ProjectId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.NoAction);
+                   
+
         }
+    
     }
 }

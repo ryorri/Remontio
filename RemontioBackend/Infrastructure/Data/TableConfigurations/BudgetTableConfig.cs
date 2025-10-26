@@ -22,17 +22,17 @@ namespace Infrastructure.Data.TableConfigurations
             builder.HasOne(p => p.User)
                 .WithMany(u => u.Budgets)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(p => p.Room)
                     .WithMany(u => u.Budgets)
                     .HasForeignKey(p => p.RoomId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(p => p.Project)
                     .WithMany(u => u.Budgets)
                     .HasForeignKey(p => p.ProjectId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Application.Objects.DTOs.ProjectDTO;
+using Application.Objects.DTOs.RoomDTO;
 using Application.Objects.DTOs.UserDTO;
 using AutoMapper;
 using Domain.Entities;
@@ -34,7 +35,7 @@ namespace Application.Mapping
 
             CreateMap<CreateProjectDTO, Project>();
             CreateMap<ProjectDataDTO, Project>();
-            CreateMap<Project,  ProjectDataDTO>();
+            CreateMap<Project, ProjectDataDTO>();
             CreateMap<List<Project>, List<ProjectDataDTO>>()
                     .ConvertUsing((src, dest, context) =>
                     {
@@ -48,6 +49,62 @@ namespace Application.Mapping
 
 
             #endregion
+
+            #region RoomMapping
+
+            CreateMap<CreateRoomDTO, Room>();
+            CreateMap<RoomDataDTO, Room>();
+            CreateMap<Room, RoomDataDTO>();
+            CreateMap<List<Room>, List<RoomDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<RoomDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<RoomDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
+            #region WallMapping
+
+            CreateMap<WallDTO, Wall>();
+            CreateMap<Wall, WallDTO>();
+            CreateMap<List<Wall>, List<WallDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<WallDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<WallDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
+            #region FloorMapping
+
+            CreateMap<FloorDTO, Floor>();
+            CreateMap<Floor, FloorDTO>();
+            CreateMap<List<Floor>, List<FloorDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<FloorDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<FloorDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
         }
     }
 }

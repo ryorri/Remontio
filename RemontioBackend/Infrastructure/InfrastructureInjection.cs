@@ -25,6 +25,7 @@ namespace Infrastructure
             #region Scopes
             services.AddTransient<DatabaseInitialiser>();
             services.AddTransient<UserExtension>();
+            services.AddScoped<CalculatingAreaExtension>();
             services.AddScoped<IRemontioDbContext, RemontioDbContext>();
 
             services.AddScoped<IRoleSeeder, RoleSeeder>();
@@ -33,6 +34,8 @@ namespace Infrastructure
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IRoomService, RoomService>();
+
 
             #endregion
 

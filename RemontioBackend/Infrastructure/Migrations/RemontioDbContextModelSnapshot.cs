@@ -24,11 +24,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Budget", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -107,14 +105,37 @@ namespace Infrastructure.Migrations
                     b.ToTable("Calculations");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Floor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("CalculatedArea")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Floors");
+                });
+
             modelBuilder.Entity("Domain.Entities.Items.BudgetItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("BudgetId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("BudgetId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("EstimatetPrice")
                         .HasColumnType("real");
@@ -271,9 +292,15 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Rooms");
                 });
@@ -443,6 +470,29 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Wall", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("CalculatedArea")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Walls");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -581,19 +631,19 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("Budgets")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Room", "Room")
                         .WithMany("Budgets")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Budgets")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -608,19 +658,19 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("Calculations")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Room", "Room")
                         .WithMany("Calculations")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Calculations")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -628,6 +678,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Room");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Floor", b =>
+                {
+                    b.HasOne("Domain.Entities.Room", "Room")
+                        .WithMany("Floors")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("Domain.Entities.Items.BudgetItem", b =>
@@ -649,13 +710,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("Photos")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Room", "Room")
                         .WithMany("Photos")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
@@ -687,10 +748,18 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("Rooms")
                         .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Rooms")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.ShoppingList", b =>
@@ -698,19 +767,19 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("ShoppingLists")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Room", "Room")
                         .WithMany("ShoppingLists")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("ShoppingLists")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -725,16 +794,27 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("Tasks")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Room", "Room")
                         .WithMany("Tasks")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Wall", b =>
+                {
+                    b.HasOne("Domain.Entities.Room", "Room")
+                        .WithMany("Walls")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
                 });
@@ -816,11 +896,15 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("Calculations");
 
+                    b.Navigation("Floors");
+
                     b.Navigation("Photos");
 
                     b.Navigation("ShoppingLists");
 
                     b.Navigation("Tasks");
+
+                    b.Navigation("Walls");
                 });
 
             modelBuilder.Entity("Domain.Entities.ShoppingList", b =>
@@ -835,6 +919,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("Calculations");
 
                     b.Navigation("Projects");
+
+                    b.Navigation("Rooms");
 
                     b.Navigation("ShoppingLists");
                 });

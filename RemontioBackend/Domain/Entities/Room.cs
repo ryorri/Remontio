@@ -19,10 +19,15 @@ namespace Domain.Entities
         public Guid ProjectId { get; set; } // FK
         public Project? Project { get; set; }  // Nav
 
+        public string UserId { get; set; } = string.Empty; // FK
+        public User? User { get; set; }  // Nav
+
         public ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
         public ICollection<Calculations> Calculations { get; set; } = new List<Calculations>();
         public ICollection<ShoppingList> ShoppingLists { get; set; } = new List<ShoppingList>();
         public ICollection<Budget> Budgets { get; set; } = new List<Budget>();
         public ICollection<Photos> Photos { get; set; } = new List<Photos>();
+        public List<Wall> Walls { get; set; } = new List<Wall>();
+        public List<Floor> Floors { get; set; } = new List<Floor>();
     }
 }

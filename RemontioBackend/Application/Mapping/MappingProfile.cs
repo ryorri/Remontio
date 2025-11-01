@@ -1,4 +1,5 @@
-﻿using Application.Objects.DTOs.ProjectDTO;
+﻿using Application.Objects.DTOs.AlertsDTO;
+using Application.Objects.DTOs.ProjectDTO;
 using Application.Objects.DTOs.RoomDTO;
 using Application.Objects.DTOs.UserDTO;
 using AutoMapper;
@@ -105,6 +106,24 @@ namespace Application.Mapping
 
             #endregion
 
+            #region AlertsMapping
+
+            CreateMap<CreateAlertDTO, Alerts>();
+            CreateMap<AlertDataDTO, Alerts>();
+            CreateMap<Alerts, AlertDataDTO>();
+            CreateMap<List<Alerts>, List<AlertDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<AlertDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<AlertDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
         }
     }
 }

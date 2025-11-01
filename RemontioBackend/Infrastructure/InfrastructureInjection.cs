@@ -35,6 +35,7 @@ namespace Infrastructure
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IAlertService, AlertService>();
 
 
             #endregion

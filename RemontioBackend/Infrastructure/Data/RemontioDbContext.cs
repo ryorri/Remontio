@@ -23,6 +23,7 @@ namespace Infrastructure.Data
         public DbSet<Tasks> Tasks { get; set; }
         public DbSet<Wall> Walls { get; set; }
         public DbSet<Floor> Floors { get; set; }
+        public DbSet<Alerts> Alerts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

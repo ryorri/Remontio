@@ -1,0 +1,53 @@
+﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.AlertsDTO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Services
+{
+    public class AlertService : IAlertService
+    {
+        public Task<bool> ChangePriorityAsync(Guid alertId, string priority)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ChangeStatusAsync(Guid alertId, string status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CreateAlertAsync(CreateAlertDTO alert)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAlertAsync(Guid alertId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AlertDataDTO?> GetAlertByIdAsync(Guid alertId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<AlertDataDTO>> GetAlertsByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<AlertDataDTO>> GetAllAlertsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateAlertAsync(AlertDataDTO alert)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

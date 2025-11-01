@@ -1,0 +1,257 @@
+﻿using Application.Interfaces.AdditionalInterfaces;
+using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.RoomDTO;
+using AutoMapper;
+using Domain.Entities;
+using Domain.Enums;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.Extensions;
+
+namespace Infrastructure.Services
+{
+    public class RoomService : IRoomService
+    {
+        private readonly RemontioDbContext _dbContext;
+        private readonly IMapper _mapper;
+        private readonly CalculatingAreaExtension _calc;
+        public RoomService(RemontioDbContext dbContext, IMapper mapper, CalculatingAreaExtension calc)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+            _calc = calc;
+        }
+    
+        public async Task<bool> AddFloorAsync(string roomId, List<IPoint> points, string floorName = "")
+        {
+            if (roomId == null)
+                throw new ArgumentNullException(nameof(roomId));
+
+            try
+            {
+                var calculatedArea = _calc.CalculatePolygonArea(points);
+
+                var floorDTO = new FloorDTO
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = floorName,
+                    CalculatedArea = calculatedArea,
+                    RoomId = Guid.Parse(roomId)
+                };
+
+                var floor = _mapper.Map<Floor>(floorDTO);
+
+                await _dbContext.Floors.AddAsync(floor);
+
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async  Task<bool> AddWallAsync(string roomId, List<IPoint> points, string wallName ="")
+        {
+
+            if (roomId == null)
+                throw new ArgumentNullException(nameof(roomId));
+
+            try
+            {
+                var calculatedArea = _calc.CalculatePolygonArea(points);
+
+                var wallDTO = new WallDTO
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = wallName,
+                    CalculatedArea = calculatedArea,
+                    RoomId = Guid.Parse(roomId)
+                };
+
+                var wall = _mapper.Map<Wall>(wallDTO);
+
+                await _dbContext.Walls.AddAsync(wall);
+
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> ChangeRoomStatusAsync(string roomId, string status)
+        {
+            try
+            {
+                if (!Guid.TryParse(roomId, out Guid guid))
+                    throw new ArgumentException("Invalid project ID format");
+
+                var room = await _dbContext.Rooms.FindAsync(guid);
+
+                if (room != null)
+                {
+                    room.Status = Enum.Parse<StatusEnum>(status, true);
+                }
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> CreateRoomAsync(CreateRoomDTO roomDTO, string projectId)
+        {
+
+            if (roomDTO == null)
+                throw new ArgumentNullException(nameof(roomDTO));
+
+            try
+            {
+                var room = _mapper.Map<Room>(roomDTO);
+                await _dbContext.Rooms.AddAsync(room);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> DeleteRoomAsync(string roomId)
+        {
+            if (roomId == null)
+                throw new ArgumentNullException(nameof(roomId));
+
+            try
+            {
+                if (!Guid.TryParse(roomId, out Guid guid))
+                    throw new ArgumentException("Invalid project ID format");
+
+                var room = await _dbContext.Rooms.FindAsync(guid);
+
+                if (room != null)
+                    _dbContext.Rooms.Remove(room);
+
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<RoomDataDTO>> GetAllRoomsAsync()
+        {
+            try
+            {
+                var roomList = await _dbContext.Rooms.Include(x => x.User)
+                                                        .ToListAsync();
+                return _mapper.Map<List<RoomDataDTO>>(roomList);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<RoomDataDTO>> GetAllRoomsByProjectIdAsync(string projectId)
+        {
+            try
+            {
+
+                if (!Guid.TryParse(projectId, out Guid guidId))
+                    throw new ArgumentException("Invalid project ID format");
+
+                var roomList = await _dbContext.Rooms.Include(x => x.User)
+                                                  .Where(x => x.ProjectId == guidId)
+                                                  .ToListAsync();
+                return _mapper.Map<List<RoomDataDTO>>(roomList);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<RoomDataDTO>> GetAllRoomsByUserIdAsync(string userId)
+        {
+            try
+            {
+                var roomList = await _dbContext.Rooms.Include(x => x.User)
+                                                  .Where(x => x.UserId == userId)
+                                                  .ToListAsync();
+                return _mapper.Map<List<RoomDataDTO>>(roomList);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<RoomDataDTO> GetRoomAsync(string roomId)
+        {
+            try
+            {
+                var room = await _dbContext.Rooms.Include(x => x.User)
+                                                  .FirstOrDefaultAsync(x => x.Id.ToString() == roomId);
+
+                return _mapper.Map<RoomDataDTO>(room);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public Task<bool> RemoveAllWallFromRoomAsync(string roomId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RemoveFloorFromRoomAsync(string roomId, string floorId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RemoveWallFromRoomAsync(string roomId, string wallId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> UpdateRoomAsync(RoomDataDTO roomDTO)
+        {
+            try
+            {
+                if (!Guid.TryParse(roomDTO.Id, out Guid guid))
+                    throw new ArgumentException("Invalid project ID format");
+
+                var room = await _dbContext.Rooms.FindAsync(guid);
+
+                if (room != null)
+                {
+                    room.Name = roomDTO.Name;
+                    room.Description = roomDTO.Description;
+
+                }
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+    }
+}

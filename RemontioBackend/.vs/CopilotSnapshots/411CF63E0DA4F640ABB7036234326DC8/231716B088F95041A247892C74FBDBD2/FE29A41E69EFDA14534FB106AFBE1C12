@@ -1,0 +1,181 @@
+﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.AlertsDTO;
+using AutoMapper;
+using Domain.Entities;
+using Domain.Enums;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infrastructure.Services
+{
+    public class AlertService : IAlertService
+    {
+        private readonly RemontioDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public AlertService(RemontioDbContext dbContext, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+
+        public async Task<bool> ChangePriorityAsync(Guid alertId, string priority)
+        {
+            try
+            {
+                var alert = await _dbContext.Alerts.FindAsync(alertId);
+                if (alert != null && !string.IsNullOrWhiteSpace(priority))
+                {
+                    var normalized = priority.Replace(" ", "");
+                    alert.Priority = Enum.Parse<PriorityEnum>(normalized, true);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> ChangeStatusAsync(Guid alertId, string status)
+        {
+            try
+            {
+                var alert = await _dbContext.Alerts.FindAsync(alertId);
+                if (alert != null && !string.IsNullOrWhiteSpace(status))
+                {
+                    var normalized = status.Replace(" ", "");
+                    alert.Status = Enum.Parse<StatusEnum>(normalized, true);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> CreateAlertAsync(CreateAlertDTO alert)
+        {
+            if (alert == null)
+                throw new ArgumentNullException(nameof(alert));
+
+            try
+            {
+                var entity = _mapper.Map<Alerts>(alert);
+                entity.Id = Guid.NewGuid();
+                entity.CreatedAt = DateTime.UtcNow;
+
+                if (!string.IsNullOrWhiteSpace(alert.Status))
+                    entity.Status = Enum.Parse<StatusEnum>(alert.Status.Replace(" ", ""), true);
+
+                if (!string.IsNullOrWhiteSpace(alert.Priority))
+                    entity.Priority = Enum.Parse<PriorityEnum>(alert.Priority, true);
+
+                await _dbContext.Alerts.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> DeleteAlertAsync(Guid alertId)
+        {
+            try
+            {
+                var alert = await _dbContext.Alerts.FindAsync(alertId);
+                if (alert != null)
+                {
+                    _dbContext.Alerts.Remove(alert);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<AlertDataDTO?> GetAlertByIdAsync(Guid alertId)
+        {
+            try
+            {
+                var alert = await _dbContext.Alerts.FindAsync(alertId);
+                return _mapper.Map<AlertDataDTO?>(alert);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<AlertDataDTO>> GetAlertsByUserIdAsync(string userId)
+        {
+            try
+            {
+                var alerts = await _dbContext.Alerts
+                                             .Where(a => a.UserId == userId)
+                                             .ToListAsync();
+                return _mapper.Map<List<AlertDataDTO>>(alerts);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<AlertDataDTO>> GetAllAlertsAsync()
+        {
+            try
+            {
+                var alerts = await _dbContext.Alerts.ToListAsync();
+                return _mapper.Map<List<AlertDataDTO>>(alerts);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<bool> UpdateAlertAsync(AlertDataDTO alert)
+        {
+            if (alert == null)
+                throw new ArgumentNullException(nameof(alert));
+
+            try
+            {
+                var entity = await _dbContext.Alerts.FindAsync(alert.Id);
+                if (entity != null)
+                {
+                    entity.Message = alert.Message;
+                    entity.StartDate = alert.StartDate;
+                    entity.EndDate = alert.EndDate;
+                    entity.UserId = alert.UserId;
+
+                    if (!string.IsNullOrWhiteSpace(alert.Status))
+                        entity.Status = Enum.Parse<StatusEnum>(alert.Status.Replace(" ", ""), true);
+
+                    if (!string.IsNullOrWhiteSpace(alert.Priority))
+                        entity.Priority = Enum.Parse<PriorityEnum>(alert.Priority, true);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+﻿using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.AlertsDTO;
+using AutoMapper;
+using Domain.Entities;
+using Domain.Enums;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infrastructure.Services
+{
+    public class AlertService : IAlertService
+    {
+        private readonly RemontioDbContext _dbContext;
+        private readonly IMapper _mapper;
+
+        public AlertService(RemontioDbContext dbContext, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
+
+        public Task<bool> ChangePriorityAsync(string alertId, string priority)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ChangeStatusAsync(string alertId, string status)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CreateAlertAsync(CreateAlertDTO alert)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAlertAsync(string alertId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AlertDataDTO?> GetAlertByIdAsync(string alertId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<AlertDataDTO>> GetAlertsByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<AlertDataDTO>> GetAllAlertsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateAlertAsync(AlertDataDTO alert)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -1,0 +1,239 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Application.Interfaces.ServiceInterfaces;
+using Application.Objects.DTOs.UserDTO;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NUnit.Framework;
+using Presentation.Controllers;
+
+namespace UnitTests.Controller
+{
+    [TestFixture]
+    public class UserControllerTests
+    {
+        private Mock<IUserService> _userServiceMock = null!;
+        private Mock<ITokenService> _tokenServiceMock = null!;
+        private UserController _controller = null!;
+
+        [SetUp]
+        public void Setup()
+        {
+            _userServiceMock = new Mock<IUserService>();
+            _tokenServiceMock = new Mock<ITokenService>();
+            _controller = new UserController(_userServiceMock.Object, _tokenServiceMock.Object);
+        }
+
+        [Test]
+        public async Task Register_ReturnsOk_WhenServiceSucceeds()
+        {
+            _userServiceMock.Setup(s => s.CreateUserAsync(It.IsAny<CreateUserDTO>())).ReturnsAsync(true);
+
+            var dto = new CreateUserDTO { UserName = "u", Name = "n", Email = "e@e.com", Password = "p", Role = "r" };
+            var result = await _controller.Register(dto);
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            var message = ok?.Value?.GetType().GetProperty("message")!.GetValue(ok.Value) as string;
+            Assert.That(message, Is.EqualTo("User created successfully"));
+        }
+
+        [Test]
+        public async Task Register_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.CreateUserAsync(It.IsAny<CreateUserDTO>())).ThrowsAsync(new Exception("fail"));
+
+            var dto = new CreateUserDTO { UserName = "u", Name = "n", Email = "e@e.com", Password = "p", Role = "r" };
+            var result = await _controller.Register(dto);
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+            var bad = result.Result as BadRequestObjectResult;
+            var message = bad?.Value?.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
+            Assert.That(message, Is.EqualTo("fail"));
+        }
+
+        [Test]
+        public async Task LogIn_ReturnsOk_WithTokenAndRefreshToken_WhenCredentialsValid()
+        {
+            var user = new UserDataDTO { Id = "1", UserName = "u" };
+            _userServiceMock.Setup(s => s.LogInAsync("u", "p")).ReturnsAsync(user);
+            _tokenServiceMock.Setup(t => t.GenerateToken(user)).Returns("token123");
+            _userServiceMock.Setup(s => s.GetRefreshTokenFromDBAsync(user.Id)).ReturnsAsync("refresh123");
+
+            var result = await _controller.LogIn("u", "p");
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            var token = ok?.Value?.GetType().GetProperty("token")!.GetValue(ok.Value) as string;
+            var refresh = ok?.Value?.GetType().GetProperty("refreshToken")!.GetValue(ok.Value) as string;
+            var returnedUser = ok?.Value?.GetType().GetProperty("result")!.GetValue(ok.Value) as UserDataDTO;
+
+            Assert.That(token, Is.EqualTo("token123"));
+            Assert.That(refresh, Is.EqualTo("refresh123"));
+            Assert.That(returnedUser, Is.Not.Null);
+            Assert.That(returnedUser!.Id, Is.EqualTo(user.Id));
+        }
+
+        [Test]
+        public async Task LogIn_ReturnsBadRequest_WhenInvalidCredentials()
+        {
+            _userServiceMock.Setup(s => s.LogInAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((UserDataDTO?)null);
+
+            var result = await _controller.LogIn("u", "wrong");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+            var bad = result.Result as BadRequestObjectResult;
+            var message = bad?.Value?.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
+            Assert.That(message, Is.EqualTo("Invalid username or password"));
+        }
+
+        [Test]
+        public async Task LogIn_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.LogInAsync(It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.LogIn("u", "p");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+            var bad = result.Result as BadRequestObjectResult;
+            var message = bad?.Value?.GetType().GetProperty("message")!.GetValue(bad.Value) as string;
+            Assert.That(message, Is.EqualTo("err"));
+        }
+
+        [Test]
+        public async Task GetUserList_ReturnsOk_OnSuccess()
+        {
+            var list = new List<UserDataDTO> { new UserDataDTO { Id = "1" } };
+            _userServiceMock.Setup(s => s.GetAllUsersAsync()).ReturnsAsync(list);
+
+            var result = await _controller.GetUserList();
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.SameAs(list));
+        }
+
+        [Test]
+        public async Task GetUserList_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.GetAllUsersAsync()).ThrowsAsync(new Exception("boom"));
+
+            var result = await _controller.GetUserList();
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+        [Test]
+        public async Task GetUser_ReturnsOk_OnSuccess()
+        {
+            var user = new UserDataDTO { Id = "1" };
+            _userServiceMock.Setup(s => s.GetUserAsync("1")).ReturnsAsync(user);
+
+            var result = await _controller.GetUser("1");
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.SameAs(user));
+        }
+
+        [Test]
+        public async Task GetUser_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.GetUserAsync(It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.GetUser("1");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+        [Test]
+        public async Task RemoveUser_ReturnsOk_OnSuccess()
+        {
+            _userServiceMock.Setup(s => s.DeleteUserAsync("1")).ReturnsAsync(true);
+
+            var result = await _controller.RemoveUser("1");
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.EqualTo(true));
+        }
+
+        [Test]
+        public async Task RemoveUser_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.DeleteUserAsync(It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.RemoveUser("1");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+        [Test]
+        public async Task UpdateUser_ReturnsOk_OnSuccess()
+        {
+            var user = new UserDataDTO { Id = "1" };
+            _userServiceMock.Setup(s => s.UpdateUserAsync("1", user)).ReturnsAsync(true);
+
+            var result = await _controller.UpdateUser("1", user);
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.EqualTo(true));
+        }
+
+        [Test]
+        public async Task UpdateUser_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.UpdateUserAsync(It.IsAny<string>(), It.IsAny<UserDataDTO>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.UpdateUser("1", new UserDataDTO());
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+        [Test]
+        public async Task ChangeUserPassword_ReturnsOk_OnSuccess()
+        {
+            _userServiceMock.Setup(s => s.ChangePasswordAsync("1", "old", "new")).ReturnsAsync(true);
+
+            var result = await _controller.ChangeUserPassword("1", "old", "new");
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.EqualTo(true));
+        }
+
+        [Test]
+        public async Task ChangeUserPassword_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.ChangePasswordAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.ChangeUserPassword("1", "old", "new");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+        [Test]
+        public async Task ChangeUserRole_ReturnsOk_OnSuccess()
+        {
+            _userServiceMock.Setup(s => s.ChangeRoleAsync("1", "admin")).ReturnsAsync(true);
+
+            var result = await _controller.ChangeUserRole("1", "admin");
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.EqualTo(true));
+        }
+
+        [Test]
+        public async Task ChangeUserRole_ReturnsBadRequest_OnException()
+        {
+            _userServiceMock.Setup(s => s.ChangeRoleAsync(It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.ChangeUserRole("1", "admin");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+    }
+}

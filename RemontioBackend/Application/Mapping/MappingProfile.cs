@@ -3,6 +3,7 @@ using Application.Objects.DTOs.PhotoDTO;
 using Application.Objects.DTOs.Photos;
 using Application.Objects.DTOs.ProjectDTO;
 using Application.Objects.DTOs.RoomDTO;
+using Application.Objects.DTOs.TaskDTO;
 using Application.Objects.DTOs.UserDTO;
 using AutoMapper;
 using Domain.Entities;
@@ -139,6 +140,25 @@ namespace Application.Mapping
                         foreach (var proj in src)
                         {
                             result.Add(context.Mapper.Map<PhotoDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
+            #region PhotosMapping
+
+            CreateMap<CreateTaskDTO, Tasks>();
+            CreateMap<TaskDataDTO, Tasks>();
+            CreateMap<Tasks, TaskDataDTO>();
+            CreateMap<List<Tasks>, List<TaskDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<TaskDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<TaskDataDTO>(proj));
                         }
                         return result;
                     });

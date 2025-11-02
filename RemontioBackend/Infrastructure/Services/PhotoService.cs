@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.PhotoDTO;
 using Application.Objects.DTOs.Photos;
+using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
 using Infrastructure.Data;
@@ -104,7 +105,7 @@ namespace Infrastructure.Services
 
         public async Task<Stream?> GetFileStreamAsync(string photoId)
         {
-            if (!Guid.TryParse(photoId, out var guid)) return null;
+            var guid = GuidValidator.ValidateGuid(photoId);
 
             var meta = await _db.Photos.FindAsync(guid);
             if (meta == null) return null;
@@ -122,7 +123,7 @@ namespace Infrastructure.Services
 
         public async Task<PhotoDataDTO?> GetMetadataAsync(string photoId)
         {
-            if (!Guid.TryParse(photoId, out var guid)) return null;
+            var guid = GuidValidator.ValidateGuid(photoId);
 
             var p = await _db.Photos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == guid);
             if (p == null) return null;
@@ -144,7 +145,7 @@ namespace Infrastructure.Services
 
         public async Task<List<PhotoDataDTO>> ListByProjectAsync(string projectId)
         {
-            if (!Guid.TryParse(projectId, out var guid)) return new List<PhotoDataDTO>();
+            var guid = GuidValidator.ValidateGuid(projectId);
 
             var list = await _db.Photos.AsNoTracking().Where(x => x.ProjectId == guid).ToListAsync();
 
@@ -165,7 +166,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> DeleteAsync(string photoId)
         {
-            if (!Guid.TryParse(photoId, out var guid)) return false;
+            var guid = GuidValidator.ValidateGuid(photoId);
 
             var p = await _db.Photos.FindAsync(guid);
             if (p == null) return false;

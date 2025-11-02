@@ -1,12 +1,13 @@
 ﻿using Application.Interfaces.AdditionalInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.RoomDTO;
+using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services
 {
@@ -88,8 +89,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(roomId, out Guid guid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(roomId);
 
                 var room = await _dbContext.Rooms.FindAsync(guid);
 
@@ -134,8 +134,7 @@ namespace Infrastructure.Services
 
             try
             {
-                if (!Guid.TryParse(roomId, out Guid guid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(roomId);
 
                 var room = await _dbContext.Rooms.FindAsync(guid);
 
@@ -171,11 +170,10 @@ namespace Infrastructure.Services
             try
             {
 
-                if (!Guid.TryParse(projectId, out Guid guidId))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(projectId);
 
                 var roomList = await _dbContext.Rooms.Include(x => x.User)
-                                                  .Where(x => x.ProjectId == guidId)
+                                                  .Where(x => x.ProjectId == guid)
                                                   .ToListAsync();
                 return _mapper.Map<List<RoomDataDTO>>(roomList);
             }
@@ -222,11 +220,10 @@ namespace Infrastructure.Services
 
             try
             {
-                if (!Guid.TryParse(roomId, out Guid roomGuid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(roomId);
 
                 var walls = await _dbContext.Walls
-                                            .Where(w => w.RoomId == roomGuid)
+                                            .Where(w => w.RoomId == guid)
                                             .ToListAsync();
 
                 if (walls.Any())
@@ -252,10 +249,8 @@ namespace Infrastructure.Services
 
             try
             {
-                if (!Guid.TryParse(roomId, out Guid roomGuid))
-                    throw new ArgumentException("Invalid project ID format");
-                if (!Guid.TryParse(floorId, out Guid floorGuid))
-                    throw new ArgumentException("Invalid floor ID format");
+                var roomGuid = GuidValidator.ValidateGuid(roomId);
+                var floorGuid = GuidValidator.ValidateGuid(floorId);
 
                 var floor = await _dbContext.Floors
                                             .FirstOrDefaultAsync(f => f.Id == floorGuid && f.RoomId == roomGuid);
@@ -283,10 +278,8 @@ namespace Infrastructure.Services
 
             try
             {
-                if (!Guid.TryParse(roomId, out Guid roomGuid))
-                    throw new ArgumentException("Invalid project ID format");
-                if (!Guid.TryParse(wallId, out Guid wallGuid))
-                    throw new ArgumentException("Invalid wall ID format");
+                var roomGuid = GuidValidator.ValidateGuid(roomId);
+                var wallGuid = GuidValidator.ValidateGuid(wallId);
 
                 var wall = await _dbContext.Walls
                                            .FirstOrDefaultAsync(w => w.Id == wallGuid && w.RoomId == roomGuid);
@@ -309,8 +302,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(roomDTO.Id, out Guid guid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(roomDTO.Id);
 
                 var room = await _dbContext.Rooms.FindAsync(guid);
 

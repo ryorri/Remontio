@@ -37,6 +37,7 @@ namespace Infrastructure
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IAlertService, AlertService>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<ITaskService, TaskService>();
 
             #endregion
 

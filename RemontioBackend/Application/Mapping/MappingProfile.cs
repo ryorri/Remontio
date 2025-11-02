@@ -1,4 +1,6 @@
 ﻿using Application.Objects.DTOs.AlertsDTO;
+using Application.Objects.DTOs.PhotoDTO;
+using Application.Objects.DTOs.Photos;
 using Application.Objects.DTOs.ProjectDTO;
 using Application.Objects.DTOs.RoomDTO;
 using Application.Objects.DTOs.UserDTO;
@@ -118,6 +120,25 @@ namespace Application.Mapping
                         foreach (var proj in src)
                         {
                             result.Add(context.Mapper.Map<AlertDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
+            #region PhotosMapping
+
+            CreateMap<CreatePhotoDTO, Photos>();
+            CreateMap<PhotoDataDTO, Photos>();
+            CreateMap<Photos, PhotoDataDTO>();
+            CreateMap<List<Photos>, List<PhotoDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<PhotoDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<PhotoDataDTO>(proj));
                         }
                         return result;
                     });

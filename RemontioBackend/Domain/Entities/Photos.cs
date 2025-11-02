@@ -12,7 +12,11 @@ namespace Domain.Entities
         public string Url { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public DateTime CreateAt { get; set; } = DateTime.UtcNow;
-
+        public long Size { get; set; }
+        public string FileType { get; set; } = string.Empty;
+        public string FileName { get; set; } = string.Empty;
+        public string ContentType { get; set; } = string.Empty;
+        public string StorageProvider { get; set; } = string.Empty;
         public Guid RoomId { get; set; } // FK
         public Room? Room { get; set; }  // Nav
 

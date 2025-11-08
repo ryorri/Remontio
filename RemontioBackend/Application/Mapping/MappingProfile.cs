@@ -13,6 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Objects.DTOs.BudgetDTO;
+using Application.Objects.DTOs.BudgetItemDTO;
+using Domain.Entities.Items;
 
 namespace Application.Mapping
 {
@@ -182,6 +185,42 @@ namespace Application.Mapping
                         }
                         return result;
                     });
+
+            #endregion
+
+            #region BudgetMapping
+
+            CreateMap<CreateBudgetDTO, Budget>();
+            CreateMap<BudgetDataDTO, Budget>();
+            CreateMap<Budget, BudgetDataDTO>();
+            CreateMap<List<Budget>, List<BudgetDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<BudgetDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<BudgetDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+            #endregion
+
+            #region BudgetItemMapping
+
+            CreateMap<CreateBudgetItemDTO, BudgetItem>();
+            CreateMap<BudgetItemDataDTO, BudgetItem>();
+            CreateMap<BudgetItem, BudgetItemDataDTO>();
+            CreateMap<List<BudgetItem>, List<BudgetItemDataDTO>>()
+                .ConvertUsing((src, dest, context) =>
+                {
+                    var result = new List<BudgetItemDataDTO>();
+                    foreach (var item in src)
+                    {
+                        result.Add(context.Mapper.Map<BudgetItemDataDTO>(item));
+                    }
+                    return result;
+                });
 
             #endregion
         }

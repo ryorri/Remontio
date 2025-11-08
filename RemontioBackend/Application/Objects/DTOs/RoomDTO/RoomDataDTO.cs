@@ -16,7 +16,6 @@ namespace Application.Objects.DTOs.RoomDTO
 
         public required string ProjectId { get; set; }
         public required string UserId { get; set; }
-        public ProjectDataDTO? Project { get; set; }
         public List<string> TaskIds { get; set; } = new List<string>();
         public List<string> CalculationIds { get; set; } = new List<string>();
         public List<string> ShoppingListIds { get; set; } = new List<string>();

@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces.DatabaseInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.ProjectDTO;
+using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
@@ -47,8 +48,7 @@ namespace Infrastructure.Services
 
             try
             {
-                if (!Guid.TryParse(projectId, out Guid guid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(projectId);
 
                 var project = await _dbContext.Projects.FindAsync(guid);
 
@@ -113,8 +113,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(projectDTO.Id, out Guid guid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(projectDTO.Id);
 
                 var project = await _dbContext.Projects.FindAsync(guid);
 
@@ -137,8 +136,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(projectId, out Guid guid))
-                    throw new ArgumentException("Invalid project ID format");
+                var guid = GuidValidator.ValidateGuid(projectId);
 
                 var project = await _dbContext.Projects.FindAsync(guid);
 

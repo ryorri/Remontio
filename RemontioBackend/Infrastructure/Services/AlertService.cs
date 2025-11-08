@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.AlertsDTO;
+using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
@@ -23,8 +24,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(alertId, out Guid guid))
-                    throw new ArgumentException("Invalid alert ID format");
+                var guid = GuidValidator.ValidateGuid(alertId);
 
                 var alert = await _dbContext.Alerts.FindAsync(guid);
 
@@ -47,8 +47,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(alertId, out Guid guid))
-                    throw new ArgumentException("Invalid alert ID format");
+                var guid = GuidValidator.ValidateGuid(alertId);
 
                 var alert = await _dbContext.Alerts.FindAsync(guid);
 
@@ -92,8 +91,7 @@ namespace Infrastructure.Services
 
             try
             {
-                if (!Guid.TryParse(alertId, out Guid guid))
-                    throw new ArgumentException("Invalid alert ID format");
+                var guid = GuidValidator.ValidateGuid(alertId);
 
                 var alert = await _dbContext.Alerts.FindAsync(guid);
 
@@ -160,8 +158,7 @@ namespace Infrastructure.Services
         {
             try
             {
-                if (!Guid.TryParse(alert.Id, out Guid guid))
-                    throw new ArgumentException("Invalid alert ID format");
+                var guid = GuidValidator.ValidateGuid(alert.Id);
 
                 var entity = await _dbContext.Alerts.FindAsync(guid);
 

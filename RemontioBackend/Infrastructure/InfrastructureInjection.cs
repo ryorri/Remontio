@@ -40,6 +40,7 @@ namespace Infrastructure
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IBudgetService, BudgetService>();
+            services.AddScoped<IContactService, ContactService>();
 
             #endregion
 

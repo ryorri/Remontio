@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using Application.Objects.DTOs.BudgetDTO;
 using Application.Objects.DTOs.BudgetItemDTO;
 using Domain.Entities.Items;
+using Application.Objects.DTOs.ContactsDTO;
 
 namespace Application.Mapping
 {
@@ -218,6 +219,24 @@ namespace Application.Mapping
                     foreach (var item in src)
                     {
                         result.Add(context.Mapper.Map<BudgetItemDataDTO>(item));
+                    }
+                    return result;
+                });
+
+            #endregion
+
+            #region ContactsMapping
+
+            CreateMap<CreateContactDTO, Contacts>();
+            CreateMap<ContactDataDTO, Contacts>();
+            CreateMap<Contacts, ContactDataDTO>();
+            CreateMap<List<Contacts>, List<ContactDataDTO>>()
+                .ConvertUsing((src, dest, context) =>
+                {
+                    var result = new List<ContactDataDTO>();
+                    foreach (var item in src)
+                    {
+                        result.Add(context.Mapper.Map<ContactDataDTO>(item));
                     }
                     return result;
                 });

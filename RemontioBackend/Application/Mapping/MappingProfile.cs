@@ -5,6 +5,7 @@ using Application.Objects.DTOs.ProjectDTO;
 using Application.Objects.DTOs.RoomDTO;
 using Application.Objects.DTOs.TaskDTO;
 using Application.Objects.DTOs.UserDTO;
+using Application.Objects.DTOs.ListDTO;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -163,6 +164,24 @@ namespace Application.Mapping
                         return result;
                     });
 
+
+            #endregion
+
+            #region ListMapping
+
+            CreateMap<CreateListDTO, ShoppingList>();
+            CreateMap<ListDataDTO, ShoppingList>();
+            CreateMap<ShoppingList, ListDataDTO>();
+            CreateMap<List<ShoppingList>, List<ListDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<ListDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<ListDataDTO>(proj));
+                        }
+                        return result;
+                    });
 
             #endregion
         }

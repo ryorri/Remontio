@@ -17,6 +17,10 @@ namespace Domain.Entities
         public required DateTime CreateAt { get; set; } = DateTime.UtcNow;
         public DateTime StartAt { get; set; }
         public DateTime ClosedAt { get; set; }
+        public  DateTime  EstimatedTime { get; set; } = DateTime.UtcNow;
+
+        public string UserId { get; set; } = string.Empty; // FK
+        public User? User { get; set; }  // Nav
 
         public Guid RoomId { get; set; } // FK
         public Room? Room { get; set; }  // Nav

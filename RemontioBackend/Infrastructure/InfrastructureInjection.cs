@@ -36,7 +36,11 @@ namespace Infrastructure
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IAlertService, AlertService>();
-
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<IListService, ListService>();
+            services.AddScoped<IBudgetService, BudgetService>();
+            services.AddScoped<IContactService, ContactService>();
 
             #endregion
 
@@ -49,7 +53,7 @@ namespace Infrastructure
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
+                options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.Password.RequireLowercase = true;

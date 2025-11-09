@@ -1,7 +1,11 @@
 ﻿using Application.Objects.DTOs.AlertsDTO;
+using Application.Objects.DTOs.PhotoDTO;
+using Application.Objects.DTOs.Photos;
 using Application.Objects.DTOs.ProjectDTO;
 using Application.Objects.DTOs.RoomDTO;
+using Application.Objects.DTOs.TaskDTO;
 using Application.Objects.DTOs.UserDTO;
+using Application.Objects.DTOs.ListDTO;
 using AutoMapper;
 using Domain.Entities;
 using System;
@@ -9,6 +13,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Objects.DTOs.BudgetDTO;
+using Application.Objects.DTOs.BudgetItemDTO;
+using Domain.Entities.Items;
+using Application.Objects.DTOs.ContactsDTO;
 
 namespace Application.Mapping
 {
@@ -122,6 +130,116 @@ namespace Application.Mapping
                         return result;
                     });
 
+
+            #endregion
+
+            #region PhotosMapping
+
+            CreateMap<CreatePhotoDTO, Photos>();
+            CreateMap<PhotoDataDTO, Photos>();
+            CreateMap<Photos, PhotoDataDTO>();
+            CreateMap<List<Photos>, List<PhotoDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<PhotoDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<PhotoDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
+            #region PhotosMapping
+
+            CreateMap<CreateTaskDTO, Tasks>();
+            CreateMap<TaskDataDTO, Tasks>();
+            CreateMap<Tasks, TaskDataDTO>();
+            CreateMap<List<Tasks>, List<TaskDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<TaskDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<TaskDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+
+            #endregion
+
+            #region ListMapping
+
+            CreateMap<CreateListDTO, ShoppingList>();
+            CreateMap<ListDataDTO, ShoppingList>();
+            CreateMap<ShoppingList, ListDataDTO>();
+            CreateMap<List<ShoppingList>, List<ListDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<ListDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<ListDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+            #endregion
+
+            #region BudgetMapping
+
+            CreateMap<CreateBudgetDTO, Budget>();
+            CreateMap<BudgetDataDTO, Budget>();
+            CreateMap<Budget, BudgetDataDTO>();
+            CreateMap<List<Budget>, List<BudgetDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<BudgetDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<BudgetDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+            #endregion
+
+            #region BudgetItemMapping
+
+            CreateMap<CreateBudgetItemDTO, BudgetItem>();
+            CreateMap<BudgetItemDataDTO, BudgetItem>();
+            CreateMap<BudgetItem, BudgetItemDataDTO>();
+            CreateMap<List<BudgetItem>, List<BudgetItemDataDTO>>()
+                .ConvertUsing((src, dest, context) =>
+                {
+                    var result = new List<BudgetItemDataDTO>();
+                    foreach (var item in src)
+                    {
+                        result.Add(context.Mapper.Map<BudgetItemDataDTO>(item));
+                    }
+                    return result;
+                });
+
+            #endregion
+
+            #region ContactsMapping
+
+            CreateMap<CreateContactDTO, Contacts>();
+            CreateMap<ContactDataDTO, Contacts>();
+            CreateMap<Contacts, ContactDataDTO>();
+            CreateMap<List<Contacts>, List<ContactDataDTO>>()
+                .ConvertUsing((src, dest, context) =>
+                {
+                    var result = new List<ContactDataDTO>();
+                    foreach (var item in src)
+                    {
+                        result.Add(context.Mapper.Map<ContactDataDTO>(item));
+                    }
+                    return result;
+                });
 
             #endregion
         }

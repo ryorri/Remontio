@@ -34,6 +34,7 @@ namespace Infrastructure.Services
             try
             {
                 var entity = _mapper.Map<Budget>(budgetDTO);
+                entity.CreateAt = DateTime.UtcNow;
                 await _dbContext.Budgets.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return true;

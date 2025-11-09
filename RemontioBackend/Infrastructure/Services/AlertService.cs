@@ -74,6 +74,7 @@ namespace Infrastructure.Services
             try
             {
                 var entity = _mapper.Map<Alerts>(alert);
+                entity.CreatedAt = DateTime.UtcNow;
                 await _dbContext.Alerts.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return true;

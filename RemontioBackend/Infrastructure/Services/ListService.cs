@@ -32,6 +32,7 @@ namespace Infrastructure.Services
             try
             {
                 var entity = _mapper.Map<ShoppingList>(listDTO);
+                entity.CreateAt = DateTime.UtcNow;
                 await _dbContext.ShoppingLists.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return true;

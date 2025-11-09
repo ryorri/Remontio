@@ -230,7 +230,7 @@ namespace UnitTests.Controller
         private class FakePoint : IPoint
         {
             public float X { get; set; }
-            public float Y { get; set; }9
+            public float Y { get; set; }
         }
 
         [Test]

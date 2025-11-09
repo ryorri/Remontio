@@ -78,6 +78,7 @@ namespace Infrastructure.Services
             try
             {
                 var entity = _mapper.Map<Tasks>(taskDTO);
+                entity.CreateAt = DateTime.UtcNow;
                 await _dbContext.Tasks.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return true;

@@ -31,6 +31,9 @@ namespace Infrastructure.Services
             try
             {
                 var entity = _mapper.Map<Contacts>(contactDTO);
+                // Auto-set CreatedDate on creation regardless of client input
+                entity.CreatedDate = DateTime.UtcNow;
+
                 await _dbContext.Contacts.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
                 return true;

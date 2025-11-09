@@ -29,6 +29,7 @@ namespace Infrastructure.Services
             try
             {
                 var project = _mapper.Map<Project>(projectDTO);
+                project.CreateAt = DateTime.UtcNow;
                 await _dbContext.Projects.AddAsync(project);
                 await _dbContext.SaveChangesAsync();
                 return true;

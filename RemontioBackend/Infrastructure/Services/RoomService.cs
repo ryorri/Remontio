@@ -117,6 +117,7 @@ namespace Infrastructure.Services
             {
                 var room = _mapper.Map<Room>(roomDTO);
                 room.ProjectId = Guid.Parse(projectId);
+                room.CreateAt = DateTime.UtcNow;
                 await _dbContext.Rooms.AddAsync(room);
                 await _dbContext.SaveChangesAsync();
                 return true;

@@ -8,8 +8,8 @@
           Kompleksowe narzędzie do planowania, organizacji i kontroli projektów remontowych
         </p>
         <div class="hero-buttons">
-          <button class="btn btn-primary">Zacznij teraz</button>
-          <button class="btn btn-secondary">Dowiedz się więcej</button>
+          <button class="btn btn-primary" @click="goToLoginPage()">Zacznij teraz</button>
+          <button class="btn btn-secondary" @click="goToAboutPage()">Dowiedz się więcej</button>
         </div>
       </div>
     </section>
@@ -72,15 +72,29 @@
     <section class="cta">
       <div class="container">
         <h2>Gotowy do rozpoczęcia remontu?</h2>
-        <p>Dołącz do tysięcy zadowolonych użytkowników, którzy efektywnie zarządzają swoimi projektami</p>
-        <button class="btn btn-primary btn-large">Rozpocznij za darmo</button>
+        <p>
+          Dołącz do tysięcy zadowolonych użytkowników, którzy efektywnie zarządzają swoimi
+          projektami
+        </p>
+        <button class="btn btn-primary btn-large" @click="goToLoginPage()">
+          Rozpocznij za darmo
+        </button>
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-// Homepage component for Remontio renovation management application
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goToLoginPage = () => {
+  router.push({ name: 'LoginPage' })
+}
+const goToAboutPage = () => {
+  router.push({ name: 'AboutPage' })
+}
 </script>
 
 <style scoped>
@@ -157,7 +171,9 @@
   padding: 40px 30px;
   border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   text-align: center;
 }
 
@@ -192,7 +208,6 @@
   color: white;
 }
 
-
 .cta h2 {
   font-size: 2.5rem;
   font-weight: 700;
@@ -203,55 +218,5 @@
   font-size: 1.2rem;
   margin-bottom: 40px;
   opacity: 0.95;
-}
-
-/* Animations */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 2.5rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.3rem;
-  }
-
-  .hero-description {
-    font-size: 1rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .features-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cta h2 {
-    font-size: 2rem;
-  }
 }
 </style>

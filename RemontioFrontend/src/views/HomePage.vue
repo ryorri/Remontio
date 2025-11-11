@@ -100,7 +100,7 @@ const goToAboutPage = () => {
 <style scoped>
 .homepage {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  background: var(--gradient-background);
 }
 
 .container {
@@ -113,8 +113,8 @@ const goToAboutPage = () => {
 .hero {
   padding: 80px 20px;
   text-align: center;
-  background: linear-gradient(135deg, #8f9fe6 0%, #b18bd8 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--color-text-white);
 }
 
 .hero-title {
@@ -156,7 +156,7 @@ const goToAboutPage = () => {
   font-weight: 700;
   text-align: center;
   margin-bottom: 60px;
-  color: #333;
+  color: var(--color-text-dark);
 }
 
 .features-grid {
@@ -167,10 +167,10 @@ const goToAboutPage = () => {
 }
 
 .feature-card {
-  background: white;
+  background: var(--color-bg-white);
   padding: 40px 30px;
   border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 6px var(--shadow-light);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -179,7 +179,7 @@ const goToAboutPage = () => {
 
 .feature-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 12px 24px var(--shadow-medium);
 }
 
 .feature-icon {
@@ -191,12 +191,12 @@ const goToAboutPage = () => {
   font-size: 1.4rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #333;
+  color: var(--color-text-dark);
 }
 
 .feature-card p {
   font-size: 1rem;
-  color: #666;
+  color: var(--color-text-medium);
   line-height: 1.6;
 }
 
@@ -204,8 +204,8 @@ const goToAboutPage = () => {
 .cta {
   padding: 80px 20px;
   text-align: center;
-  background: linear-gradient(135deg, #8f9fe6 0%, #b18bd8 100%);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--color-text-white);
 }
 
 .cta h2 {

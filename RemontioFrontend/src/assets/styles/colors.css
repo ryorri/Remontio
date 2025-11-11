@@ -1,0 +1,67 @@
+/* Color Palette - Extracted from HomePage.vue and project design */
+
+:root {
+  /* Primary Brand Colors */
+  --color-primary-purple: #8f9fe6;
+  --color-primary-pink: #b18bd8;
+  --color-primary-blue: #667eea;
+
+  /* Background Colors */
+  --color-bg-light-gray: #f8f9fa;
+  --color-bg-white: #ffffff;
+  
+  /* Text Colors */
+  --color-text-dark: #333;
+  --color-text-medium: #666;
+  --color-text-white: #ffffff;
+
+  /* Feature Card Background Colors (from MainLayout columns) */
+  --color-bg-pink-light: #f8d7da;
+  --color-bg-blue-light: #d1ecf1;
+  --color-bg-green-light: #d4edda;
+  --color-bg-yellow-light: #fff3cd;
+  --color-bg-blue-pale: #cce5ff;
+
+  /* Accent Colors */
+  --color-red: #ff0000;
+  --color-green: #008000;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #8f9fe6 0%, #b18bd8 100%);
+  --gradient-background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+
+  /* Shadow Colors */
+  --shadow-light: rgba(0, 0, 0, 0.07);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+
+  /* Opacity Values */
+  --opacity-high: 0.95;
+  --opacity-medium: 0.8;
+  --opacity-low: 0.4;
+}
+
+/* Utility Classes */
+.gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.gradient-background {
+  background: var(--gradient-background);
+}
+
+.text-primary {
+  color: var(--color-primary-blue);
+}
+
+.text-dark {
+  color: var(--color-text-dark);
+}
+
+.text-medium {
+  color: var(--color-text-medium);
+}
+
+.bg-white {
+  background-color: var(--color-bg-white);
+}

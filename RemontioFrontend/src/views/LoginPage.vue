@@ -8,14 +8,20 @@
         </div>
 
         <form class="login-form" @submit.prevent="handleLogin">
+          <div v-if="authStore.sessionExpiredMessage" class="info-message">
+            <span class="info-icon">ℹ️</span>
+            <span>{{ authStore.sessionExpiredMessage }}</span>
+          </div>
+
           <div class="form-group">
-            <label for="email">Login</label>
+            <label for="username">Login</label>
             <input
-              type="login"
-              id="email"
-              v-model="email"
+              type="text"
+              id="username"
+              v-model="username"
               placeholder="Twój login"
               required
+              :disabled="authStore.isLoading"
             />
           </div>
 
@@ -27,11 +33,21 @@
               v-model="password"
               placeholder="••••••••"
               required
+              :disabled="authStore.isLoading"
             />
           </div>
 
-          <button type="submit" class="btn btn-primary btn-large btn-block">
-            Zaloguj się
+          <div v-if="authStore.error" class="error-message">
+            <span class="error-icon">⚠️</span>
+            <span>{{ authStore.error }}</span>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-large btn-block"
+            :disabled="authStore.isLoading"
+          >
+            {{ authStore.isLoading ? 'Logowanie...' : 'Zaloguj się' }}
           </button>
         </form>
 
@@ -44,16 +60,25 @@
 </template>
 
 <script setup lang="ts">
-import { Backend } from '@/main'
+import { useAuthStore } from '@/stores/authStore'
+import router from '@/router'
 import { ref } from 'vue'
+import { Backend } from '@/main'
 
-const email = ref('')
+const authStore = useAuthStore()
+
+const username = ref('')
 const password = ref('')
 
-
 const handleLogin = async () => {
-  console.log('Login attempt:', { email: email.value})
+  authStore.clearError()
+  authStore.clearSessionExpiredMessage()
 
+  const success = await authStore.login(username.value, password.value)
+
+  if (success) {
+    router.push({ name: 'DashboardPage' })
+  }
 }
 </script>
 
@@ -129,6 +154,58 @@ const handleLogin = async () => {
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
+.form-group input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  color: #c33;
+  font-size: 0.9rem;
+  animation: shake 0.3s ease;
+}
+
+.error-icon {
+  font-size: 1.2rem;
+}
+
+.info-message {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: #e7f3ff;
+  border: 1px solid #b3d9ff;
+  border-radius: 8px;
+  color: #0066cc;
+  font-size: 0.9rem;
+}
+
+.info-icon {
+  font-size: 1.2rem;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -145,7 +222,7 @@ const handleLogin = async () => {
   cursor: pointer;
 }
 
-.remember-me input[type="checkbox"] {
+.remember-me input[type='checkbox'] {
   cursor: pointer;
   width: 18px;
   height: 18px;
@@ -166,6 +243,18 @@ const handleLogin = async () => {
   width: 100%;
   margin-top: 10px;
   border: solid 1px lightgrey;
+  transition: all 0.3s ease;
+}
+
+.btn-block:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-block:disabled:hover {
+  transform: none;
+  box-shadow: none;
 }
 
 .login-footer {

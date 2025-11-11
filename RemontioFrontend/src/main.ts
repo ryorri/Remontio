@@ -5,9 +5,8 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-
-import { Client } from './backend/BackendBase'
-const backend = new Client('https://localhost:7259')
+import { RemontioBackend } from './backend/RemontioBackend'
+const backend = new RemontioBackend('https://localhost:7259')
 
 const app = createApp(App)
 

@@ -12,7 +12,6 @@ export const useAuthStore = defineStore('auth', () => {
   const isLoading = ref(false)
   const sessionExpiredMessage = ref<string | null>(null)
 
-  // Restore user from localStorage on store initialization
   function restoreUser() {
     const storedUser = localStorage.getItem('remontio_user_data')
     if (storedUser && backend.isAuthenticated()) {
@@ -74,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
   function logout() {
     user.value = null
     backend.clearAuth()
+    router.push({ name: 'HomePage' })
   }
 
   function clearError() {

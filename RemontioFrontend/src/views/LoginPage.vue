@@ -85,7 +85,7 @@ const handleLogin = async () => {
 <style scoped>
 .login-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #8f9fe6 0%, #b18bd8 100%);
+  background: var(--gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -98,7 +98,7 @@ const handleLogin = async () => {
 }
 
 .login-card {
-  background: white;
+  background: var(--color-bg-white);
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   padding: 40px;
@@ -113,13 +113,13 @@ const handleLogin = async () => {
 .login-title {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #333;
+  color: var(--color-text-dark);
   margin-bottom: 10px;
 }
 
 .login-subtitle {
   font-size: 1.1rem;
-  color: #666;
+  color: var(--color-text-medium);
 }
 
 .login-form {
@@ -137,7 +137,7 @@ const handleLogin = async () => {
 .form-group label {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-dark);
 }
 
 .form-group input {
@@ -150,7 +150,7 @@ const handleLogin = async () => {
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary-blue);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
@@ -218,7 +218,7 @@ const handleLogin = async () => {
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
-  color: #666;
+  color: var(--color-text-medium);
   cursor: pointer;
 }
 
@@ -230,7 +230,7 @@ const handleLogin = async () => {
 
 .forgot-password {
   font-size: 0.9rem;
-  color: #667eea;
+  color: var(--color-primary-blue);
   text-decoration: none;
   font-weight: 600;
 }
@@ -266,11 +266,11 @@ const handleLogin = async () => {
 
 .login-footer p {
   font-size: 0.95rem;
-  color: #666;
+  color: var(--color-text-medium);
 }
 
 .register-link {
-  color: #667eea;
+  color: var(--color-primary-blue);
   font-weight: 600;
   text-decoration: none;
 }

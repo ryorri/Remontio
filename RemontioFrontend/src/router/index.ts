@@ -4,13 +4,11 @@ import LoginPage from '@/views/LoginPage.vue'
 import DashboardPage from '@/views/DashboardPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { Backend } from '@/main'
-import HomePage from '@/views/HomePage.vue'
-import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-     {
+    {
       path: '/',
       name: 'HomePage',
       component: HomePage,

@@ -3,6 +3,12 @@
     <header class="header">
       <div class="header-inner">
         <h1 class="title">🏠 Remontio</h1>
+        <div class="user-info">
+          <span class="user-name">{{ userData.name }} {{ userData.surname }}</span>
+          <button type="submit" @click="authStore.logout" class="btn btn-secondary btn-compact">
+            Logout
+          </button>
+        </div>
       </div>
     </header>
     <div class="container">
@@ -76,9 +82,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { getUserData } from '@/helpers/userHelpers'
+import { useAuthStore } from '@/stores/authStore'
 const year = new Date().getFullYear()
 const showMenu = ref(true)
+const userData = getUserData()
+const authStore = useAuthStore()
 </script>
 
 <style scoped lang="css">
@@ -102,16 +112,41 @@ const showMenu = ref(true)
   padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 12px;
 }
 
 .title {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0 20px;
   font-size: 2rem;
   font-weight: 700;
+}
+
+/* User info (right side) */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 6px var(--shadow-light);
+}
+
+.user-name {
+  color: var(--color-text-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Compact button size that reuses global .btn styles */
+.btn-compact {
+  padding: 8px 14px;
+  font-size: 0.9rem;
 }
 
 .container {
@@ -262,6 +297,15 @@ const showMenu = ref(true)
 
   .content {
     padding: 20px 0;
+  }
+
+  .user-info {
+    gap: 8px;
+    padding: 6px 10px;
+  }
+
+  .user-name {
+    font-size: 0.85rem;
   }
 }
 </style>

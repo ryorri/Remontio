@@ -73,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
   function logout() {
     user.value = null
     backend.clearAuth()
+    router.push({ name: 'HomePage' })
   }
 
   function clearError() {

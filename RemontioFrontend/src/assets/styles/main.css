@@ -241,3 +241,83 @@
     font-size: 0.75rem;
   }
 }
+
+/* Shared project meta and status styles (moved from component scoped styles) */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.meta-item {
+  background: var(--color-bg-light-gray);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: inset 0 1px 0 var(--shadow-light);
+  transition: background 0.2s ease;
+}
+
+.meta-item i {
+  font-size: 1.1rem;
+  color: var(--color-primary-purple);
+  width: 20px;
+  text-align: center;
+}
+
+.meta-item:hover {
+  background: var(--color-bg-white);
+}
+
+.meta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  opacity: 0.7;
+}
+
+.meta-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-medium);
+}
+
+.project-status {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 24px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.project-status.status-0 {
+  background: var(--color-bg-blue-pale);
+  color: var(--color-primary-blue);
+}
+
+.project-status.status-1 {
+  background: var(--color-bg-yellow-light);
+  color: #856404;
+}
+
+.project-status.status-2 {
+  background: var(--color-bg-pink-light);
+  color: #721c24;
+}
+
+.project-status.status-3 {
+  background: var(--color-bg-green-light);
+  color: var(--color-green);
+}

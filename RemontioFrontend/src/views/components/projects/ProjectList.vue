@@ -100,10 +100,12 @@ import type { ProjectDataDTO } from '@/backend/BackendBase'
 import { getStatusLabel } from '@/helpers/statusEnumFormatter'
 import { getCurrentUserId } from '@/helpers/userHelpers'
 import { formatDate } from '@/helpers/dateFormatter'
+import { useRouter } from 'vue-router'
 
 const projectsList = ref<ProjectDataDTO[]>([])
 const loading = ref(true)
 const openMenuId = ref<string | null>(null)
+const router = useRouter()
 
 const fetchProjects = async () => {
   try {
@@ -123,8 +125,10 @@ const createNewProject = () => {
 
 const openProject = (projectId: string | undefined) => {
   if (projectId) {
-    // TODO: Navigate to project details page
-    console.log('Open project:', projectId)
+    router.push({
+      name: 'ProjectDetails',
+      params: { projectId: projectId },
+    })
   }
 }
 
@@ -140,8 +144,12 @@ const handleAction = (action: () => void) => {
 
 // Placeholder action handlers
 const onEdit = (projectId: string | undefined) => {
-  if (!projectId) return
-  console.log('Edit project:', projectId)
+  if (projectId) {
+    router.push({
+      name: 'ProjectEdit',
+      params: { projectId: projectId },
+    })
+  }
 }
 
 const onChangeStatus = (projectId: string | undefined) => {
@@ -308,37 +316,7 @@ onUnmounted(() => {
   margin-right: 0.5rem;
 }
 
-/* Status badges */
-.project-status {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-}
-
-.project-status.status-0 {
-  background: var(--color-bg-blue-pale);
-  color: var(--color-primary-blue);
-}
-
-.project-status.status-1 {
-  background: var(--color-bg-yellow-light);
-  color: #856404;
-}
-
-.project-status.status-2 {
-  background: var(--color-bg-pink-light);
-  color: #721c24;
-}
-
-.project-status.status-3 {
-  background: var(--color-bg-green-light);
-  color: var(--color-green);
-}
+/* Status badges (moved to global styles) */
 
 /* Toggle arrow row */
 .toggle-arrow {

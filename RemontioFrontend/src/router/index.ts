@@ -3,8 +3,6 @@ import HomePage from '@/views/HomePage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import DashboardPage from '@/views/DashboardPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { Backend } from '@/main'
-import ProjectList from '@/views/components/projects/ProjectList.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +33,18 @@ const router = createRouter({
       path: '/project-list',
       name: 'ProjectList',
       component: () => import('@/views/components/projects/ProjectList.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/project/:projectId',
+      name: 'ProjectDetails',
+      component: () => import('@/views/components/projects/ProjectDetails.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/project/:projectId/edit',
+      name: 'ProjectEdit',
+      component: () => import('@/views/components/projects/ProjectEdit_v2.vue'),
       meta: { requiresAuth: true },
     },
     /////////////////////////////////////////////////////////////////

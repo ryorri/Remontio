@@ -313,11 +313,49 @@
 }
 
 .project-status.status-2 {
+  background: var(--color-bg-green-light);
+  color: var(--color-green);
+}
+
+.project-status.status-3 {
   background: var(--color-bg-pink-light);
   color: #721c24;
 }
 
-.project-status.status-3 {
-  background: var(--color-bg-green-light);
-  color: var(--color-green);
+.status-form {
+  animation: fadeInUp 0.4s ease;
+}
+
+.status-option {
+  background: var(--color-bg-light-gray);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  box-shadow: inset 0 1px 0 var(--shadow-light);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+  position: relative;
+}
+.status-option:hover {
+  background: var(--color-bg-white);
+}
+.status-option.active {
+  outline: 2px solid var(--color-primary-purple);
+  background: var(--color-bg-white);
+}
+.status-option input[type='radio'] {
+  margin: 0;
+}
+
+.header-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .status-option {
+    padding: 0.75rem 0.85rem;
+  }
 }

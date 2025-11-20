@@ -47,25 +47,37 @@ const router = createRouter({
       component: () => import('@/views/components/projects/ProjectEdit_v2.vue'),
       meta: { requiresAuth: true },
     },
+    {
+      path: '/project/:projectId/change-status',
+      name: 'ProjectChangeStatus',
+      component: () => import('@/views/components/projects/ProjectChangeStatus.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/project/:projectId/delete',
+      name: 'ProjectDelete',
+      component: () => import('@/views/components/projects/ProjectDelete.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/project/create',
+      name: 'ProjectCreate',
+      component: () => import('@/views/components/projects/ProjectCreate.vue'),
+      meta: { requiresAuth: true },
+    },
     /////////////////////////////////////////////////////////////////
   ],
 })
 
 // Navigation guard to check authentication
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) {
-    // Import authStore dynamically to avoid circular dependency
-    import('@/stores/authStore').then(({ useAuthStore }) => {
-      const authStore = useAuthStore()
-      if (!authStore.checkAndHandleExpiredSession()) {
-        next({ name: 'LoginPage' })
-      } else {
-        next()
-      }
-    })
-  } else {
-    next()
-  }
-})
+router.beforeEach(async (to, from, next) => {
+  const { useAuthStore } = await import('@/stores/authStore')
+  const auth = useAuthStore()
 
+  if (to.meta.requiresAuth && !auth.checkAndHandleExpiredSession()) {
+    return next({ name: 'LoginPage' })
+  }
+
+  next()
+})
 export default router

@@ -111,8 +111,22 @@ const onEdit = () => {
     })
   }
 }
-const onChangeStatus = () => {}
-const onDelete = () => {}
+const onChangeStatus = () => {
+  if (projectId) {
+    router.push({
+      name: 'ProjectChangeStatus',
+      params: { projectId: projectId },
+    })
+  }
+}
+const onDelete = () => {
+  if (projectId) {
+    router.push({
+      name: 'ProjectDelete',
+      params: { projectId: projectId },
+    })
+  }
+}
 
 onMounted(async () => {
   await fetchData()

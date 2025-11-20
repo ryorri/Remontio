@@ -119,8 +119,9 @@ const fetchProjects = async () => {
 }
 
 const createNewProject = () => {
-  // TODO: Navigate to project creation page
-  console.log('Create new project')
+  router.push({
+    name: 'ProjectCreate',
+  })
 }
 
 const openProject = (projectId: string | undefined) => {
@@ -153,13 +154,21 @@ const onEdit = (projectId: string | undefined) => {
 }
 
 const onChangeStatus = (projectId: string | undefined) => {
-  if (!projectId) return
-  console.log('Change status:', projectId)
+  if (projectId) {
+    router.push({
+      name: 'ProjectChangeStatus',
+      params: { projectId: projectId },
+    })
+  }
 }
 
 const onDelete = (projectId: string | undefined) => {
-  if (!projectId) return
-  console.log('Delete project:', projectId)
+  if (projectId) {
+    router.push({
+      name: 'ProjectDelete',
+      params: { projectId: projectId },
+    })
+  }
 }
 
 // Close dropdown on outside click

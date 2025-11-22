@@ -6,8 +6,9 @@ export function getUserData() {
   return allUserData || null
 }
 
-export function getUserInitials(userId: string) {
+export function getCurrentUserId() {
   let rawData = localStorage.getItem('remontio_user_data')
   if (!rawData) return null
   let allUserData = JSON.parse(rawData)
+  return allUserData ? allUserData.id : null
 }

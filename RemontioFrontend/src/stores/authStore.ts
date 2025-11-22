@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { RemontioBackend } from '@/backend/RemontioBackend'
 import type { UserDataDTO } from '@/backend/BackendBase'
-import router from '@/router'
 
 const backend = new RemontioBackend('https://localhost:7259')
 
@@ -28,7 +27,6 @@ export const useAuthStore = defineStore('auth', () => {
   function handleSessionExpired() {
     sessionExpiredMessage.value = 'Sesja wygasła'
     logout()
-    router.push({ name: 'LoginPage' })
   }
 
   function checkAndHandleExpiredSession() {
@@ -73,7 +71,6 @@ export const useAuthStore = defineStore('auth', () => {
   function logout() {
     user.value = null
     backend.clearAuth()
-    router.push({ name: 'HomePage' })
   }
 
   function clearError() {

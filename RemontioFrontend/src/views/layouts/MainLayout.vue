@@ -19,9 +19,15 @@
         <nav class="nav-menu">
           <ul class="nav-list">
             <li>
-              <a href="#" class="cst-btn">
+              <a @click="goToProjects()" class="cst-btn">
                 <span class="nav-icon">📋</span>
                 <span class="nav-text">Projekty</span>
+              </a>
+            </li>
+            <li>
+              <a @click="goToRooms()" class="cst-btn">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pokoje</span>
               </a>
             </li>
             <li>
@@ -83,12 +89,28 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { getUserData } from '@/helpers/userHelpers'
 import { useAuthStore } from '@/stores/authStore'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
 const year = new Date().getFullYear()
+
 const showMenu = ref(true)
 const userData = getUserData()
-const authStore = useAuthStore()
+
+////////ROUTING////////
+
+const goToProjects = () => {
+  router.push({ name: 'ProjectList' })
+}
+const goToRooms = () => {
+  router.push({ name: 'RoomList' })
+}
+
+//////////////////////
 </script>
 
 <style scoped lang="css">

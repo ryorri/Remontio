@@ -25,6 +25,12 @@
               </a>
             </li>
             <li>
+              <a @click="goToRooms()" class="cst-btn">
+                <span class="nav-icon">📋</span>
+                <span class="nav-text">Pokoje</span>
+              </a>
+            </li>
+            <li>
               <a href="#" class="cst-btn">
                 <span class="nav-icon">✅</span>
                 <span class="nav-text">Zadania</span>
@@ -99,6 +105,9 @@ const userData = getUserData()
 
 const goToProjects = () => {
   router.push({ name: 'ProjectList' })
+}
+const goToRooms = () => {
+  router.push({ name: 'RoomList' })
 }
 
 //////////////////////

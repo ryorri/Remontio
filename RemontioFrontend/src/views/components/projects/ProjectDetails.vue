@@ -142,138 +142,17 @@ onMounted(async () => {
   animation: fadeInUp 0.6s ease;
 }
 
-.details-wrapper {
-  background: var(--color-bg-white);
-  border-radius: 16px;
-  box-shadow: 0 4px 16px var(--shadow-light);
-  padding: 2rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.details-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1.25rem;
-  align-items: flex-start;
-}
-
-.title-block {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-}
-
 .details-title {
   font-size: 2.4rem;
-  font-weight: 700;
-  margin: 0;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.header-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  align-items: center;
-}
-
-.header-btn {
-  padding: auto;
-  font-size: 0.85rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .header-btn.danger {
   color: var(--color-red);
 }
 
-.details-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.content-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.section-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--color-primary-blue);
-}
-
-.description-text {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: var(--color-text-medium);
-  background: var(--color-bg-light-gray);
-  padding: 1rem 1.25rem;
-  border-radius: 12px;
-  box-shadow: inset 0 1px 0 var(--shadow-light);
-}
-
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-}
-
-/* Removed unused owner section styles */
-
-/* Status badges reused from ProjectList via same class names */
-
-/* Error State */
-.error-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 4rem 2rem;
-  text-align: center;
-}
-.error-state i {
-  font-size: 3.5rem;
-  color: var(--color-red);
-  opacity: 0.7;
-}
-.error-state h2 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: var(--color-text-dark);
-}
-.error-state p {
-  margin: 0;
-  color: var(--color-text-medium);
-  max-width: 480px;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
   .project-details-container {
     padding: 1rem;
-  }
-  .details-wrapper {
-    padding: 1.5rem 1.25rem;
-    gap: 1.75rem;
-  }
-  .details-title {
-    font-size: 2rem;
   }
   .header-actions {
     width: 100%;
@@ -285,13 +164,6 @@ onMounted(async () => {
 }
 
 @media (max-width: 480px) {
-  .details-title {
-    font-size: 1.7rem;
-  }
-  .header-btn {
-    flex: 1 1 100%;
-    justify-content: center;
-  }
   .header-actions {
     gap: 0.5rem;
   }

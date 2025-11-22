@@ -61,6 +61,12 @@
                     <div class="panel-actions">
                       <button
                         class="panel-item"
+                        @click="handleAction(() => onRoomList(project.id))"
+                      >
+                        Pokoje
+                      </button>
+                      <button
+                        class="panel-item"
                         @click="handleAction(() => openProject(project.id))"
                       >
                         Otwórz
@@ -152,6 +158,14 @@ const onEdit = (projectId: string | undefined) => {
     })
   }
 }
+const onRoomList = (projectId: string | undefined) => {
+  if (projectId) {
+    router.push({
+      name: 'RoomList',
+      params: { projectId: projectId },
+    })
+  }
+}
 
 const onChangeStatus = (projectId: string | undefined) => {
   if (projectId) {
@@ -218,7 +232,6 @@ onUnmounted(() => {
   gap: 8px;
 }
 
-/* Empty State */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -247,12 +260,10 @@ onUnmounted(() => {
   margin: 0;
 }
 
-/* Table */
 .table-container {
   background: var(--color-bg-white);
   border-radius: 12px;
   box-shadow: 0 4px 12px var(--shadow-light);
-  max-height: 300px;
   overflow: hidden auto;
 }
 
@@ -294,7 +305,6 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
-/* Table cells */
 .project-name {
   font-weight: 600;
   color: var(--color-primary-blue);
@@ -325,29 +335,25 @@ onUnmounted(() => {
   margin-right: 0.5rem;
 }
 
-/* Status badges (moved to global styles) */
-
-/* Toggle arrow row */
 .toggle-arrow {
-  background-color: var(--color-bg-light-gray);
+  background: var(--gradient-primary);
   text-align: center;
   cursor: pointer;
 }
 
 .toggle-arrow td {
   padding: 8px 12px;
-  color: var(--color-text-medium);
+  color: var(--color-text-white);
   font-weight: 600;
 }
 
-/* Actions dropdown panel */
 .actions-dropdown-row td {
   padding: 0;
   background: var(--color-bg-light-gray);
 }
 
 .actions-panel {
-  background: var(--color-bg-white);
+  background: var(--color-bg-light-gray);
   border-top: 1px solid var(--color-bg-light-gray);
   box-shadow: inset 0 1px 0 var(--shadow-light);
   padding: 12px 16px;

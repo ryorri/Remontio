@@ -28,7 +28,7 @@ const router = createRouter({
       component: DashboardPage,
       meta: { requiresAuth: true },
     },
-    ////////////////////PROJECT PAGES ROUTES HERE////////////////////
+    ////////////////////PROJECT PAGES ROUTES////////////////////
     {
       path: '/project-list',
       name: 'ProjectList',
@@ -65,6 +65,56 @@ const router = createRouter({
       component: () => import('@/views/components/projects/ProjectCreate.vue'),
       meta: { requiresAuth: true },
     },
+    ////////////////////ROOM PAGES ROUTES/////////////////////////
+    {
+      path: '/room/:roomId/change-status-and-priority',
+      name: 'RoomChangeStatusAndPriority',
+      component: () => import('@/views/components/rooms/RoomChangeStatusAndPriority_v2.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room/create',
+      name: 'RoomCreate',
+      component: () => import('@/views/components/rooms/RoomCreate.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room/create/:projectId',
+      name: 'RoomCreate',
+      component: () => import('@/views/components/rooms/RoomCreate.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room/:roomId',
+      name: 'RoomDetails',
+      component: () => import('@/views/components/rooms/RoomDetails.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room/:roomId/edit',
+      name: 'RoomEdit',
+      component: () => import('@/views/components/rooms/RoomEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room/:roomId/delete',
+      name: 'RoomDelete',
+      component: () => import('@/views/components/rooms/RoomDelete.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room-list/',
+      name: 'RoomList',
+      component: () => import('@/views/components/rooms/RoomList.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/room-list/:projectId?',
+      name: 'RoomList',
+      component: () => import('@/views/components/rooms/RoomList.vue'),
+      meta: { requiresAuth: true },
+    },
+
     /////////////////////////////////////////////////////////////////
   ],
 })

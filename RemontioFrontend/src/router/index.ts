@@ -114,7 +114,13 @@ const router = createRouter({
       component: () => import('@/views/components/rooms/RoomList.vue'),
       meta: { requiresAuth: true },
     },
-
+    ////////////////////PLANNING PAGES ROUTES////////////////////////////
+    {
+      path: '/planning',
+      name: 'PlanningView',
+      component: () => import('@/views/components/planningTasks/PlaningView.vue'),
+      meta: { requiresAuth: true },
+    },
     /////////////////////////////////////////////////////////////////
   ],
 })

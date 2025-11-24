@@ -36,12 +36,22 @@
         <div class="form-row">
           <div class="form-group">
             <label for="task-start">Data rozpoczęcia</label>
-            <input id="task-start" v-model="formData.startAt" type="date" />
+            <input
+              id="task-start"
+              v-model="formData.startAt"
+              type="date"
+              :disabled="isDateLocked"
+            />
           </div>
 
           <div class="form-group">
             <label for="task-end">Szacowany czas zakończenia</label>
-            <input id="task-end" v-model="formData.estimatedTime" type="date" />
+            <input
+              id="task-end"
+              v-model="formData.estimatedTime"
+              type="date"
+              :disabled="isDateLocked"
+            />
           </div>
         </div>
 
@@ -93,7 +103,8 @@
 
 <script setup lang="ts">
 import { ref, watch, toRefs, computed } from 'vue'
-import type { StatusEnum, PriorityEnum, CreateTaskDTO } from '@/backend/BackendBase'
+import { StatusEnum, PriorityEnum, type CreateTaskDTO } from '@/backend/BackendBase'
+import { getTodayString, makeLocalMidday } from '@/helpers/dateFormatter'
 import { getExtendedPriorityLabel } from '@/helpers/priorityEnumFormatter'
 import { getExtendedStatusLabel } from '@/helpers/statusEnumFormatter'
 import { Backend } from '@/main'
@@ -108,14 +119,6 @@ const props = defineProps<{
 const { isOpen } = toRefs(props)
 const emit = defineEmits(['close', 'created'])
 
-const getTodayString = () => {
-  const d = new Date()
-  const year = d.getFullYear()
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
-
 const formData = ref({
   name: '',
   description: '',
@@ -124,6 +127,11 @@ const formData = ref({
   priority: undefined as number | undefined,
   status: undefined as number | undefined,
 })
+
+// Daty zablokowane gdy status nie wybrany (undefined) lub W planach
+const isDateLocked = computed(
+  () => formData.value.status === undefined || formData.value.status === StatusEnum._0,
+)
 
 const isSaving = ref(false)
 const saveError = ref('')
@@ -146,6 +154,17 @@ watch(isOpen, (open) => {
   }
 })
 
+watch(
+  () => formData.value.status,
+  (newStatus) => {
+    if (newStatus === undefined || newStatus === StatusEnum._0) {
+      const todayStr = getTodayString()
+      formData.value.startAt = todayStr
+      formData.value.estimatedTime = todayStr
+    }
+  },
+)
+
 function closeModal() {
   emit('close')
 }
@@ -160,17 +179,6 @@ async function handleSubmit() {
   saveError.value = ''
 
   try {
-    const makeLocalMidday = (dStr: string | undefined) => {
-      if (!dStr) return undefined
-      const parts = dStr.split('-')
-      if (parts.length !== 3) return undefined
-      const [yStr, mStr, dStrDay] = parts
-      const y = Number(yStr)
-      const m = Number(mStr)
-      const day = Number(dStrDay)
-      if ([y, m, day].some((n) => isNaN(n))) return undefined
-      return new Date(y, m - 1, day, 12, 0, 0, 0)
-    }
     const dto: CreateTaskDTO = {
       name: formData.value.name,
       description: formData.value.description || undefined,

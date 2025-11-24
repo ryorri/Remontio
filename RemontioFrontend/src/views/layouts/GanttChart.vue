@@ -8,7 +8,31 @@
       <div class="gantt-legend">
         <div class="legend-item">
           <div class="legend-color" style="background: var(--color-primary-purple)"></div>
-          <span>Zadania</span>
+          <span>Aktywne</span>
+        </div>
+        <div class="legend-item">
+          <div
+            class="legend-color"
+            style="
+              background: var(--color-bg-light-gray);
+              border: 2px dashed var(--color-primary-purple);
+            "
+          ></div>
+          <span>W planach</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: var(--color-green)"></div>
+          <span>Zakończone</span>
+        </div>
+        <div class="legend-item">
+          <div
+            class="legend-color"
+            style="
+              background: var(--color-bg-yellow-light);
+              border: 2px solid var(--color-bg-dark-gray);
+            "
+          ></div>
+          <span>Wstrzymane</span>
         </div>
       </div>
     </div>
@@ -272,6 +296,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import type { RoomDataDTO, TaskDataDTO } from '@/backend/BackendBase'
+import { StatusEnum } from '@/backend/BackendBase'
+import { makeLocalMidday } from '@/helpers/dateFormatter'
+import { Backend } from '@/main'
 
 interface Props {
   rooms: RoomDataDTO[]
@@ -284,9 +311,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   createTask: [roomId: string]
   editTask: [task: TaskDataDTO]
-  updateTaskDates: [
-    payload: { id: string; startAt?: Date; closedAt?: Date; estimatedTime?: number },
-  ]
+  updateTaskDates: [payload: TaskDataDTO]
 }>()
 
 // Constants
@@ -447,6 +472,8 @@ const getDatePosition = (date: Date | string) => {
 // Każdy pasek bazuje wyłącznie na startAt (data początku) oraz estimatedTime (data końca lub liczba dni).
 // closedAt ignorujemy przy rysowaniu (możesz dodać osobną stylizację później).
 
+// Helper moved to dateFormatter.ts (makeLocalMidday)
+
 function normalizeTask(task: TaskDataDTO): { start: Date; end: Date; durationDays: number } | null {
   if (!task.startAt) return null
   const start = new Date(task.startAt)
@@ -474,11 +501,39 @@ const getTaskBarStyle = (task: TaskDataDTO) => {
   if (!norm) return {}
   const leftPx = getDatePosition(norm.start)
   const widthPx = norm.durationDays * dayWidth
+  const status = task.status
+  const locked = status === StatusEnum._0 || status === StatusEnum._2 || status === StatusEnum._3
+
+  let background = 'var(--color-primary-purple)'
+  let border: string | undefined = 'none'
+  let color = 'white'
+  let opacity = '1'
+
+  if (status === StatusEnum._0) {
+    // planned
+    background = 'var(--color-bg-light-gray)'
+    border = '2px dashed var(--color-primary-purple)'
+    color = 'var(--color-text-dark)'
+    opacity = '0.6'
+  } else if (status === StatusEnum._2) {
+    // completed
+    background = 'var(--color-green)'
+    color = 'white'
+  } else if (status === StatusEnum._3) {
+    // paused
+    background = 'var(--color-bg-yellow-light)'
+    border = '2px solid var(--color-bg-dark-gray)'
+    color = 'var(--color-text-dark)'
+  }
+
   return {
     left: leftPx + 'px',
     width: widthPx + 'px',
-    background: 'var(--color-primary-purple)',
-    opacity: '1',
+    background,
+    opacity,
+    border,
+    color,
+    cursor: locked ? 'default' : 'move',
   }
 }
 
@@ -494,14 +549,18 @@ const getChartHeightForTasks = (taskList: TaskDataDTO[]) =>
 // Drag and drop handlers
 const startDrag = (event: MouseEvent, item: RoomDataDTO | TaskDataDTO, type: 'room' | 'task') => {
   // don't preventDefault here — allow dblclick to propagate for editing
-
+  if (type === 'task') {
+    const t = item as TaskDataDTO
+    if (t.status === StatusEnum._0 || t.status === StatusEnum._2 || t.status === StatusEnum._3) {
+      // Planned / Zakończony / Wstrzymany tasks nie podlegają drag
+      return
+    }
+  }
   draggedItem.value = { id: item.id!, type, data: item }
   dragStartX.value = event.clientX
-
   if (type === 'task' && (item as TaskDataDTO).startAt) {
     dragStartDate.value = new Date((item as TaskDataDTO).startAt!)
   }
-
   document.addEventListener('mousemove', handleDrag)
   document.addEventListener('mouseup', stopDrag)
 }
@@ -512,36 +571,50 @@ const handleDrag = (event: MouseEvent) => {
   const deltaDays = Math.round(deltaX / dayWidth)
   if (deltaDays === 0) return
   const task = draggedItem.value.data as TaskDataDTO
-  // Przesuwamy start
+  // Przesuwamy start (południe lokalne)
   const newStart = new Date(dragStartDate.value)
   newStart.setDate(newStart.getDate() + deltaDays)
-  newStart.setHours(0, 0, 0, 0)
-  task.startAt = newStart
-  // Przesuwamy koniec jeśli istnieje
-  const rawEnd = (task as any).estimatedTime
+  task.startAt = makeLocalMidday(newStart)
+  // Przesuwamy koniec jeśli istnieje (też południe)
   if ((task as any).estimatedTime) {
     const end = new Date((task as any).estimatedTime)
     if (!isNaN(end.getTime()) && end.getFullYear() !== 1) {
       end.setDate(end.getDate() + deltaDays)
-      end.setHours(0, 0, 0, 0)
-      ;(task as any).estimatedTime = end.toISOString()
+      ;(task as any).estimatedTime = makeLocalMidday(end)
     }
   }
   dragStartX.value = event.clientX
   dragStartDate.value = newStart
 }
 
-const stopDrag = () => {
+const stopDrag = async () => {
   if (draggedItem.value && draggedItem.value.type === 'task') {
     const task = draggedItem.value.data as TaskDataDTO
-    const payload: { id: string; startAt?: Date; estimatedTime?: Date } = {
+    const dto: TaskDataDTO = {
       id: task.id!,
-      startAt: task.startAt ? new Date(task.startAt) : undefined,
+      name: task.name,
+      description: task.description,
+      status: task.status,
+      priority: task.priority,
+      createAt: task.createAt,
+      startAt: task.startAt ? makeLocalMidday(new Date(task.startAt)) : undefined,
+      closedAt: task.closedAt,
+      roomId: task.roomId,
+      projectId: task.projectId,
+      userId: task.userId,
+      estimatedTime: (task as any).estimatedTime
+        ? makeLocalMidday(new Date((task as any).estimatedTime))
+        : undefined,
     }
-    if ((task as any).estimatedTime instanceof Date) {
-      payload.estimatedTime = new Date((task as any).estimatedTime)
+    try {
+      const ok = await Backend.editTask(dto)
+      if (!ok) {
+        console.warn('[Gantt] Nie udało się zapisać zmian zadania (drag).')
+      }
+      emit('updateTaskDates', dto)
+    } catch (e) {
+      console.error('[Gantt] Błąd zapisu zadania po drag:', e)
     }
-    emit('updateTaskDates', payload as any)
   }
   draggedItem.value = null
   dragStartDate.value = null
@@ -557,10 +630,15 @@ const startResize = (
 ) => {
   event.preventDefault()
   event.stopPropagation()
-
+  if (itemType === 'task') {
+    const t = item as TaskDataDTO
+    if (t.status === StatusEnum._0 || t.status === StatusEnum._2 || t.status === StatusEnum._3) {
+      // Planned / Zakończony / Wstrzymany tasks nie podlegają resize
+      return
+    }
+  }
   resizeMode.value = { type, item, itemType }
   dragStartX.value = event.clientX
-
   document.addEventListener('mousemove', handleResize)
   document.addEventListener('mouseup', stopResize)
 }
@@ -576,37 +654,51 @@ const handleResize = (event: MouseEvent) => {
   if (type === 'start') {
     const newStart = new Date(task.startAt)
     newStart.setDate(newStart.getDate() + deltaDays)
-    newStart.setHours(0, 0, 0, 0)
-    task.startAt = newStart
+    task.startAt = makeLocalMidday(newStart)
   } else if (type === 'end') {
     if ((task as any).estimatedTime) {
       const end = new Date((task as any).estimatedTime)
       if (!isNaN(end.getTime()) && end.getFullYear() !== 1) {
         end.setDate(end.getDate() + deltaDays)
-        end.setHours(0, 0, 0, 0)
-        ;(task as any).estimatedTime = end.toISOString()
+        ;(task as any).estimatedTime = makeLocalMidday(end)
       }
     } else if (task.startAt) {
       const end = new Date(task.startAt)
       end.setDate(end.getDate() + Math.max(deltaDays, 1))
-      end.setHours(0, 0, 0, 0)
-      ;(task as any).estimatedTime = end.toISOString()
+      ;(task as any).estimatedTime = makeLocalMidday(end)
     }
   }
   dragStartX.value = event.clientX
 }
 
-const stopResize = () => {
+const stopResize = async () => {
   if (resizeMode.value && resizeMode.value.itemType === 'task') {
     const task = resizeMode.value.item as TaskDataDTO
-    const payload: { id: string; startAt?: Date; estimatedTime?: Date } = {
+    const dto: TaskDataDTO = {
       id: task.id!,
-      startAt: task.startAt ? new Date(task.startAt) : undefined,
+      name: task.name,
+      description: task.description,
+      status: task.status,
+      priority: task.priority,
+      createAt: task.createAt,
+      startAt: task.startAt ? makeLocalMidday(new Date(task.startAt)) : undefined,
+      closedAt: task.closedAt,
+      roomId: task.roomId,
+      projectId: task.projectId,
+      userId: task.userId,
+      estimatedTime: (task as any).estimatedTime
+        ? makeLocalMidday(new Date((task as any).estimatedTime))
+        : undefined,
     }
-    if ((task as any).estimatedTime instanceof Date) {
-      payload.estimatedTime = new Date((task as any).estimatedTime)
+    try {
+      const ok = await Backend.editTask(dto)
+      if (!ok) {
+        console.warn('[Gantt] Nie udało się zapisać zmian zadania (resize).')
+      }
+      emit('updateTaskDates', dto)
+    } catch (e) {
+      console.error('[Gantt] Błąd zapisu zadania po resize:', e)
     }
-    emit('updateTaskDates', payload as any)
   }
   resizeMode.value = null
   document.removeEventListener('mousemove', handleResize)
@@ -970,6 +1062,9 @@ onUnmounted(() => {
 
 .task-bar {
   background: var(--color-primary-purple);
+}
+.task-bar.planned {
+  cursor: default;
 }
 
 .bar-content {

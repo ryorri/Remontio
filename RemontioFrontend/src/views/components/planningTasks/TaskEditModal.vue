@@ -19,7 +19,7 @@
             v-model="formData.name"
             type="text"
             placeholder="Np. Malowanie ścian"
-            required
+            requiredz
           />
         </div>
 
@@ -36,12 +36,22 @@
         <div class="form-row">
           <div class="form-group">
             <label for="edit-task-start">Data rozpoczęcia</label>
-            <input id="edit-task-start" v-model="formData.startAt" type="date" />
+            <input
+              id="edit-task-start"
+              v-model="formData.startAt"
+              type="date"
+              :disabled="isDateLocked"
+            />
           </div>
 
           <div class="form-group">
             <label for="edit-task-end">Szacowany czas zakończenia</label>
-            <input id="edit-task-end" v-model="formData.estimatedTime" type="date" />
+            <input
+              id="edit-task-end"
+              v-model="formData.estimatedTime"
+              type="date"
+              :disabled="isDateLocked"
+            />
           </div>
         </div>
 
@@ -99,8 +109,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, toRefs, onMounted } from 'vue'
-import type { TaskDataDTO, StatusEnum, PriorityEnum } from '@/backend/BackendBase'
+import { ref, watch, toRefs, onMounted, computed } from 'vue'
+import { type TaskDataDTO, StatusEnum, PriorityEnum } from '@/backend/BackendBase'
+import { getTodayString, makeLocalMidday } from '@/helpers/dateFormatter'
 import { getExtendedPriorityLabel } from '@/helpers/priorityEnumFormatter'
 import { getExtendedStatusLabel } from '@/helpers/statusEnumFormatter'
 import { Backend } from '@/main'
@@ -122,6 +133,13 @@ const formData = ref({
   status: undefined as number | undefined,
 })
 
+// Blokada dat gdy status: undefined, W planach (_0), Zakończony (_2) lub Wstrzymany (_3).
+// Reset dat do dzisiaj tylko dla undefined lub W planach, nie dla zakończonych/wstrzymanych.
+const isDateLocked = computed(() => {
+  const s = formData.value.status
+  return s === undefined || s === StatusEnum._0 || s === StatusEnum._2 || s === StatusEnum._3
+})
+
 const originalTask = ref<TaskDataDTO | undefined>(undefined)
 const isSaving = ref(false)
 const loadingTask = ref(false)
@@ -129,13 +147,6 @@ const saveError = ref('')
 
 const priorityOptions = getExtendedPriorityLabel()
 const statusOptions = getExtendedStatusLabel()
-
-function getTodayString(): string {
-  const d = new Date()
-  d.setHours(0, 0, 0, 0)
-  const pad = (n: number) => n.toString().padStart(2, '0')
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
-}
 
 function toDateInputValue(d: unknown, startFallback?: Date | string | undefined): string {
   if (d === undefined || d === null) return ''
@@ -182,6 +193,12 @@ async function loadTask() {
       })
       formData.value.priority = task.priority !== undefined ? Number(task.priority) : undefined
       formData.value.status = task.status !== undefined ? Number(task.status) : undefined
+      // Jeżeli status niewybrany lub W planach – ustaw dzisiejsze daty
+      if (formData.value.status === undefined || formData.value.status === StatusEnum._0) {
+        const todayStr = getTodayString()
+        formData.value.startAt = todayStr
+        formData.value.estimatedTime = todayStr
+      }
     } else {
       saveError.value = 'Nie znaleziono zadania.'
     }
@@ -205,6 +222,18 @@ onMounted(() => {
   }
 })
 
+// Reaguj na zmianę statusu podczas edycji
+watch(
+  () => formData.value.status,
+  (newStatus) => {
+    if (newStatus === undefined || newStatus === StatusEnum._0) {
+      const todayStr = getTodayString()
+      formData.value.startAt = todayStr
+      formData.value.estimatedTime = todayStr
+    }
+  },
+)
+
 function closeModal() {
   emit('close')
 }
@@ -224,18 +253,6 @@ async function handleSubmit() {
   saveError.value = ''
 
   try {
-    // Tworzymy daty z godziną 12:00 (południe) lokalnie aby zachować ten sam dzień po konwersji do UTC ISO
-    const makeLocalMidday = (dStr: string | undefined) => {
-      if (!dStr) return undefined
-      const parts = dStr.split('-')
-      if (parts.length !== 3) return undefined
-      const [yStr, mStr, dStrDay] = parts
-      const y = Number(yStr)
-      const m = Number(mStr)
-      const day = Number(dStrDay)
-      if ([y, m, day].some((n) => isNaN(n))) return undefined
-      return new Date(y, m - 1, day, 12, 0, 0, 0)
-    }
     const startDate = makeLocalMidday(formData.value.startAt)
     const estDate = makeLocalMidday(formData.value.estimatedTime)
 

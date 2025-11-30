@@ -22,7 +22,7 @@ export interface StatusOption {
 }
 
 export function getExtendedStatusLabel(): StatusOption[] {
-  const statusOptions: StatusOption[] = [
+  return [
     {
       value: StatusEnum._0,
       label: getStatusLabel(StatusEnum._0),
@@ -44,5 +44,4 @@ export function getExtendedStatusLabel(): StatusOption[] {
       description: 'Projekt tymczasowo wstrzymany – brak postępów.',
     },
   ]
-  return statusOptions
 }

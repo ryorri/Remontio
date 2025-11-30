@@ -31,7 +31,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="cst-btn">
+              <a @click="goToPlanning()" class="cst-btn">
                 <span class="nav-icon">✅</span>
                 <span class="nav-text">Zadania</span>
               </a>
@@ -108,6 +108,9 @@ const goToProjects = () => {
 }
 const goToRooms = () => {
   router.push({ name: 'RoomList' })
+}
+const goToPlanning = () => {
+  router.push({ name: 'PlanningView' })
 }
 
 //////////////////////

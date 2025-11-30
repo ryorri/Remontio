@@ -1,7 +1,7 @@
 export function formatDate(date: Date | undefined): string {
   if (!date) return ''
   const dateObj = new Date(date)
-  if (dateObj.getFullYear() === 1) return '' // .NET MinValue
+  if (dateObj.getFullYear() === 1) return ''
   return dateObj.toLocaleDateString('pl-PL', {
     year: 'numeric',
     month: 'short',
@@ -16,7 +16,6 @@ export function getTodayString(): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 }
 
-// Przyjmuje Date lub string 'YYYY-MM-DD' i ustawia godzinę na 12:00 lokalnie.
 export function makeLocalMidday(input: Date | string | undefined): Date | undefined {
   if (!input) return undefined
   if (input instanceof Date) {
@@ -35,4 +34,64 @@ export function makeLocalMidday(input: Date | string | undefined): Date | undefi
     return new Date(y, m - 1, d, 12, 0, 0, 0)
   }
   return undefined
+}
+
+export function formatDay(date: Date): string {
+  return date.getDate().toString().padStart(2, '0')
+}
+
+export function formatMonth(date: Date): string {
+  const months = [
+    'Sty',
+    'Lut',
+    'Mar',
+    'Kwi',
+    'Maj',
+    'Cze',
+    'Lip',
+    'Sie',
+    'Wrz',
+    'Paź',
+    'Lis',
+    'Gru',
+  ]
+  return months[date.getMonth()] || ''
+}
+
+export function toDateInputValue(d: unknown, startFallback?: Date | string | undefined): string {
+  if (d === undefined || d === null) return ''
+  let dateObj: Date
+  if (typeof d === 'number') {
+    if (startFallback) {
+      const base = startFallback instanceof Date ? new Date(startFallback) : new Date(startFallback)
+      base.setHours(0, 0, 0, 0)
+      base.setDate(base.getDate() + d)
+      dateObj = base
+    } else {
+      dateObj = new Date(d)
+    }
+  } else if (d instanceof Date) {
+    dateObj = d
+  } else if (typeof d === 'string') {
+    dateObj = new Date(d)
+  } else {
+    return ''
+  }
+  if (isNaN(dateObj.getTime()) || dateObj.getFullYear() === 1) return ''
+  const pad = (n: number) => n.toString().padStart(2, '0')
+  return `${dateObj.getFullYear()}-${pad(dateObj.getMonth() + 1)}-${pad(dateObj.getDate())}`
+}
+
+export function getDateRangeError(
+  start: Date | string | undefined,
+  end: Date | string | undefined,
+): string {
+  if (!start || !end) return ''
+  const startDate = typeof start === 'string' ? new Date(start) : start
+  const endDate = typeof end === 'string' ? new Date(end) : end
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return ''
+  if (endDate < startDate) {
+    return 'Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.'
+  }
+  return ''
 }

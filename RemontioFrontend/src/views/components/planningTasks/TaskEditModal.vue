@@ -19,7 +19,7 @@
             v-model="formData.name"
             type="text"
             placeholder="Np. Malowanie ścian"
-            requiredz
+            required
           />
         </div>
 
@@ -32,29 +32,6 @@
             placeholder="Dodatkowe informacje o zadaniu..."
           ></textarea>
         </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="edit-task-start">Data rozpoczęcia</label>
-            <input
-              id="edit-task-start"
-              v-model="formData.startAt"
-              type="date"
-              :disabled="isDateLocked"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="edit-task-end">Szacowany czas zakończenia</label>
-            <input
-              id="edit-task-end"
-              v-model="formData.estimatedTime"
-              type="date"
-              :disabled="isDateLocked"
-            />
-          </div>
-        </div>
-
         <div class="form-row">
           <div class="form-group">
             <label for="edit-task-priority">Priorytet</label>
@@ -87,6 +64,32 @@
           </div>
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label for="edit-task-start">Data rozpoczęcia</label>
+            <input
+              id="edit-task-start"
+              v-model="formData.startAt"
+              type="date"
+              :disabled="isDateLocked"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="edit-task-end">Szacowany czas zakończenia</label>
+            <input
+              id="edit-task-end"
+              v-model="formData.estimatedTime"
+              type="date"
+              :disabled="isDateLocked"
+            />
+          </div>
+        </div>
+        <div v-if="dateValidationError" class="date-error">
+          <i class="fas fa-exclamation-triangle"></i>
+          {{ dateValidationError }}
+        </div>
+
         <div class="modal-actions">
           <button type="button" class="btn btn-danger" @click="handleDelete">
             <i class="fas fa-trash"></i>
@@ -111,7 +114,12 @@
 <script setup lang="ts">
 import { ref, watch, toRefs, onMounted, computed } from 'vue'
 import { type TaskDataDTO, StatusEnum, PriorityEnum } from '@/backend/BackendBase'
-import { getTodayString, makeLocalMidday } from '@/helpers/dateFormatter'
+import {
+  getTodayString,
+  makeLocalMidday,
+  toDateInputValue,
+  getDateRangeError,
+} from '@/helpers/dateFormatter'
 import { getExtendedPriorityLabel } from '@/helpers/priorityEnumFormatter'
 import { getExtendedStatusLabel } from '@/helpers/statusEnumFormatter'
 import { Backend } from '@/main'
@@ -133,12 +141,14 @@ const formData = ref({
   status: undefined as number | undefined,
 })
 
-// Blokada dat gdy status: undefined, W planach (_0), Zakończony (_2) lub Wstrzymany (_3).
-// Reset dat do dzisiaj tylko dla undefined lub W planach, nie dla zakończonych/wstrzymanych.
 const isDateLocked = computed(() => {
   const s = formData.value.status
   return s === undefined || s === StatusEnum._0 || s === StatusEnum._2 || s === StatusEnum._3
 })
+
+const dateValidationError = computed(() =>
+  getDateRangeError(formData.value.startAt, formData.value.estimatedTime),
+)
 
 const originalTask = ref<TaskDataDTO | undefined>(undefined)
 const isSaving = ref(false)
@@ -147,32 +157,6 @@ const saveError = ref('')
 
 const priorityOptions = getExtendedPriorityLabel()
 const statusOptions = getExtendedStatusLabel()
-
-function toDateInputValue(d: unknown, startFallback?: Date | string | undefined): string {
-  if (d === undefined || d === null) return ''
-  let dateObj: Date
-  // Jeśli backend zwraca liczbę (np. ile dni), zinterpretuj jako start + dni
-  if (typeof d === 'number') {
-    if (startFallback) {
-      const base = startFallback instanceof Date ? new Date(startFallback) : new Date(startFallback)
-      base.setHours(0, 0, 0, 0)
-      base.setDate(base.getDate() + d)
-      dateObj = base
-    } else {
-      // Bez punktu odniesienia traktuj jako epoch
-      dateObj = new Date(d)
-    }
-  } else if (d instanceof Date) {
-    dateObj = d
-  } else if (typeof d === 'string') {
-    dateObj = new Date(d)
-  } else {
-    return ''
-  }
-  if (isNaN(dateObj.getTime()) || dateObj.getFullYear() === 1) return '' // .NET MinValue => ukryj
-  const pad = (n: number) => n.toString().padStart(2, '0')
-  return `${dateObj.getFullYear()}-${pad(dateObj.getMonth() + 1)}-${pad(dateObj.getDate())}`
-}
 
 async function loadTask() {
   if (!taskId.value) return
@@ -186,14 +170,8 @@ async function loadTask() {
       formData.value.description = task.description || ''
       formData.value.startAt = toDateInputValue(task.startAt)
       formData.value.estimatedTime = toDateInputValue(task.estimatedTime)
-      console.log('[TaskEditModal] Raw task dates', {
-        startAtRaw: task.startAt,
-        estimatedTimeRaw: task.estimatedTime,
-        computedEstimatedTimeInput: formData.value.estimatedTime,
-      })
       formData.value.priority = task.priority !== undefined ? Number(task.priority) : undefined
       formData.value.status = task.status !== undefined ? Number(task.status) : undefined
-      // Jeżeli status niewybrany lub W planach – ustaw dzisiejsze daty
       if (formData.value.status === undefined || formData.value.status === StatusEnum._0) {
         const todayStr = getTodayString()
         formData.value.startAt = todayStr
@@ -222,7 +200,6 @@ onMounted(() => {
   }
 })
 
-// Reaguj na zmianę statusu podczas edycji
 watch(
   () => formData.value.status,
   (newStatus) => {
@@ -241,6 +218,11 @@ function closeModal() {
 async function handleSubmit() {
   if (!formData.value.name.trim()) {
     saveError.value = 'Nazwa zadania jest wymagana.'
+    return
+  }
+
+  if (dateValidationError.value) {
+    saveError.value = dateValidationError.value
     return
   }
 
@@ -275,9 +257,7 @@ async function handleSubmit() {
       estimatedTime: estDate,
     }
 
-    console.log('[TaskEditModal] Wysyłam dane do edycji (surowe DTO):', dto)
     const success = await Backend.editTask(dto)
-    console.log('[TaskEditModal] Odpowiedź z backendu (boolean):', success)
 
     if (success) {
       emit('saved', dto)

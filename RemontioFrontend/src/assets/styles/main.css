@@ -489,3 +489,88 @@
   border-color: var(--color-primary-blue);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
+
+/* Card and Section Styles */
+.card-section {
+  background: var(--color-bg-white);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px var(--shadow-light);
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--color-bg-light-gray);
+}
+
+.section-header i {
+  font-size: 1.5rem;
+  color: var(--color-primary-blue);
+}
+
+.section-header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text-dark);
+  flex: 1;
+}
+
+.gradient-title {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.badge {
+  font-size: 0.9rem;
+  color: var(--color-text-medium);
+  background: var(--color-bg-light-gray);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary-blue);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.icon-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* Global validation error style (zastępuje lokalne .date-error w modalach) */
+.date-error {
+  color: #dc2626;
+  background: #fee;
+  border: 1px solid #fcc;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-error i {
+  font-size: 16px;
+}
+
+/* Projekt: etykieta wyboru projektu (przeniesiona z lokalnego scoped stylu) */
+.project-select-label {
+  margin-right: 12px;
+}

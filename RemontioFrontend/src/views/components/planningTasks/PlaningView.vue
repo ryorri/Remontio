@@ -1,8 +1,14 @@
 <template>
   <MainLayout>
     <div class="p-4">
-      <label for="project-select" class="block mb-2 font-medium">Wybierz projekt:</label>
-      <select id="project-select" v-model="selectedProjectId" class="border rounded p-2 w-full">
+      <label for="project-select" class="block mb-2 font-medium project-select-label"
+        >Wybierz projekt:</label
+      >
+      <select
+        id="project-select"
+        v-model="selectedProjectId"
+        class="border rounded p-2 w-full mb-4"
+      >
         <option disabled value="">— Wybierz —</option>
         <option v-for="project in projects" :key="project.id" :value="project.id">
           {{ project.name }}
@@ -89,10 +95,11 @@ async function loadProjects() {
 
 async function loadProjectData(projectId: string) {
   try {
-    const allRooms = await Backend.getRoomListByUserId(userId!)
+    const [allRooms, allTasks] = await Promise.all([
+      Backend.getRoomListByUserId(userId!),
+      Backend.getTaskListByUserId(userId!),
+    ])
     rooms.value = allRooms.filter((room) => room.projectId === projectId)
-    const allTasks = await Backend.getTaskListByUserId(userId!)
-    // Zostawiamy daty dokładnie w formacie zwróconym przez backend (string ISO / MinValue itp.)
     tasks.value = allTasks.filter((task) => task.projectId === projectId)
   } catch (error) {
     console.error('Error loading project data:', error)
@@ -101,34 +108,36 @@ async function loadProjectData(projectId: string) {
   }
 }
 
+async function reloadCurrentProject() {
+  if (selectedProjectId.value) {
+    await loadProjectData(selectedProjectId.value)
+  }
+}
+
 function openCreateModal(roomId: string) {
-  createModal.value = { open: true, roomId }
+  createModal.value.open = true
+  createModal.value.roomId = roomId
 }
 
 function openEditModal(task: TaskDataDTO) {
   if (task.id) {
-    editModal.value = { open: true, taskId: task.id }
+    editModal.value.open = true
+    editModal.value.taskId = task.id
   }
 }
 
 async function handleTaskCreated() {
   createModal.value.open = false
-  if (selectedProjectId.value) {
-    await loadProjectData(selectedProjectId.value)
-  }
+  await reloadCurrentProject()
 }
 
 async function handleTaskSaved() {
   editModal.value.open = false
-  if (selectedProjectId.value) {
-    await loadProjectData(selectedProjectId.value)
-  }
+  await reloadCurrentProject()
 }
 
 async function handleTaskDeleted() {
   editModal.value.open = false
-  if (selectedProjectId.value) {
-    await loadProjectData(selectedProjectId.value)
-  }
+  await reloadCurrentProject()
 }
 </script>

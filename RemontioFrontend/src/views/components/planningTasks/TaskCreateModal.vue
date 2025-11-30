@@ -35,28 +35,6 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label for="task-start">Data rozpoczęcia</label>
-            <input
-              id="task-start"
-              v-model="formData.startAt"
-              type="date"
-              :disabled="isDateLocked"
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="task-end">Szacowany czas zakończenia</label>
-            <input
-              id="task-end"
-              v-model="formData.estimatedTime"
-              type="date"
-              :disabled="isDateLocked"
-            />
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
             <label for="task-priority">Priorytet</label>
             <select id="task-priority" v-model="formData.priority">
               <option :value="undefined">— Brak —</option>
@@ -86,6 +64,32 @@
             </select>
           </div>
         </div>
+        <div v-if="dateValidationError" class="date-error">
+          <i class="fas fa-exclamation-triangle"></i>
+          {{ dateValidationError }}
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-start">Data rozpoczęcia</label>
+            <input
+              id="task-start"
+              v-model="formData.startAt"
+              type="date"
+              :disabled="isDateLocked"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="task-end">Szacowany czas zakończenia</label>
+            <input
+              id="task-end"
+              v-model="formData.estimatedTime"
+              type="date"
+              :disabled="isDateLocked"
+            />
+          </div>
+        </div>
 
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" @click="closeModal">Anuluj</button>
@@ -104,7 +108,7 @@
 <script setup lang="ts">
 import { ref, watch, toRefs, computed } from 'vue'
 import { StatusEnum, PriorityEnum, type CreateTaskDTO } from '@/backend/BackendBase'
-import { getTodayString, makeLocalMidday } from '@/helpers/dateFormatter'
+import { getTodayString, makeLocalMidday, getDateRangeError } from '@/helpers/dateFormatter'
 import { getExtendedPriorityLabel } from '@/helpers/priorityEnumFormatter'
 import { getExtendedStatusLabel } from '@/helpers/statusEnumFormatter'
 import { Backend } from '@/main'
@@ -128,9 +132,12 @@ const formData = ref({
   status: undefined as number | undefined,
 })
 
-// Daty zablokowane gdy status nie wybrany (undefined) lub W planach
 const isDateLocked = computed(
   () => formData.value.status === undefined || formData.value.status === StatusEnum._0,
+)
+
+const dateValidationError = computed(() =>
+  getDateRangeError(formData.value.startAt, formData.value.estimatedTime),
 )
 
 const isSaving = ref(false)
@@ -172,6 +179,11 @@ function closeModal() {
 async function handleSubmit() {
   if (!formData.value.name.trim()) {
     saveError.value = 'Nazwa zadania jest wymagana.'
+    return
+  }
+
+  if (dateValidationError.value) {
+    saveError.value = dateValidationError.value
     return
   }
 

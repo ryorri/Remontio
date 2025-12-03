@@ -121,6 +121,50 @@ const router = createRouter({
       component: () => import('@/views/components/planningTasks/PlaningView.vue'),
       meta: { requiresAuth: true },
     },
+    ////////////////////BUDGET AND SHOPPING PAGES ROUTES////////////////////////////
+    {
+      path: '/budget-list',
+      name: 'BudgetList',
+      component: () => import('@/views/components/budget/BudgetList.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget-create',
+      name: 'BudgetCreate',
+      component: () => import('@/views/components/budget/BudgetCreate.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget/:budgetId',
+      name: 'BudgetDetails',
+      component: () => import('@/views/components/budget/BudgetDetailsAndEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget/:budgetId/edit',
+      name: 'BudgetEdit',
+      component: () => import('@/views/components/budget/BudgetEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget/:budgetId/shopping-lists',
+      name: 'ShoppingListsByBudget',
+      component: () => import('@/views/components/shoppinglists/ShoppinglistList.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget/:budgetId/shopping-list/create',
+      name: 'ShoppingListCreate',
+      component: () => import('@/views/components/shoppinglists/ShoppingListCreateAndEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget/:budgetId/shopping-list/:listId/edit',
+      name: 'ShoppingListEdit',
+      component: () => import('@/views/components/shoppinglists/ShoppingListCreateAndEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+
     /////////////////////////////////////////////////////////////////
   ],
 })

@@ -887,14 +887,14 @@ export class Client {
    * @param estimatedPrice (optional)
    * @return OK
    */
-  addItem(
+  addBudgetItem(
     budgetId: string | undefined,
     name: string | undefined,
     price: number | undefined,
     total: number | undefined,
     estimatedPrice: number | undefined,
   ): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/Budget/add-item?'
+    let url_ = this.baseUrl + '/api/Budget/add-budget-item?'
     if (budgetId === null) throw new globalThis.Error("The parameter 'budgetId' cannot be null.")
     else if (budgetId !== undefined) url_ += 'budgetId=' + encodeURIComponent('' + budgetId) + '&'
     if (name === null) throw new globalThis.Error("The parameter 'name' cannot be null.")
@@ -917,11 +917,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processAddItem(_response)
+      return this.processAddBudgetItem(_response)
     })
   }
 
-  protected processAddItem(response: Response): Promise<boolean> {
+  protected processAddBudgetItem(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -954,8 +954,8 @@ export class Client {
    * @param itemId (optional)
    * @return OK
    */
-  removeItem(budgetId: string | undefined, itemId: string | undefined): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/Budget/remove-item?'
+  removeBudgetItem(budgetId: string | undefined, itemId: string | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Budget/remove-budget-item?'
     if (budgetId === null) throw new globalThis.Error("The parameter 'budgetId' cannot be null.")
     else if (budgetId !== undefined) url_ += 'budgetId=' + encodeURIComponent('' + budgetId) + '&'
     if (itemId === null) throw new globalThis.Error("The parameter 'itemId' cannot be null.")
@@ -970,11 +970,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processRemoveItem(_response)
+      return this.processRemoveBudgetItem(_response)
     })
   }
 
-  protected processRemoveItem(response: Response): Promise<boolean> {
+  protected processRemoveBudgetItem(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -1068,8 +1068,8 @@ export class Client {
    * @param budgetId (optional)
    * @return OK
    */
-  clearItems(budgetId: string | undefined): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/Budget/clear-items?'
+  clearBudgetItems(budgetId: string | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Budget/clear-budget-items?'
     if (budgetId === null) throw new globalThis.Error("The parameter 'budgetId' cannot be null.")
     else if (budgetId !== undefined) url_ += 'budgetId=' + encodeURIComponent('' + budgetId) + '&'
     url_ = url_.replace(/[?&]$/, '')
@@ -1082,11 +1082,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processClearItems(_response)
+      return this.processClearBudgetItems(_response)
     })
   }
 
-  protected processClearItems(response: Response): Promise<boolean> {
+  protected processClearBudgetItems(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -1118,8 +1118,8 @@ export class Client {
    * @param budgetId (optional)
    * @return OK
    */
-  recalculate(budgetId: string | undefined): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/Budget/recalculate?'
+  budgetRecalculate(budgetId: string | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Budget/budget-recalculate?'
     if (budgetId === null) throw new globalThis.Error("The parameter 'budgetId' cannot be null.")
     else if (budgetId !== undefined) url_ += 'budgetId=' + encodeURIComponent('' + budgetId) + '&'
     url_ = url_.replace(/[?&]$/, '')
@@ -1132,11 +1132,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processRecalculate(_response)
+      return this.processBudgetRecalculate(_response)
     })
   }
 
-  protected processRecalculate(response: Response): Promise<boolean> {
+  protected processBudgetRecalculate(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -1888,6 +1888,56 @@ export class Client {
    * @param listId (optional)
    * @return OK
    */
+  getItemListByListId(listId: string | undefined): Promise<ListItemDataDTO[]> {
+    let url_ = this.baseUrl + '/api/List/get-item-list-by-list-id?'
+    if (listId === null) throw new globalThis.Error("The parameter 'listId' cannot be null.")
+    else if (listId !== undefined) url_ += 'listId=' + encodeURIComponent('' + listId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetItemListByListId(_response)
+    })
+  }
+
+  protected processGetItemListByListId(response: Response): Promise<ListItemDataDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as ListItemDataDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<ListItemDataDTO[]>(null as any)
+  }
+
+  /**
+   * @param listId (optional)
+   * @return OK
+   */
   deleteList(listId: string | undefined): Promise<boolean> {
     let url_ = this.baseUrl + '/api/List/delete-list?'
     if (listId === null) throw new globalThis.Error("The parameter 'listId' cannot be null.")
@@ -1993,13 +2043,13 @@ export class Client {
    * @param price (optional)
    * @return OK
    */
-  addItem2(
+  addListItem(
     listId: string | undefined,
     name: string | undefined,
     quantity: number | undefined,
     price: number | undefined,
   ): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/List/add-item?'
+    let url_ = this.baseUrl + '/api/List/add-list-item?'
     if (listId === null) throw new globalThis.Error("The parameter 'listId' cannot be null.")
     else if (listId !== undefined) url_ += 'listId=' + encodeURIComponent('' + listId) + '&'
     if (name === null) throw new globalThis.Error("The parameter 'name' cannot be null.")
@@ -2018,11 +2068,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processAddItem2(_response)
+      return this.processAddListItem(_response)
     })
   }
 
-  protected processAddItem2(response: Response): Promise<boolean> {
+  protected processAddListItem(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -2055,8 +2105,8 @@ export class Client {
    * @param itemId (optional)
    * @return OK
    */
-  removeItem2(listId: string | undefined, itemId: string | undefined): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/List/remove-item?'
+  removeListItem(listId: string | undefined, itemId: string | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/List/remove-list-item?'
     if (listId === null) throw new globalThis.Error("The parameter 'listId' cannot be null.")
     else if (listId !== undefined) url_ += 'listId=' + encodeURIComponent('' + listId) + '&'
     if (itemId === null) throw new globalThis.Error("The parameter 'itemId' cannot be null.")
@@ -2071,11 +2121,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processRemoveItem2(_response)
+      return this.processRemoveListItem(_response)
     })
   }
 
-  protected processRemoveItem2(response: Response): Promise<boolean> {
+  protected processRemoveListItem(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -2109,12 +2159,12 @@ export class Client {
    * @param isBought (optional)
    * @return OK
    */
-  markItemBought(
+  markListItemBought(
     listId: string | undefined,
     itemId: string | undefined,
     isBought: boolean | undefined,
   ): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/List/mark-item-bought?'
+    let url_ = this.baseUrl + '/api/List/mark-list-item-bought?'
     if (listId === null) throw new globalThis.Error("The parameter 'listId' cannot be null.")
     else if (listId !== undefined) url_ += 'listId=' + encodeURIComponent('' + listId) + '&'
     if (itemId === null) throw new globalThis.Error("The parameter 'itemId' cannot be null.")
@@ -2131,11 +2181,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processMarkItemBought(_response)
+      return this.processMarkListItemBought(_response)
     })
   }
 
-  protected processMarkItemBought(response: Response): Promise<boolean> {
+  protected processMarkListItemBought(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -2167,8 +2217,8 @@ export class Client {
    * @param listId (optional)
    * @return OK
    */
-  clearItems2(listId: string | undefined): Promise<boolean> {
-    let url_ = this.baseUrl + '/api/List/clear-items?'
+  clearListItems(listId: string | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/List/clear-list-items?'
     if (listId === null) throw new globalThis.Error("The parameter 'listId' cannot be null.")
     else if (listId !== undefined) url_ += 'listId=' + encodeURIComponent('' + listId) + '&'
     url_ = url_.replace(/[?&]$/, '')
@@ -2181,11 +2231,11 @@ export class Client {
     }
 
     return this.http.fetch(url_, options_).then((_response: Response) => {
-      return this.processClearItems2(_response)
+      return this.processClearListItems(_response)
     })
   }
 
-  protected processClearItems2(response: Response): Promise<boolean> {
+  protected processClearListItems(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -3544,7 +3594,6 @@ export class Client {
     url_ = url_.replace(/[?&]$/, '')
 
     const content_ = JSON.stringify(body)
-    console.log('[BackendBase.createTask] Raw create DTO payload:', body)
 
     let options_: RequestInit = {
       body: content_,
@@ -4666,10 +4715,10 @@ export interface CreateTaskDTO {
   createAt: Date
   startAt?: Date
   closedAt?: Date
+  estimatedTime?: Date
   roomId: string
   projectId: string
   userId: string | undefined
-  estimatedTime?: Date
 }
 
 export interface CreateUserDTO {
@@ -4696,6 +4745,15 @@ export interface ListDataDTO {
   roomId: string | undefined
   projectId: string | undefined
   userId: string | undefined
+}
+
+export interface ListItemDataDTO {
+  id: string | undefined
+  name: string | undefined
+  quantity?: number
+  price?: number
+  isBought?: boolean
+  shoppingListId: string | undefined
 }
 
 export interface PhotoDataDTO {

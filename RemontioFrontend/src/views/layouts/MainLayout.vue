@@ -37,15 +37,9 @@
               </a>
             </li>
             <li>
-              <a href="#" class="cst-btn">
+              <a @click="goToBudgets()" class="cst-btn">
                 <span class="nav-icon">💰</span>
                 <span class="nav-text">Budżet</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="cst-btn">
-                <span class="nav-icon">🛒</span>
-                <span class="nav-text">Zakupy</span>
               </a>
             </li>
             <li>
@@ -111,6 +105,10 @@ const goToRooms = () => {
 }
 const goToPlanning = () => {
   router.push({ name: 'PlanningView' })
+}
+
+const goToBudgets = () => {
+  router.push({ name: 'BudgetList' })
 }
 
 //////////////////////

@@ -99,12 +99,6 @@ const saving = ref(false)
 const deleting = ref(false)
 const error = ref<string | null>(null)
 
-const statusOptions = [
-  { value: 0, label: getStatusLabel(0) },
-  { value: 1, label: getStatusLabel(1) },
-  { value: 2, label: getStatusLabel(2) },
-]
-
 // Fetch project
 const fetchData = async () => {
   try {

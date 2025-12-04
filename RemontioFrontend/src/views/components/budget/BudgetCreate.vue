@@ -76,10 +76,8 @@
               class="btn btn-primary header-btn"
               :disabled="submitting || !canSubmit"
             >
-              <span v-if="!submitting"
-                ><i class="fas fa-save" aria-hidden="true"></i> Utwórz budżet</span
-              >
-              <span v-else>Tworzenie...</span>
+              <i class="fas fa-save" aria-hidden="true"></i>
+              {{ submitting ? 'Tworzenie...' : 'Utwórz budżet' }}
             </button>
             <button
               type="button"
@@ -113,8 +111,6 @@ const router = useRouter()
 
 const name = ref('')
 const description = ref('')
-const total = ref<number | undefined>(undefined)
-const spent = ref<number | undefined>(undefined)
 const estimatedPrice = ref<number | undefined>(undefined)
 const projectId = ref('')
 const roomId = ref('')
@@ -159,7 +155,7 @@ async function onSubmit() {
   success.value = false
 
   try {
-    const ok = await Backend.createBudget({
+    await Backend.createBudget({
       name: name.value,
       description: description.value || undefined,
       createAt: new Date(),
@@ -171,12 +167,8 @@ async function onSubmit() {
       userId: getCurrentUserId(),
     })
 
-    if (ok) {
-      success.value = true
-      setTimeout(() => router.push({ name: 'BudgetList' }), 1000)
-    } else {
-      error.value = 'Serwer zwrócił niepowodzenie.'
-    }
+    success.value = true
+    setTimeout(() => router.push({ name: 'BudgetList' }), 1000)
   } catch (e: any) {
     error.value = e?.message || 'Nie udało się utworzyć budżetu.'
   } finally {
@@ -225,23 +217,5 @@ onMounted(async () => {
 .budget-form .form-select:focus {
   border-color: var(--color-primary-blue);
   box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.1);
-}
-
-.header-btn {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>

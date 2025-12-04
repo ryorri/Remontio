@@ -3,8 +3,8 @@
     <div class="details-wrapper" v-if="!loading && budget">
       <div class="details-header">
         <div class="title-block">
-          <h1 class="details-title">Budżet: {{ budget?.name || '' }}</h1>
-          <span class="badge">Utworzono: {{ formatDate(budget?.createAt) }}</span>
+          <h1 class="details-title">Budżet: {{ budget.name }}</h1>
+          <span class="badge">Utworzono: {{ formatDate(budget.createAt) }}</span>
         </div>
         <div class="header-actions">
           <button class="btn btn-primary header-btn" @click="goToEdit">
@@ -38,21 +38,27 @@
               <i class="fas fa-coins"></i>
               <div class="meta-text">
                 <span class="meta-label">Suma</span>
-                <span class="meta-value">{{ formatCurrency(budget.total) }}</span>
+                <span class="meta-value">{{
+                  formatCurrency(budget.total, (budget as any)?.currency || 'PLN')
+                }}</span>
               </div>
             </div>
             <div class="meta-item">
               <i class="fas fa-money-bill-wave"></i>
               <div class="meta-text">
                 <span class="meta-label">Wydano</span>
-                <span class="meta-value">{{ formatCurrency(budget.spent) }}</span>
+                <span class="meta-value">{{
+                  formatCurrency(budget.spent, (budget as any)?.currency || 'PLN')
+                }}</span>
               </div>
             </div>
             <div class="meta-item">
               <i class="fas fa-calculator"></i>
               <div class="meta-text">
                 <span class="meta-label">Szacowana cena</span>
-                <span class="meta-value">{{ formatCurrency(budget.estimatedPrice) }}</span>
+                <span class="meta-value">{{
+                  formatCurrency(budget.estimatedPrice, (budget as any)?.currency || 'PLN')
+                }}</span>
               </div>
             </div>
           </div>
@@ -91,6 +97,7 @@ import { useRoute, useRouter } from 'vue-router'
 import type { BudgetDataDTO } from '@/backend/BackendBase'
 import { FontAwesomeIcon } from '@/assets/styles/fortawesome'
 import { formatDate } from '@/helpers/dateFormatter'
+import { formatCurrency } from '@/helpers/currencyFormatter'
 
 const route = useRoute()
 const budgetId = computed(() => String(route.params.budgetId || ''))
@@ -103,36 +110,28 @@ const roomName = ref<string>('')
 
 const router = useRouter()
 
-const formatCurrency = (value?: number | null) => {
-  if (value === undefined || value === null) return '-'
-  return new Intl.NumberFormat('pl-PL', { style: 'currency', currency: 'PLN' }).format(value)
-}
-
 const goToEdit = () => {
   router.push({ name: 'BudgetEdit', params: { budgetId: budgetId.value } })
 }
-
+onMounted(async () => {
+  await loadBudget()
+})
 const loadBudget = async () => {
   try {
     loading.value = true
-    const b = await Backend.getBudgetById(budgetId.value)
-    budget.value = b
-    // Fetch related project/room names
-    if (b?.projectId) {
+    budget.value = await Backend.getBudgetById(budgetId.value)
+
+    if (budget.value.projectId) {
       try {
-        const p = await Backend.getProjectById(b.projectId)
-        projectName.value = p?.name || ''
+        const p = await Backend.getProjectById(budget.value.projectId)
+        projectName.value = p.name || ''
       } catch {}
-    } else {
-      projectName.value = ''
     }
-    if (b?.roomId) {
+    if (budget.value.roomId) {
       try {
-        const r = await Backend.getRoomById(b.roomId)
-        roomName.value = r?.name || ''
+        const r = await Backend.getRoomById(budget.value.roomId)
+        roomName.value = r.name || ''
       } catch {}
-    } else {
-      roomName.value = ''
     }
   } catch (e) {
     console.error('Error loading budget:', e)
@@ -140,14 +139,4 @@ const loadBudget = async () => {
     loading.value = false
   }
 }
-
-onMounted(async () => {
-  await loadBudget()
-})
 </script>
-
-<style scoped>
-.mb-3 {
-  margin-bottom: 1rem;
-}
-</style>

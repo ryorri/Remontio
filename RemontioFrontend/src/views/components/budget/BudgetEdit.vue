@@ -74,12 +74,11 @@ const form = ref<{ name: string; description: string; estimatedPrice: number | n
 const loadBudget = async () => {
   try {
     loading.value = true
-    const b = await Backend.getBudgetById(budgetId.value)
-    budget.value = b
+    budget.value = await Backend.getBudgetById(budgetId.value)
     form.value = {
-      name: b.name || '',
-      description: b.description || '',
-      estimatedPrice: b.estimatedPrice ?? null,
+      name: budget.value.name || '',
+      description: budget.value.description || '',
+      estimatedPrice: budget.value.estimatedPrice ?? null,
     }
   } catch (e) {
     console.error('Error loading budget:', e)
@@ -113,16 +112,10 @@ const saveChanges = async () => {
 }
 
 const goBack = () => {
-  router.push({ name: 'BudgetList', params: { budgetId: budgetId.value } })
+  router.push({ name: 'BudgetList' })
 }
 
 onMounted(async () => {
   await loadBudget()
 })
 </script>
-
-<style scoped>
-.mb-3 {
-  margin-bottom: 1rem;
-}
-</style>

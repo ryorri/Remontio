@@ -50,10 +50,15 @@
                 </td>
 
                 <td class="budget-amount">
-                  {{ formatCurrency(spentMap[budget.id!] ?? budget.spent) }}
+                  {{
+                    formatCurrency(
+                      spentMap[budget.id!] ?? budget.spent,
+                      (budget as any)?.currency || 'PLN',
+                    )
+                  }}
                 </td>
                 <td class="budget-amount">
-                  {{ formatCurrency(budget.estimatedPrice) }}
+                  {{ formatCurrency(budget.estimatedPrice, (budget as any)?.currency || 'PLN') }}
                 </td>
                 <td class="date-cell">
                   {{ formatDate(budget.createAt) }}
@@ -103,6 +108,7 @@ import type { BudgetDataDTO } from '@/backend/BackendBase'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { getCurrentUserId } from '@/helpers/userHelpers'
 import { formatDate } from '@/helpers/dateFormatter'
+import { formatCurrency } from '@/helpers/currencyFormatter'
 import { useRouter } from 'vue-router'
 
 const budgetList = ref<BudgetDataDTO[]>([])
@@ -182,18 +188,12 @@ const fetchBudgets = async () => {
 }
 
 const createNewBudget = () => {
-  router.push({
-    name: 'BudgetCreate',
-  })
+  router.push({ name: 'BudgetCreate' })
 }
 
 const openBudget = (budgetId: string | undefined) => {
-  if (budgetId) {
-    router.push({
-      name: 'BudgetDetails',
-      params: { budgetId: budgetId },
-    })
-  }
+  if (!budgetId) return
+  router.push({ name: 'BudgetDetails', params: { budgetId } })
 }
 
 const toggleMenu = (budgetId: string | undefined) => {
@@ -207,12 +207,8 @@ const handleAction = (action: () => void) => {
 }
 
 const onEdit = (budgetId: string | undefined) => {
-  if (budgetId) {
-    router.push({
-      name: 'BudgetEdit',
-      params: { budgetId: budgetId },
-    })
-  }
+  if (!budgetId) return
+  router.push({ name: 'BudgetEdit', params: { budgetId } })
 }
 
 const onDelete = async (budgetId: string | undefined) => {
@@ -227,23 +223,10 @@ const onDelete = async (budgetId: string | undefined) => {
 }
 
 const viewShoppingLists = (budgetId: string | undefined) => {
-  if (budgetId) {
-    router.push({
-      name: 'ShoppingListsByBudget',
-      params: { budgetId: budgetId },
-    })
-  }
+  if (!budgetId) return
+  router.push({ name: 'ShoppingListsByBudget', params: { budgetId } })
 }
 
-const formatCurrency = (value: number | undefined) => {
-  if (value === undefined || value === null) return '-'
-  return new Intl.NumberFormat('pl-PL', {
-    style: 'currency',
-    currency: 'PLN',
-  }).format(value)
-}
-
-// Close dropdown on outside click
 const handleOutsideClick = () => {
   openMenuId.value = null
 }
@@ -459,31 +442,5 @@ onUnmounted(() => {
   justify-content: center;
   padding: 4rem 2rem;
   gap: 1rem;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--color-bg-light-gray);
-  border-top-color: var(--color-primary-purple);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>

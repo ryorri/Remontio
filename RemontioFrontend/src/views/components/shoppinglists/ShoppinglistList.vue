@@ -93,27 +93,23 @@ const shoppingLists = ref<UiShoppingListRow[]>([])
 const budgetName = ref<string>('')
 const loading = ref(true)
 const budgetId = ref<string>(route.params.budgetId as string)
-const projectId = ref<string>('')
-const roomId = ref<string>('')
 
 const fetchShoppingLists = async () => {
   loading.value = true
   try {
-    // Load budget to resolve project/room
     const budget = await Backend.getBudgetById(budgetId.value)
     budgetName.value = budget.name || ''
-    projectId.value = budget.projectId || ''
-    roomId.value = budget.roomId || ''
+    const projectId = budget.projectId || ''
+    const roomId = budget.roomId || ''
 
     const userId = getCurrentUserId()
     if (!userId) {
       shoppingLists.value = []
       return
     }
-    // Fetch lists for user and filter by project/room match to budget
     const lists = await Backend.getListByUserId(userId)
     const filtered = lists.filter(
-      (l) => (l.projectId || '') === projectId.value && (l.roomId || '') === roomId.value,
+      (l) => (l.projectId || '') === projectId && (l.roomId || '') === roomId,
     )
 
     // Fetch actual item counts from backend for each list
@@ -199,15 +195,6 @@ onMounted(fetchShoppingLists)
   align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
-}
-
-.budget-badge {
-  font-size: 1rem;
-  background: var(--color-primary-blue);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-weight: 600;
 }
 
 .empty-state {
@@ -311,11 +298,6 @@ onMounted(fetchShoppingLists)
   gap: 0.5rem;
 }
 
-.btn-sm {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-}
-
 .loading-state {
   display: flex;
   flex-direction: column;
@@ -323,31 +305,5 @@ onMounted(fetchShoppingLists)
   justify-content: center;
   padding: 4rem 2rem;
   gap: 1rem;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 4px solid var(--color-bg-light-gray);
-  border-top-color: var(--color-primary-purple);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>

@@ -189,10 +189,22 @@ import { ref, computed, onMounted } from 'vue'
 import { debounce } from '@/helpers/debounce'
 import { useRouter, useRoute } from 'vue-router'
 import type { ListItemDataDTO } from '@/backend/BackendBase'
+import { formatCurrency } from '@/helpers/currencyFormatter'
+import { getCurrentUserId } from '@/helpers/userHelpers'
+
 interface ShoppingListItem {
   name: string
   quantity: number
   price: number
+}
+
+interface PersistedShoppingListSummary {
+  id: string
+  budgetId: string
+  name: string
+  description?: string
+  createAt: string
+  itemCount: number
 }
 
 const router = useRouter()
@@ -211,11 +223,14 @@ const listItems = ref<ListItemDataDTO[]>([])
 const backendTotal = computed(() =>
   listItems.value.reduce((sum, it) => sum + (it.quantity || 0) * (it.price || 0), 0),
 )
-const existingItemCount = ref<number>(0)
 
 const submitting = ref(false)
 const error = ref<string | null>(null)
 const success = ref(false)
+
+onMounted(() => {
+  loadShoppingList()
+})
 
 const totalPrice = computed(() => {
   return items.value.reduce((sum, item) => {
@@ -233,23 +248,6 @@ const removeItem = (index: number) => {
   if (items.value.length > 1) {
     items.value.splice(index, 1)
   }
-}
-
-const formatCurrency = (value: number) => {
-  return new Intl.NumberFormat('pl-PL', {
-    style: 'currency',
-    currency: 'PLN',
-  }).format(value)
-}
-
-// Local summary (without items) retained for listing; items persisted via backend addItem2
-interface PersistedShoppingListSummary {
-  id: string
-  budgetId: string
-  name: string
-  description?: string
-  createAt: string
-  itemCount: number
 }
 
 function loadAllLists(): PersistedShoppingListSummary[] {
@@ -271,8 +269,6 @@ const budgetProjectId = ref<string>('')
 const budgetRoomId = ref<string>('')
 const userId = ref<string | null>(null)
 
-import { getCurrentUserId } from '@/helpers/userHelpers'
-
 const loadShoppingList = async () => {
   userId.value = getCurrentUserId()
   // Load budget to obtain project/room association needed for list creation
@@ -292,11 +288,7 @@ const loadShoppingList = async () => {
     if (existingListData.value) {
       name.value = existingListData.value.name || ''
       description.value = existingListData.value.description || ''
-      // Items cannot be loaded (API provides only itemIds); keep blank row for adding new ones
       items.value = [{ name: '', quantity: 1, price: 0 }]
-      // Show count of existing items from backend
-      existingItemCount.value = (existingListData.value.itemIds?.length || 0) as number
-      // Fetch backend items details (name, etc.)
       try {
         listItems.value = (await Backend.getItemListByListId(listId.value)) as any
       } catch (e) {
@@ -310,10 +302,7 @@ const loadShoppingList = async () => {
 }
 
 const cancel = () => {
-  router.push({
-    name: 'ShoppingListsByBudget',
-    params: { budgetId: budgetId.value },
-  })
+  router.push({ name: 'ShoppingListsByBudget', params: { budgetId: budgetId.value } })
 }
 
 const findCreatedListId = async (): Promise<string | null> => {
@@ -441,8 +430,6 @@ const onSaveItems = async () => {
       }
       saveAllLists(summaries)
     }
-    existingItemCount.value += validItems.length
-    // Refresh backend items list
     try {
       listItems.value = await Backend.getItemListByListId(listId.value!)
     } catch {}
@@ -455,10 +442,6 @@ const onSaveItems = async () => {
     submitting.value = false
   }
 }
-
-onMounted(() => {
-  loadShoppingList()
-})
 
 const debouncedMarkBought = debounce(
   async (listIdParam: string, itemId: string, newState: boolean) => {
@@ -487,8 +470,6 @@ async function removeExistingItem(li: ListItemDataDTO) {
     submitting.value = true
     await Backend.removeListItem(listId.value, li.id)
     listItems.value = listItems.value.filter((x) => x.id !== li.id)
-    existingItemCount.value = Math.max(0, existingItemCount.value - 1)
-    // Update summary count
     const summaries = loadAllLists()
     const idx = summaries.findIndex((s) => s.id === listId.value)
     if (idx >= 0) {
@@ -502,8 +483,6 @@ async function removeExistingItem(li: ListItemDataDTO) {
     submitting.value = false
   }
 }
-
-// Usuwamy lokalny cache — dane pozycji pobierane z backendu
 </script>
 
 <style scoped>
@@ -554,10 +533,6 @@ async function removeExistingItem(li: ListItemDataDTO) {
   align-items: center;
 }
 
-/* Styled checkbox for bought state */
-/* default checkbox styling handled by Bootstrap's form-check-input */
-
-/* Prominent delete button */
 .delete-btn {
   background: #dc3545;
   color: #fff;
@@ -569,27 +544,5 @@ async function removeExistingItem(li: ListItemDataDTO) {
 }
 .delete-btn i {
   color: #fff;
-}
-
-.header-btn {
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.btn-sm {
-  padding: 0.5rem 0.75rem;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>

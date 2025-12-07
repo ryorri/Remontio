@@ -1227,6 +1227,478 @@ export class Client {
   }
 
   /**
+   * @param roomId (optional)
+   * @param body (optional)
+   * @return OK
+   */
+  createCalculation(
+    roomId: string | undefined,
+    body: CreateCalculationDTO | undefined,
+  ): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Calculations/create-calculation?'
+    if (roomId === null) throw new globalThis.Error("The parameter 'roomId' cannot be null.")
+    else if (roomId !== undefined) url_ += 'roomId=' + encodeURIComponent('' + roomId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    const content_ = JSON.stringify(body)
+
+    let options_: RequestInit = {
+      body: content_,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processCreateCalculation(_response)
+    })
+  }
+
+  protected processCreateCalculation(response: Response): Promise<boolean> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as boolean)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<boolean>(null as any)
+  }
+
+  /**
+   * @param calculationId (optional)
+   * @return OK
+   */
+  getCalculationById(calculationId: string | undefined): Promise<CalculationDataDTO> {
+    let url_ = this.baseUrl + '/api/Calculations/get-calculation-by-id?'
+    if (calculationId === null)
+      throw new globalThis.Error("The parameter 'calculationId' cannot be null.")
+    else if (calculationId !== undefined)
+      url_ += 'calculationId=' + encodeURIComponent('' + calculationId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetCalculationById(_response)
+    })
+  }
+
+  protected processGetCalculationById(response: Response): Promise<CalculationDataDTO> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as CalculationDataDTO)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<CalculationDataDTO>(null as any)
+  }
+
+  /**
+   * @return OK
+   */
+  getCalculationList(): Promise<CalculationDataDTO[]> {
+    let url_ = this.baseUrl + '/api/Calculations/get-calculation-list'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetCalculationList(_response)
+    })
+  }
+
+  protected processGetCalculationList(response: Response): Promise<CalculationDataDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as CalculationDataDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<CalculationDataDTO[]>(null as any)
+  }
+
+  /**
+   * @param userId (optional)
+   * @return OK
+   */
+  getCalculationListByUserId(userId: string | undefined): Promise<CalculationDataDTO[]> {
+    let url_ = this.baseUrl + '/api/Calculations/get-calculation-list-by-user-id?'
+    if (userId === null) throw new globalThis.Error("The parameter 'userId' cannot be null.")
+    else if (userId !== undefined) url_ += 'userId=' + encodeURIComponent('' + userId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetCalculationListByUserId(_response)
+    })
+  }
+
+  protected processGetCalculationListByUserId(response: Response): Promise<CalculationDataDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as CalculationDataDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<CalculationDataDTO[]>(null as any)
+  }
+
+  /**
+   * @param projectId (optional)
+   * @return OK
+   */
+  getCalculationListByProjectId(projectId: string | undefined): Promise<CalculationDataDTO[]> {
+    let url_ = this.baseUrl + '/api/Calculations/get-calculation-list-by-project-id?'
+    if (projectId === null) throw new globalThis.Error("The parameter 'projectId' cannot be null.")
+    else if (projectId !== undefined)
+      url_ += 'projectId=' + encodeURIComponent('' + projectId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetCalculationListByProjectId(_response)
+    })
+  }
+
+  protected processGetCalculationListByProjectId(
+    response: Response,
+  ): Promise<CalculationDataDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as CalculationDataDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<CalculationDataDTO[]>(null as any)
+  }
+
+  /**
+   * @param roomId (optional)
+   * @return OK
+   */
+  getCalculationListByRoomId(roomId: string | undefined): Promise<CalculationDataDTO[]> {
+    let url_ = this.baseUrl + '/api/Calculations/get-calculation-list-by-room-id?'
+    if (roomId === null) throw new globalThis.Error("The parameter 'roomId' cannot be null.")
+    else if (roomId !== undefined) url_ += 'roomId=' + encodeURIComponent('' + roomId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetCalculationListByRoomId(_response)
+    })
+  }
+
+  protected processGetCalculationListByRoomId(response: Response): Promise<CalculationDataDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as CalculationDataDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<CalculationDataDTO[]>(null as any)
+  }
+
+  /**
+   * @param calculationId (optional)
+   * @return OK
+   */
+  deleteCalculation(calculationId: string | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Calculations/delete-calculation?'
+    if (calculationId === null)
+      throw new globalThis.Error("The parameter 'calculationId' cannot be null.")
+    else if (calculationId !== undefined)
+      url_ += 'calculationId=' + encodeURIComponent('' + calculationId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'DELETE',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processDeleteCalculation(_response)
+    })
+  }
+
+  protected processDeleteCalculation(response: Response): Promise<boolean> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as boolean)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<boolean>(null as any)
+  }
+
+  /**
+   * @param body (optional)
+   * @return OK
+   */
+  editCalculation(body: CalculationDataDTO | undefined): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Calculations/edit-calculation'
+    url_ = url_.replace(/[?&]$/, '')
+
+    const content_ = JSON.stringify(body)
+
+    let options_: RequestInit = {
+      body: content_,
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processEditCalculation(_response)
+    })
+  }
+
+  protected processEditCalculation(response: Response): Promise<boolean> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as boolean)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<boolean>(null as any)
+  }
+
+  /**
+   * @param calculationId (optional)
+   * @param type (optional)
+   * @return OK
+   */
+  editCalculationType(
+    calculationId: string | undefined,
+    type: string | undefined,
+  ): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Calculations/edit-calculation-type?'
+    if (calculationId === null)
+      throw new globalThis.Error("The parameter 'calculationId' cannot be null.")
+    else if (calculationId !== undefined)
+      url_ += 'calculationId=' + encodeURIComponent('' + calculationId) + '&'
+    if (type === null) throw new globalThis.Error("The parameter 'type' cannot be null.")
+    else if (type !== undefined) url_ += 'type=' + encodeURIComponent('' + type) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processEditCalculationType(_response)
+    })
+  }
+
+  protected processEditCalculationType(response: Response): Promise<boolean> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as boolean)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<boolean>(null as any)
+  }
+
+  /**
    * @param body (optional)
    * @return OK
    */
@@ -3313,7 +3785,7 @@ export class Client {
   addWall(
     roomId: string | undefined,
     wallName: string | undefined,
-    body: IPoint[] | undefined,
+    body: PointDTO[] | undefined,
   ): Promise<boolean> {
     let url_ = this.baseUrl + '/api/Room/add-wall?'
     if (roomId === null) throw new globalThis.Error("The parameter 'roomId' cannot be null.")
@@ -3478,7 +3950,7 @@ export class Client {
   addFloor(
     roomId: string | undefined,
     floorName: string | undefined,
-    body: IPoint[] | undefined,
+    body: PointDTO[] | undefined,
   ): Promise<boolean> {
     let url_ = this.baseUrl + '/api/Room/add-floor?'
     if (roomId === null) throw new globalThis.Error("The parameter 'roomId' cannot be null.")
@@ -3583,6 +4055,106 @@ export class Client {
       })
     }
     return Promise.resolve<boolean>(null as any)
+  }
+
+  /**
+   * @param roomId (optional)
+   * @return OK
+   */
+  getWallsByRoomId(roomId: string | undefined): Promise<WallDTO[]> {
+    let url_ = this.baseUrl + '/api/Room/get-walls-by-room-id?'
+    if (roomId === null) throw new globalThis.Error("The parameter 'roomId' cannot be null.")
+    else if (roomId !== undefined) url_ += 'roomId=' + encodeURIComponent('' + roomId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetWallsByRoomId(_response)
+    })
+  }
+
+  protected processGetWallsByRoomId(response: Response): Promise<WallDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as WallDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<WallDTO[]>(null as any)
+  }
+
+  /**
+   * @param roomId (optional)
+   * @return OK
+   */
+  getFloorsByRoomId(roomId: string | undefined): Promise<FloorDTO[]> {
+    let url_ = this.baseUrl + '/api/Room/get-floors-by-room-id?'
+    if (roomId === null) throw new globalThis.Error("The parameter 'roomId' cannot be null.")
+    else if (roomId !== undefined) url_ += 'roomId=' + encodeURIComponent('' + roomId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processGetFloorsByRoomId(_response)
+    })
+  }
+
+  protected processGetFloorsByRoomId(response: Response): Promise<FloorDTO[]> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as FloorDTO[])
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<FloorDTO[]>(null as any)
   }
 
   /**
@@ -4641,6 +5213,24 @@ export interface BudgetItemDataDTO {
   isCompleted?: boolean
 }
 
+export interface CalculationDataDTO {
+  id: string | undefined
+  name: string | undefined
+  value: number
+  type: CalculationsTypeEnum
+  roomId: string | undefined
+  projectId: string | undefined
+  userId: string | undefined
+}
+
+export enum CalculationsTypeEnum {
+  _0 = 0,
+  _1 = 1,
+  _2 = 2,
+  _3 = 3,
+  _4 = 4,
+}
+
 export interface ContactDataDTO {
   id: string | undefined
   name: string | undefined
@@ -4671,6 +5261,12 @@ export interface CreateBudgetDTO {
   roomId: string
   projectId: string
   userId: string | undefined
+}
+
+export interface CreateCalculationDTO {
+  name: string | undefined
+  value: number
+  type: CalculationsTypeEnum
 }
 
 export interface CreateContactDTO {
@@ -4733,9 +5329,11 @@ export interface CreateUserDTO {
   createdAt?: Date
 }
 
-export interface IPoint {
-  x?: number
-  y?: number
+export interface FloorDTO {
+  id: string | undefined
+  name?: string | undefined
+  calculatedArea: number
+  roomId: string
 }
 
 export interface ListDataDTO {
@@ -4769,6 +5367,11 @@ export interface PhotoDataDTO {
   projectId?: string | undefined
   roomId?: string | undefined
   userId?: string | undefined
+}
+
+export interface PointDTO {
+  x?: number
+  y?: number
 }
 
 export enum PriorityEnum {
@@ -4846,6 +5449,13 @@ export interface UserDataDTO {
   email?: string | undefined
   role?: string | undefined
   createdAt?: Date
+}
+
+export interface WallDTO {
+  id: string | undefined
+  name?: string | undefined
+  calculatedArea: number
+  roomId: string
 }
 
 export interface FileParameter {

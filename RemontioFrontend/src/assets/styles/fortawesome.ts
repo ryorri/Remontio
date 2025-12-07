@@ -13,6 +13,16 @@ import {
   faPlus,
   faAddressBook,
   faSearch,
+  faCalculator,
+  faArrowRight,
+  faArrowLeft,
+  faFolder,
+  faDoorOpen,
+  faCube,
+  faRulerCombined,
+  faSave,
+  faInfoCircle,
+  faUndo,
 } from '@fortawesome/free-solid-svg-icons'
 import { faBell } from '@fortawesome/free-regular-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -28,6 +38,16 @@ library.add(
   faPlus,
   faAddressBook,
   faSearch,
+  faCalculator,
+  faArrowRight,
+  faArrowLeft,
+  faFolder,
+  faDoorOpen,
+  faCube,
+  faRulerCombined,
+  faSave,
+  faInfoCircle,
+  faUndo,
   faBell,
   faGithub,
 )

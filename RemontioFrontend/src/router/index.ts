@@ -164,7 +164,31 @@ const router = createRouter({
       component: () => import('@/views/components/shoppinglists/ShoppingListCreateAndEdit.vue'),
       meta: { requiresAuth: true },
     },
-
+    ////////////////////PLANNING PAGES ROUTES////////////////////////////
+    {
+      path: '/contacts',
+      name: 'ContactList',
+      component: () => import('@/views/components/contacts/ContactList.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/contacts-create',
+      name: 'ContactCreate',
+      component: () => import('@/views/components/contacts/ContactCreate.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/contacts-edit/:contactId',
+      name: 'ContactEdit',
+      component: () => import('@/views/components/contacts/ContactEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/contacts-details/:contactId',
+      name: 'ContactDetails',
+      component: () => import('@/views/components/contacts/ContactDetails.vue'),
+      meta: { requiresAuth: true },
+    },
     /////////////////////////////////////////////////////////////////
   ],
 })

@@ -4648,6 +4648,7 @@ export interface ContactDataDTO {
   contactDetails: string | undefined
   createdDate: Date
   isPrivate?: boolean
+  spec: SpecEnum
   userId: string | undefined
 }
 
@@ -4678,6 +4679,7 @@ export interface CreateContactDTO {
   contactDetails: string | undefined
   createdDate?: Date
   isPrivate?: boolean
+  spec: SpecEnum
   userId: string | undefined
 }
 
@@ -4801,6 +4803,17 @@ export interface RoomDataDTO {
   budgetIds?: string[] | undefined
   photoIds?: string[] | undefined
   wallIds?: string[] | undefined
+}
+
+export enum SpecEnum {
+  _0 = 0,
+  _1 = 1,
+  _2 = 2,
+  _3 = 3,
+  _4 = 4,
+  _5 = 5,
+  _6 = 6,
+  _7 = 7,
 }
 
 export enum StatusEnum {

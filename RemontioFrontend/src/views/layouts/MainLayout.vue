@@ -55,6 +55,12 @@
               </a>
             </li>
             <li>
+              <a @click="goToContacts()" class="cst-btn">
+                <span class="nav-icon">📸</span>
+                <span class="nav-text">Kontakty</span>
+              </a>
+            </li>
+            <li>
               <a href="#" class="cst-btn">
                 <span class="nav-icon">⚙️</span>
                 <span class="nav-text">Ustawienia</span>
@@ -109,6 +115,9 @@ const goToPlanning = () => {
 
 const goToBudgets = () => {
   router.push({ name: 'BudgetList' })
+}
+const goToContacts = () => {
+  router.push({ name: 'ContactList' })
 }
 
 //////////////////////

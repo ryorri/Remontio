@@ -113,9 +113,11 @@ const router = useRouter()
 const goToEdit = () => {
   router.push({ name: 'BudgetEdit', params: { budgetId: budgetId.value } })
 }
+
 onMounted(async () => {
   await loadBudget()
 })
+
 const loadBudget = async () => {
   try {
     loading.value = true

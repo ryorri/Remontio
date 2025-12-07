@@ -78,6 +78,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { formatDate } from '@/helpers/dateFormatter'
 import { Backend } from '@/main'
 import { getCurrentUserId } from '@/helpers/userHelpers'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 interface UiShoppingListRow {
   id: string

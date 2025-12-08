@@ -43,7 +43,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="cst-btn">
+              <a @click="goToCalculators()" class="cst-btn">
                 <span class="nav-icon">🧮</span>
                 <span class="nav-text">Kalkulatory</span>
               </a>
@@ -118,6 +118,9 @@ const goToBudgets = () => {
 }
 const goToContacts = () => {
   router.push({ name: 'ContactList' })
+}
+const goToCalculators = () => {
+  router.push({ name: 'CalculatorList' })
 }
 
 //////////////////////

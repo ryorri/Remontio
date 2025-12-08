@@ -164,7 +164,7 @@ const router = createRouter({
       component: () => import('@/views/components/shoppinglists/ShoppingListCreateAndEdit.vue'),
       meta: { requiresAuth: true },
     },
-    ////////////////////PLANNING PAGES ROUTES////////////////////////////
+    ////////////////////CONTACTS PAGES ROUTES////////////////////////////
     {
       path: '/contacts',
       name: 'ContactList',
@@ -187,6 +187,25 @@ const router = createRouter({
       path: '/contacts-details/:contactId',
       name: 'ContactDetails',
       component: () => import('@/views/components/contacts/ContactDetails.vue'),
+      meta: { requiresAuth: true },
+    },
+    ////////////////////CONTACTS PAGES ROUTES////////////////////////////
+    {
+      path: '/calculations',
+      name: 'CalculatorList',
+      component: () => import('@/views/components/calculators/CalculatorList.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/calculations-create',
+      name: 'CalculatorCreate',
+      component: () => import('@/views/components/calculators/CalculatorCreate.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/calculations-edit/:calculationId',
+      name: 'CalculatorEdit',
+      component: () => import('@/views/components/calculators/CalculatorEdit.vue'),
       meta: { requiresAuth: true },
     },
     /////////////////////////////////////////////////////////////////

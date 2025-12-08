@@ -135,15 +135,6 @@
             @submit="handleCalculationSubmit"
           />
 
-          <!-- Type 2: Repair Wall Calculation -->
-          <RepairWallCalculation
-            v-else-if="selectedType === CalculationsTypeEnum._2"
-            :room-id="selectedRoomId"
-            :submitting="submitting"
-            @back="goBackToStep1"
-            @submit="handleCalculationSubmit"
-          />
-
           <!-- Type 3: Paint Calculation -->
           <PaintCalculation
             v-else-if="selectedType === CalculationsTypeEnum._3"
@@ -171,7 +162,6 @@
 import MainLayout from '@/views/layouts/MainLayout.vue'
 import WallCalculation from './calculatorTypes/WallCalculation.vue'
 import PaintCalculation from './calculatorTypes/PaintCalculation.vue'
-import RepairWallCalculation from './calculatorTypes/RepairWallCalculation.vue'
 import FloorCalculation from './calculatorTypes/FloorCalculation.vue'
 import CustomValueCalculation from './calculatorTypes/CustomValueCalculation.vue'
 import { Backend } from '@/main'
@@ -394,115 +384,6 @@ onMounted(() => {
   border-radius: 2px;
 }
 
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  padding: 1.5rem;
-  background: var(--color-bg-light-gray);
-  border-radius: 12px;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-}
-
-.meta-item svg {
-  font-size: 1.5rem;
-  color: var(--color-primary);
-  flex-shrink: 0;
-}
-
-.meta-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  min-width: 0;
-}
-
-.meta-label {
-  font-size: 0.75rem;
-  color: #666;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.meta-value {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.section-title svg {
-  color: var(--color-primary);
-}
-
-.calculation-summary {
-  padding: 1.5rem;
-  background: var(--color-bg-light-gray);
-  border-radius: 12px;
-}
-
-.summary-box {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.summary-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
-}
-
-.summary-label {
-  font-weight: 600;
-  color: #666;
-}
-
-.summary-value {
-  font-weight: 700;
-  color: var(--color-primary);
-  font-size: 1.125rem;
-}
-
-.header-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.header-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
 @media (max-width: 768px) {
   .steps-container {
     flex-direction: column;
@@ -511,10 +392,6 @@ onMounted(() => {
   .step-divider {
     width: 2px;
     height: 30px;
-  }
-
-  .meta-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>

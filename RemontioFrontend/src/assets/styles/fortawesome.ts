@@ -23,6 +23,9 @@ import {
   faSave,
   faInfoCircle,
   faUndo,
+  faChevronDown,
+  faShoppingCart,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import { faBell } from '@fortawesome/free-regular-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -48,6 +51,9 @@ library.add(
   faSave,
   faInfoCircle,
   faUndo,
+  faChevronDown,
+  faShoppingCart,
+  faTimes,
   faBell,
   faGithub,
 )

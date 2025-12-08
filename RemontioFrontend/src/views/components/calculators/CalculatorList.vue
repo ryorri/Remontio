@@ -69,13 +69,6 @@
                 <div class="action-buttons">
                   <button
                     class="btn btn-sm btn-primary"
-                    @click="openCalculation(calculation.id)"
-                    title="Otwórz"
-                  >
-                    <font-awesome-icon icon="eye" />
-                  </button>
-                  <button
-                    class="btn btn-sm btn-primary"
                     @click="onEdit(calculation.id)"
                     title="Edytuj"
                   >

@@ -49,7 +49,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="cst-btn">
+              <a @click="goToGallery()" class="cst-btn">
                 <span class="nav-icon">📸</span>
                 <span class="nav-text">Galeria</span>
               </a>
@@ -121,6 +121,9 @@ const goToContacts = () => {
 }
 const goToCalculators = () => {
   router.push({ name: 'CalculatorList' })
+}
+const goToGallery = () => {
+  router.push({ name: 'GalleryView' })
 }
 
 //////////////////////

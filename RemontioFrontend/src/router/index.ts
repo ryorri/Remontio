@@ -208,6 +208,13 @@ const router = createRouter({
       component: () => import('@/views/components/calculators/CalculatorEdit.vue'),
       meta: { requiresAuth: true },
     },
+    ////////////////////GALLERY PAGES ROUTES////////////////////////////
+    {
+      path: '/gallery',
+      name: 'GalleryView',
+      component: () => import('@/views/components/photosGallery/PhotoGalleryView.vue'),
+      meta: { requiresAuth: true },
+    },
     /////////////////////////////////////////////////////////////////
   ],
 })

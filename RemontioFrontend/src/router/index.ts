@@ -215,6 +215,13 @@ const router = createRouter({
       component: () => import('@/views/components/photosGallery/PhotoGalleryView.vue'),
       meta: { requiresAuth: true },
     },
+    ////////////////////ALERTS PAGES ROUTES////////////////////////////
+    {
+      path: '/alerts',
+      name: 'AlertPanel',
+      component: () => import('@/views/components/alerts/AlertPanel.vue'),
+      meta: { requiresAuth: true },
+    },
     /////////////////////////////////////////////////////////////////
   ],
 })

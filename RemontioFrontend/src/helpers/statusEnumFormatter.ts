@@ -45,3 +45,18 @@ export function getExtendedStatusLabel(): StatusOption[] {
     },
   ]
 }
+
+export function getStatusToAlerts(): StatusOption[] {
+  return [
+    {
+      value: StatusEnum._1,
+      label: getStatusLabel(StatusEnum._1),
+      description: 'Aktywne',
+    },
+    {
+      value: StatusEnum._2,
+      label: getStatusLabel(StatusEnum._2),
+      description: 'Zakończone',
+    },
+  ]
+}

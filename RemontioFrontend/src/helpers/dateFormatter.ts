@@ -95,3 +95,30 @@ export function getDateRangeError(
   }
   return ''
 }
+
+export function formatDateTime(date: Date | undefined): string {
+  if (!date) return 'N/A'
+  return new Date(date).toLocaleString('pl-PL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+export function formatRelativeTime(date: Date): string {
+  const now = new Date()
+  const diff = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+  if (diff < 60) return 'przed chwilą'
+  if (diff < 3600) return `${Math.floor(diff / 60)} min temu`
+  if (diff < 86400) return `${Math.floor(diff / 3600)} godz. temu`
+
+  return date.toLocaleString('pl-PL', {
+    day: '2-digit',
+    month: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}

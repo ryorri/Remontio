@@ -5,6 +5,10 @@ export class RemontioBackend extends Client {
   private static readonly REFRESH_TOKEN_KEY = 'remontio_refresh_token'
   private static readonly USER_DATA_KEY = 'remontio_user_data'
   private static readonly TOKEN_EXPIRY_KEY = 'remontio_token_expiry'
+  private static readonly REFRESH_BUFFER_MS = 60000 // 1 minuta
+  private static readonly MAX_REFRESH_WINDOW_MS = 5 * 60000 // 5 minut
+
+  private isRefreshing = false
 
   constructor(baseUrl: string) {
     super(baseUrl, {
@@ -13,17 +17,8 @@ export class RemontioBackend extends Client {
   }
 
   private async fetchWithAuth(url: RequestInfo, init?: RequestInit): Promise<Response> {
-    let token = this.getStoredToken()
+    const token = this.getStoredToken()
 
-    if (token && this.isTokenExpired()) {
-      if (this.canRefreshToken()) {
-        // Try to refresh if within 5-minute window
-        const refreshed = await this.refreshAuthToken()
-        if (refreshed) {
-          token = this.getStoredToken()
-        }
-      }
-    }
     if (token) {
       init = init || {}
       init.headers = {
@@ -34,16 +29,12 @@ export class RemontioBackend extends Client {
 
     const response = await fetch(url, init)
 
-    if (response.status === 401 && token && this.canRefreshToken()) {
+    if (response.status === 401 && !this.isRefreshing && this.canRefreshToken()) {
       const refreshed = await this.refreshAuthToken()
       if (refreshed) {
-        // Retry the request with new token
         const newToken = this.getStoredToken()
-        if (newToken && init) {
-          init.headers = {
-            ...init.headers,
-            Authorization: `Bearer ${newToken}`,
-          }
+        if (newToken) {
+          init!.headers = { ...init!.headers, Authorization: `Bearer ${newToken}` }
           return fetch(url, init)
         }
       }
@@ -75,26 +66,38 @@ export class RemontioBackend extends Client {
   }
 
   public getUserId(): string | null {
-    return localStorage.getItem(RemontioBackend.USER_DATA_KEY)
+    const userDataStr = localStorage.getItem(RemontioBackend.USER_DATA_KEY)
+    if (!userDataStr) return null
+
+    try {
+      const userData: UserDataDTO = JSON.parse(userDataStr)
+      return userData.id || null
+    } catch {
+      return null
+    }
+  }
+
+  private getTokenExpiry(): number | null {
+    const expiryStr = localStorage.getItem(RemontioBackend.TOKEN_EXPIRY_KEY)
+    return expiryStr ? parseInt(expiryStr) : null
   }
 
   public isTokenExpired(): boolean {
-    const expiryStr = localStorage.getItem(RemontioBackend.TOKEN_EXPIRY_KEY)
-    if (!expiryStr) return true
+    const expiry = this.getTokenExpiry()
+    if (!expiry) return true
 
-    const expiry = parseInt(expiryStr)
-    return Date.now() >= expiry - 60000
+    return Date.now() >= expiry + RemontioBackend.REFRESH_BUFFER_MS
   }
 
   public canRefreshToken(): boolean {
-    const expiryStr = localStorage.getItem(RemontioBackend.TOKEN_EXPIRY_KEY)
-    if (!expiryStr) return false
+    const expiry = this.getTokenExpiry()
+    if (!expiry) return false
 
-    const expiry = parseInt(expiryStr)
     const now = Date.now()
-    const fiveMinutes = 5 * 60 * 1000
+    const refreshStart = expiry - RemontioBackend.REFRESH_BUFFER_MS
+    const refreshEnd = expiry + RemontioBackend.MAX_REFRESH_WINDOW_MS
 
-    return now > expiry && now < expiry + fiveMinutes
+    return now >= refreshStart && now < refreshEnd
   }
 
   public isAuthenticated(): boolean {
@@ -106,6 +109,10 @@ export class RemontioBackend extends Client {
   }
 
   public async refreshAuthToken(): Promise<boolean> {
+    if (this.isRefreshing) return false
+
+    this.isRefreshing = true
+
     try {
       const userId = this.getUserId()
       const refreshToken = this.getStoredRefreshToken()
@@ -116,19 +123,16 @@ export class RemontioBackend extends Client {
       }
 
       const response = await this.getRefreshToken(userId, refreshToken)
+      const data = JSON.parse(response)
 
-      if (response) {
-        const data = JSON.parse(response)
-        this.setAuthTokens(data.token, data.newRefreshToken, data.user)
-        return true
-      }
-
-      this.clearAuth()
-      return false
+      this.setAuthTokens(data.token, data.newRefreshToken, data.user)
+      return true
     } catch (error) {
       console.error('Token refresh failed:', error)
       this.clearAuth()
       return false
+    } finally {
+      this.isRefreshing = false
     }
   }
 

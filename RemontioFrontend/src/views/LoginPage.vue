@@ -52,7 +52,13 @@
         </form>
 
         <div class="login-footer">
-          <p>Nie masz konta? <a href="#" class="register-link">Zarejestruj się</a></p>
+          <p>
+            Nie masz konta? <a @click="goToRegister()" class="register-link">Zarejestruj się</a>
+          </p>
+          <p>
+            Zapomniałeś hasła?
+            <a @click="goToResetPassword()" class="register-link">Zresetuj hasło</a>
+          </p>
         </div>
       </div>
     </div>
@@ -70,6 +76,12 @@ const authStore = useAuthStore()
 const username = ref('')
 const password = ref('')
 
+const goToRegister = () => {
+  router.push({ name: 'RegisterPage' })
+}
+const goToResetPassword = () => {
+  router.push({ name: 'ChangePasswordPage' })
+}
 const handleLogin = async () => {
   authStore.clearError()
   authStore.clearSessionExpiredMessage()

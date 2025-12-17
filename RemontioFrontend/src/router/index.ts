@@ -3,6 +3,8 @@ import HomePage from '@/views/HomePage.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import DashboardPage from '@/views/DashboardPage.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import RegisterPage from '@/views/RegisterPage.vue'
+import ResetPasswordPage from '@/views/ResetPasswordPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +23,16 @@ const router = createRouter({
       path: '/about',
       name: 'AboutPage',
       component: AboutPage,
+    },
+    {
+      path: '/register',
+      name: 'RegisterPage',
+      component: RegisterPage,
+    },
+    {
+      path: '/change-password',
+      name: 'ChangePasswordPage',
+      component: ResetPasswordPage,
     },
     {
       path: '/dashboard',

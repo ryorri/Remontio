@@ -126,7 +126,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="cst-btn">
+              <a @click="goToSettings()" class="cst-btn">
                 <span class="nav-icon">⚙️</span>
                 <span class="nav-text">Ustawienia</span>
               </a>
@@ -228,6 +228,9 @@ const goToGallery = () => {
 }
 const goToAlerts = () => {
   router.push({ name: 'AlertPanel' })
+}
+const goToSettings = () => {
+  router.push({ name: 'SettingsPanel' })
 }
 
 const goToAlertsAndCloseModal = () => {

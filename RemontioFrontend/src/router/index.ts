@@ -222,6 +222,13 @@ const router = createRouter({
       component: () => import('@/views/components/alerts/AlertPanel.vue'),
       meta: { requiresAuth: true },
     },
+    ////////////////////Settings PAGES ROUTES////////////////////////////
+    {
+      path: '/settings',
+      name: 'SettingsPanel',
+      component: () => import('@/views/components/settings/SettingsPanel.vue'),
+      meta: { requiresAuth: true },
+    },
     /////////////////////////////////////////////////////////////////
   ],
 })

@@ -4808,6 +4808,64 @@ export class Client {
 
   /**
    * @param username (optional)
+   * @param oldPassword (optional)
+   * @return OK
+   */
+  changePassword(
+    username: string | undefined,
+    oldPassword: string | undefined,
+  ): Promise<CreateUserDTO> {
+    let url_ = this.baseUrl + '/api/User/change-password?'
+    if (username === null) throw new globalThis.Error("The parameter 'username' cannot be null.")
+    else if (username !== undefined) url_ += 'username=' + encodeURIComponent('' + username) + '&'
+    if (oldPassword === null)
+      throw new globalThis.Error("The parameter 'oldPassword' cannot be null.")
+    else if (oldPassword !== undefined)
+      url_ += 'oldPassword=' + encodeURIComponent('' + oldPassword) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    let options_: RequestInit = {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processChangePassword(_response)
+    })
+  }
+
+  protected processChangePassword(response: Response): Promise<CreateUserDTO> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as CreateUserDTO)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<CreateUserDTO>(null as any)
+  }
+
+  /**
+   * @param username (optional)
    * @param password (optional)
    * @return OK
    */

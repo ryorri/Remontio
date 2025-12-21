@@ -881,37 +881,25 @@ export class Client {
 
   /**
    * @param budgetId (optional)
-   * @param name (optional)
-   * @param price (optional)
-   * @param total (optional)
-   * @param estimatedPrice (optional)
+   * @param body (optional)
    * @return OK
    */
   addBudgetItem(
     budgetId: string | undefined,
-    name: string | undefined,
-    price: number | undefined,
-    total: number | undefined,
-    estimatedPrice: number | undefined,
+    body: CreateBudgetItemDTO | undefined,
   ): Promise<boolean> {
     let url_ = this.baseUrl + '/api/Budget/add-budget-item?'
     if (budgetId === null) throw new globalThis.Error("The parameter 'budgetId' cannot be null.")
     else if (budgetId !== undefined) url_ += 'budgetId=' + encodeURIComponent('' + budgetId) + '&'
-    if (name === null) throw new globalThis.Error("The parameter 'name' cannot be null.")
-    else if (name !== undefined) url_ += 'name=' + encodeURIComponent('' + name) + '&'
-    if (price === null) throw new globalThis.Error("The parameter 'price' cannot be null.")
-    else if (price !== undefined) url_ += 'price=' + encodeURIComponent('' + price) + '&'
-    if (total === null) throw new globalThis.Error("The parameter 'total' cannot be null.")
-    else if (total !== undefined) url_ += 'total=' + encodeURIComponent('' + total) + '&'
-    if (estimatedPrice === null)
-      throw new globalThis.Error("The parameter 'estimatedPrice' cannot be null.")
-    else if (estimatedPrice !== undefined)
-      url_ += 'estimatedPrice=' + encodeURIComponent('' + estimatedPrice) + '&'
     url_ = url_.replace(/[?&]$/, '')
 
+    const content_ = JSON.stringify(body)
+
     let options_: RequestInit = {
+      body: content_,
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         Accept: 'application/json',
       },
     }
@@ -975,6 +963,64 @@ export class Client {
   }
 
   protected processRemoveBudgetItem(response: Response): Promise<boolean> {
+    const status = response.status
+    let _headers: any = {}
+    if (response.headers && response.headers.forEach) {
+      response.headers.forEach((v: any, k: any) => (_headers[k] = v))
+    }
+    if (status === 200) {
+      return response.text().then((_responseText) => {
+        let result200: any = null
+        result200 =
+          _responseText === ''
+            ? null
+            : (JSON.parse(_responseText, this.jsonParseReviver) as boolean)
+        return result200
+      })
+    } else if (status !== 200 && status !== 204) {
+      return response.text().then((_responseText) => {
+        return throwException(
+          'An unexpected server error occurred.',
+          status,
+          _responseText,
+          _headers,
+        )
+      })
+    }
+    return Promise.resolve<boolean>(null as any)
+  }
+
+  /**
+   * @param budgetId (optional)
+   * @param body (optional)
+   * @return OK
+   */
+  updateBudgetItem(
+    budgetId: string | undefined,
+    body: BudgetItemDataDTO | undefined,
+  ): Promise<boolean> {
+    let url_ = this.baseUrl + '/api/Budget/update-budget-item?'
+    if (budgetId === null) throw new globalThis.Error("The parameter 'budgetId' cannot be null.")
+    else if (budgetId !== undefined) url_ += 'budgetId=' + encodeURIComponent('' + budgetId) + '&'
+    url_ = url_.replace(/[?&]$/, '')
+
+    const content_ = JSON.stringify(body)
+
+    let options_: RequestInit = {
+      body: content_,
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    }
+
+    return this.http.fetch(url_, options_).then((_response: Response) => {
+      return this.processUpdateBudgetItem(_response)
+    })
+  }
+
+  protected processUpdateBudgetItem(response: Response): Promise<boolean> {
     const status = response.status
     let _headers: any = {}
     if (response.headers && response.headers.forEach) {
@@ -5204,12 +5250,26 @@ export interface BudgetDataDTO {
   userId: string | undefined
 }
 
+export enum BudgetItemCategory {
+  _0 = 0,
+  _1 = 1,
+  _2 = 2,
+  _3 = 3,
+  _4 = 4,
+  _5 = 5,
+  _6 = 6,
+  _7 = 7,
+  _8 = 8,
+}
+
 export interface BudgetItemDataDTO {
   id: string | undefined
   name: string | undefined
+  description?: string | undefined
+  category?: BudgetItemCategory
   price?: number
   total?: number
-  estimatetPrice?: number
+  estimatedPrice?: number
   isCompleted?: boolean
 }
 
@@ -5261,6 +5321,16 @@ export interface CreateBudgetDTO {
   roomId: string
   projectId: string
   userId: string | undefined
+}
+
+export interface CreateBudgetItemDTO {
+  name: string | undefined
+  description?: string | undefined
+  category?: BudgetItemCategory
+  price?: number
+  total?: number
+  estimatedPrice?: number
+  isCompleted?: boolean
 }
 
 export interface CreateCalculationDTO {

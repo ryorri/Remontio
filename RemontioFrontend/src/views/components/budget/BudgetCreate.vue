@@ -182,40 +182,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.budgets-container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem;
-  animation: fadeInUp 0.6s ease;
-}
-
-.budgets-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin: 0;
-}
-
 .budget-form .form-label {
-  font-weight: 600;
   color: var(--color-text-dark);
-  margin-bottom: 0.5rem;
-}
-
-.budget-form .form-control,
-.budget-form .form-select {
-  border: 1px solid var(--color-bg-light-gray);
-  border-radius: 8px;
-  padding: 0.75rem;
-  transition: all 0.2s ease;
-}
-
-.budget-form .form-control:focus,
-.budget-form .form-select:focus {
-  border-color: var(--color-primary-blue);
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.1);
 }
 </style>

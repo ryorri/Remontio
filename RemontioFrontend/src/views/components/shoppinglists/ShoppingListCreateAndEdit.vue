@@ -305,6 +305,55 @@ const cancel = () => {
   router.push({ name: 'ShoppingListsByBudget', params: { budgetId: budgetId.value } })
 }
 
+const updateBudgetItemEstimatedPrice = async (shoppingListId: string) => {
+  try {
+    // Get shopping list items to calculate total estimated price
+    const shoppingListItems = await Backend.getItemListByListId(shoppingListId)
+    const estimatedPrice = shoppingListItems.reduce(
+      (sum, item) => sum + (item.quantity || 0) * (item.price || 0),
+      0,
+    )
+
+    // Get budget items to find the one that was just created for this shopping list
+    const budgetItems = await Backend.getBudgetItems(budgetId.value)
+
+    // Find the budget item that corresponds to this shopping list (by name match)
+    // The backend creates a budget item with the same name as the shopping list
+    const shoppingListData = await Backend.getListById(shoppingListId)
+    const budgetItem = budgetItems.find((item) => item.name === shoppingListData.name)
+
+    if (budgetItem && budgetItem.id) {
+      // Update item with estimated price and add "(Lista zakupów)" suffix to distinguish it
+      await Backend.updateBudgetItem(budgetId.value, {
+        ...budgetItem,
+        name: `${shoppingListData.name} (Lista zakupów)`,
+        estimatedPrice: estimatedPrice,
+      })
+    } else {
+      // Try to find by name with suffix (in case it was already updated before)
+      const nameWithSuffix = `${shoppingListData.name} (Lista zakupów)`
+      const budgetItemWithSuffix = budgetItems.find((item) => item.name === nameWithSuffix)
+
+      if (budgetItemWithSuffix && budgetItemWithSuffix.id) {
+        // Just update the price, name already has suffix
+        await Backend.updateBudgetItem(budgetId.value, {
+          ...budgetItemWithSuffix,
+          estimatedPrice: estimatedPrice,
+        })
+      } else {
+        console.warn('Nie znaleziono itemu budżetu dla listy zakupów')
+        console.warn('Lista zakupów ma nazwę:', shoppingListData.name)
+        console.warn(
+          'Dostępne nazwy itemów:',
+          budgetItems.map((i) => i.name),
+        )
+      }
+    }
+  } catch (e) {
+    console.error('Błąd podczas aktualizacji szacowanej ceny:', e)
+  }
+}
+
 const findCreatedListId = async (): Promise<string | null> => {
   if (!userId.value) return null
   try {
@@ -374,9 +423,21 @@ const onSaveList = async () => {
       })
       const newListId = await findCreatedListId()
       if (!newListId) throw new Error('Nie udało się pobrać ID nowej listy')
+
       // Attach list to budget (snapshot=false)
       try {
         await Backend.addShoppingListAsItem(budgetId.value, newListId, false)
+        // Po dodaniu listy zakupów do budżetu, zaktualizuj pole "wydano"
+        try {
+          const budgetItems = await Backend.getBudgetItems(budgetId.value)
+          const totalSpent = budgetItems
+            .filter((item) => item.isCompleted)
+            .reduce((sum, item) => sum + (item.estimatedPrice || 0), 0)
+          const budget = await Backend.getBudgetById(budgetId.value)
+          await Backend.editBudget({ ...budget, spent: totalSpent })
+        } catch (e) {
+          console.warn('Nie udało się zaktualizować pola wydano po dodaniu listy', e)
+        }
       } catch (e) {
         console.warn('Nie udało się podpiąć listy do budżetu', e)
       }
@@ -397,7 +458,7 @@ const onSaveList = async () => {
     }
 
     success.value = true
-    // Do not redirect automatically; allow adding items after creating list
+    // Nie przekierowuj po utworzeniu listy
   } catch (e: any) {
     error.value = e?.message || 'Nie udało się zapisać listy zakupowej'
   } finally {
@@ -433,7 +494,17 @@ const onSaveItems = async () => {
     try {
       listItems.value = await Backend.getItemListByListId(listId.value!)
     } catch {}
+
+    // Update budget item estimated price if this list is attached to a budget
+    if (budgetId.value && listId.value) {
+      await updateBudgetItemEstimatedPrice(listId.value)
+    }
+
     success.value = true
+    // Przekieruj do szczegółów budżetu po zapisaniu pozycji
+    setTimeout(() => {
+      router.push({ name: 'BudgetDetails', params: { budgetId: budgetId.value } })
+    }, 500)
     // Clear inputs after save
     items.value = [{ name: '', quantity: 1, price: 0 }]
   } catch (e: any) {
@@ -476,6 +547,11 @@ async function removeExistingItem(li: ListItemDataDTO) {
       const s = summaries[idx]!
       summaries[idx] = { ...s, itemCount: Math.max(0, (s.itemCount || 0) - 1) }
       saveAllLists(summaries)
+    }
+
+    // Update budget item estimated price if this list is attached to a budget
+    if (budgetId.value && listId.value) {
+      await updateBudgetItemEstimatedPrice(listId.value)
     }
   } catch (e) {
     console.warn('Nie udało się usunąć pozycji', e)

@@ -159,6 +159,18 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/budget/:budgetId/item/add',
+      name: 'BudgetItemAdd',
+      component: () => import('@/views/components/budget/BudgetItemAdd.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/budget/:budgetId/item/:itemId/edit',
+      name: 'BudgetItemEdit',
+      component: () => import('@/views/components/budget/BudgetItemEdit.vue'),
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/budget/:budgetId/shopping-lists',
       name: 'ShoppingListsByBudget',
       component: () => import('@/views/components/shoppinglists/ShoppinglistList.vue'),

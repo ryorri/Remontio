@@ -84,6 +84,14 @@
                       >
                         Usuń
                       </button>
+                      <button class="panel-item" @click="openExportModal(budget.id)">
+                        <i class="fas fa-file-export"></i> Eksportuj
+                      </button>
+                      <BudgetExportModal
+                        v-if="showExportModal && exportBudgetData"
+                        :budget="exportBudgetData"
+                        @close="closeExportModal"
+                      />
                     </div>
                   </div>
                 </td>
@@ -97,6 +105,26 @@
 </template>
 
 <script lang="ts" setup>
+import BudgetExportModal from './BudgetExportModal.vue'
+const showExportModal = ref(false)
+const exportBudgetData = ref<any | null>(null)
+
+const openExportModal = (budgetId: string | undefined) => {
+  if (!budgetId) return
+  const budget = budgetList.value.find((b) => b.id === budgetId)
+  if (!budget) return
+  exportBudgetData.value = {
+    ...budget,
+    projectName: projectNames.value[budget.id!] || '-',
+    roomName: roomNames.value[budget.id!] || '-',
+  }
+  showExportModal.value = true
+}
+
+const closeExportModal = () => {
+  showExportModal.value = false
+  exportBudgetData.value = null
+}
 import { Backend } from '@/main'
 import MainLayout from '@/views/layouts/MainLayout.vue'
 import type { BudgetDataDTO } from '@/backend/BackendBase'
@@ -207,6 +235,165 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.budgets-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fadeInUp 0.6s ease;
+}
+
+.budgets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.budgets-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.budgets-header .btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  gap: 1rem;
+}
+
+.empty-state i {
+  font-size: 5rem;
+  color: var(--color-primary-purple);
+  opacity: var(--opacity-medium);
+}
+
+.empty-state h2 {
+  font-size: 2rem;
+  color: var(--color-text-dark);
+  margin: 0;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+  color: var(--color-text-medium);
+  margin: 0;
+}
+
+.table-container {
+  background: var(--color-bg-white);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow-light);
+  overflow: hidden auto;
+}
+
+.budgets-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.budgets-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--gradient-primary);
+}
+
+.budgets-table th {
+  padding: 1rem;
+  text-align: left;
+  color: var(--color-text-white);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.budgets-table td {
+  padding: 1rem;
+  color: var(--color-text-dark);
+}
+
+.budgets-table tbody tr {
+  border-bottom: 1px solid var(--color-bg-light-gray);
+  transition: all 0.2s ease;
+}
+
+.budget-row {
+  cursor: pointer;
+}
+
+.budget-row:hover {
+  background: var(--color-bg-light-gray);
+}
+
+.budget-name {
+  font-weight: 600;
+  color: var(--color-primary-blue);
+}
+
+.budget-description {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--color-text-medium);
+}
+
+.budget-meta {
+  color: var(--color-text-medium);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.budget-amount {
+  font-weight: 500;
+  color: var(--color-text-dark);
+  white-space: nowrap;
+}
+
+.date-cell {
+  white-space: nowrap;
+  color: var(--color-text-medium);
+}
+
+.toggle-arrow {
+  background: var(--gradient-primary);
+  text-align: center;
+  cursor: pointer;
+}
+
+.toggle-arrow td {
+  padding: 8px 12px;
+  color: var(--color-text-white);
+  font-weight: 600;
+}
+
+.toggle-arrow:hover {
+  opacity: 0.9;
+}
+
+.actions-dropdown-row td {
+  padding: 0;
+  background: var(--color-bg-light-gray);
+}
+
 .actions-panel {
   background: var(--color-bg-light-gray);
   border-top: 1px solid var(--color-bg-light-gray);
@@ -239,5 +426,14 @@ onUnmounted(() => {
 
 .panel-item.danger {
   color: var(--color-red);
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
 }
 </style>

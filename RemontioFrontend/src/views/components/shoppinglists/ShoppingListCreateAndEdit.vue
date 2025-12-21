@@ -162,6 +162,18 @@
             >
               <i class="fas fa-check" aria-hidden="true"></i> Zapisz pozycje
             </button>
+
+            <!-- Export button -->
+            <button
+              type="button"
+              class="btn btn-outline-secondary header-btn"
+              @click="openExportModal"
+              :disabled="!hasList"
+              title="Eksportuj listę"
+            >
+              <i class="fas fa-file-export" aria-hidden="true"></i> Eksport
+            </button>
+
             <button
               type="button"
               class="btn btn-danger header-btn"
@@ -179,6 +191,13 @@
         </form>
       </div>
     </div>
+
+    <!-- Export modal -->
+    <ShoppinglistExportModal
+      v-if="showExportModal"
+      :shoppingList="exportShoppingList"
+      @close="showExportModal = false"
+    />
   </MainLayout>
 </template>
 
@@ -191,6 +210,7 @@ import { useRouter, useRoute } from 'vue-router'
 import type { ListItemDataDTO } from '@/backend/BackendBase'
 import { formatCurrency } from '@/helpers/currencyFormatter'
 import { getCurrentUserId } from '@/helpers/userHelpers'
+import ShoppinglistExportModal from './ShoppinglistExportModal.vue' // <-- import modal
 
 interface ShoppingListItem {
   name: string
@@ -558,6 +578,32 @@ async function removeExistingItem(li: ListItemDataDTO) {
   } finally {
     submitting.value = false
   }
+}
+
+// --- modal state & helpers ---
+const showExportModal = ref(false)
+
+const exportShoppingList = computed(() => {
+  // prefer persisted items from backend (listItems) when available
+  return {
+    id: listId.value,
+    name: name.value,
+    description: description.value,
+    createAt: existingListData.value?.createAt ?? new Date().toISOString(),
+    items:
+      listItems.value && listItems.value.length > 0
+        ? listItems.value
+        : items.value.map((it) => ({ name: it.name, quantity: it.quantity, price: it.price })),
+  }
+})
+
+const openExportModal = () => {
+  if (!hasList.value) {
+    // if list not persisted yet, still allow export of current inputs
+    showExportModal.value = true
+    return
+  }
+  showExportModal.value = true
 }
 </script>
 

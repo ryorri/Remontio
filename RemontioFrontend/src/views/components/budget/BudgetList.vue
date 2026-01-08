@@ -33,73 +33,72 @@
               <th>Wydano</th>
               <th>Szacowana cena</th>
               <th>Utworzono</th>
+              <th>Akcje</th>
             </tr>
           </thead>
           <tbody>
-            <template v-for="budget in budgetList" :key="budget.id">
-              <tr class="budget-row" @click="openBudget(budget.id)">
-                <td class="budget-name">{{ budget.name }}</td>
-                <td class="budget-description">
-                  {{ budget.description || 'Brak opisu' }}
-                </td>
-                <td class="budget-meta">
-                  {{ projectNames[budget.id!] || '-' }}
-                </td>
-                <td class="budget-meta">
-                  {{ roomNames[budget.id!] || '-' }}
-                </td>
+            <tr v-for="budget in budgetList" :key="budget.id" class="budget-row">
+              <td class="budget-name" @click="openBudget(budget.id)">{{ budget.name }}</td>
+              <td class="budget-description" @click="openBudget(budget.id)">
+                {{ budget.description || 'Brak opisu' }}
+              </td>
+              <td class="budget-meta" @click="openBudget(budget.id)">
+                {{ projectNames[budget.id!] || '-' }}
+              </td>
+              <td class="budget-meta" @click="openBudget(budget.id)">
+                {{ roomNames[budget.id!] || '-' }}
+              </td>
 
-                <td class="budget-amount">
-                  {{ formatCurrency(budget.spent ?? 0, (budget as any)?.currency || 'PLN') }}
-                </td>
-                <td class="budget-amount">
-                  {{ formatCurrency(budget.estimatedPrice, (budget as any)?.currency || 'PLN') }}
-                </td>
-                <td class="date-cell">
-                  {{ formatDate(budget.createAt) }}
-                </td>
-              </tr>
-              <tr class="toggle-arrow" @click.stop="toggleMenu(budget.id)">
-                <td colspan="8">{{ openMenuId === budget.id ? '▲' : '▼' }} Akcje</td>
-              </tr>
-              <tr v-if="openMenuId === budget.id" class="actions-dropdown-row" @click.stop>
-                <td colspan="8">
-                  <div class="actions-panel">
-                    <div class="panel-actions">
-                      <button
-                        class="panel-item"
-                        @click="handleAction(() => viewShoppingLists(budget.id))"
-                      >
-                        <i class="fas fa-shopping-cart"></i> Listy zakupowe
-                      </button>
-                      <button class="panel-item" @click="handleAction(() => openBudget(budget.id))">
-                        Otwórz
-                      </button>
-                      <button class="panel-item" @click="handleAction(() => onEdit(budget.id))">
-                        Edytuj
-                      </button>
-                      <button
-                        class="panel-item danger"
-                        @click="handleAction(() => onDelete(budget.id))"
-                      >
-                        Usuń
-                      </button>
-                      <button class="panel-item" @click="openExportModal(budget.id)">
-                        <i class="fas fa-file-export"></i> Eksportuj
-                      </button>
-                      <BudgetExportModal
-                        v-if="showExportModal && exportBudgetData"
-                        :budget="exportBudgetData"
-                        @close="closeExportModal"
-                      />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </template>
+              <td class="budget-amount" @click="openBudget(budget.id)">
+                {{ formatCurrency(budget.spent ?? 0, (budget as any)?.currency || 'PLN') }}
+              </td>
+              <td class="budget-amount" @click="openBudget(budget.id)">
+                {{ formatCurrency(budget.estimatedPrice, (budget as any)?.currency || 'PLN') }}
+              </td>
+              <td class="date-cell" @click="openBudget(budget.id)">
+                {{ formatDate(budget.createAt) }}
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-sm btn-primary"
+                    @click="openBudget(budget.id)"
+                    title="Otwórz"
+                  >
+                    <font-awesome-icon :icon="['fas', 'folder-open']" />
+                  </button>
+                  <button
+                    class="btn btn-sm btn-info"
+                    @click="viewShoppingLists(budget.id)"
+                    title="Listy zakupowe"
+                  >
+                    <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+                  </button>
+                  <button class="btn btn-sm btn-primary" @click="onEdit(budget.id)" title="Edytuj">
+                    <font-awesome-icon :icon="['fas', 'edit']" />
+                  </button>
+                  <button
+                    class="btn btn-sm btn-success"
+                    @click="openExportModal(budget.id)"
+                    title="Eksportuj"
+                  >
+                    <font-awesome-icon :icon="['fas', 'file-export']" />
+                  </button>
+                  <button class="btn btn-sm btn-danger" @click="onDelete(budget.id)" title="Usuń">
+                    <font-awesome-icon :icon="['fas', 'trash-can']" />
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
+
+      <BudgetExportModal
+        v-if="showExportModal && exportBudgetData"
+        :budget="exportBudgetData"
+        @close="closeExportModal"
+      />
     </div>
   </MainLayout>
 </template>
@@ -128,15 +127,15 @@ const closeExportModal = () => {
 import { Backend } from '@/main'
 import MainLayout from '@/views/layouts/MainLayout.vue'
 import type { BudgetDataDTO } from '@/backend/BackendBase'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { getCurrentUserId } from '@/helpers/userHelpers'
 import { formatDate } from '@/helpers/dateFormatter'
 import { formatCurrency } from '@/helpers/currencyFormatter'
 import { useRouter } from 'vue-router'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const budgetList = ref<BudgetDataDTO[]>([])
 const loading = ref(true)
-const openMenuId = ref<string | null>(null)
 const projectNames = ref<Record<string, string>>({})
 const roomNames = ref<Record<string, string>>({})
 const router = useRouter()
@@ -189,16 +188,6 @@ const openBudget = (budgetId: string | undefined) => {
   router.push({ name: 'BudgetDetails', params: { budgetId } })
 }
 
-const toggleMenu = (budgetId: string | undefined) => {
-  if (!budgetId) return
-  openMenuId.value = openMenuId.value === budgetId ? null : budgetId
-}
-
-const handleAction = (action: () => void) => {
-  action()
-  openMenuId.value = null
-}
-
 const onEdit = (budgetId: string | undefined) => {
   if (!budgetId) return
   router.push({ name: 'BudgetEdit', params: { budgetId } })
@@ -220,17 +209,8 @@ const viewShoppingLists = (budgetId: string | undefined) => {
   router.push({ name: 'ShoppingListsByBudget', params: { budgetId } })
 }
 
-const handleOutsideClick = () => {
-  openMenuId.value = null
-}
-
 onMounted(async () => {
-  window.addEventListener('click', handleOutsideClick)
   await fetchBudgets()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('click', handleOutsideClick)
 })
 </script>
 
@@ -316,7 +296,7 @@ onUnmounted(() => {
 
 .budgets-table th {
   padding: 1rem;
-  text-align: left;
+  text-align: center;
   color: var(--color-text-white);
   font-weight: 600;
   text-transform: uppercase;
@@ -335,10 +315,6 @@ onUnmounted(() => {
   transition: all 0.2s ease;
 }
 
-.budget-row {
-  cursor: pointer;
-}
-
 .budget-row:hover {
   background: var(--color-bg-light-gray);
 }
@@ -346,6 +322,7 @@ onUnmounted(() => {
 .budget-name {
   font-weight: 600;
   color: var(--color-primary-blue);
+  cursor: pointer;
 }
 
 .budget-description {
@@ -354,78 +331,33 @@ onUnmounted(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--color-text-medium);
+  cursor: pointer;
 }
 
 .budget-meta {
   color: var(--color-text-medium);
   font-size: 0.9rem;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .budget-amount {
   font-weight: 500;
   color: var(--color-text-dark);
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .date-cell {
   white-space: nowrap;
   color: var(--color-text-medium);
-}
-
-.toggle-arrow {
-  background: var(--gradient-primary);
-  text-align: center;
   cursor: pointer;
 }
 
-.toggle-arrow td {
-  padding: 8px 12px;
-  color: var(--color-text-white);
-  font-weight: 600;
-}
-
-.toggle-arrow:hover {
-  opacity: 0.9;
-}
-
-.actions-dropdown-row td {
-  padding: 0;
-  background: var(--color-bg-light-gray);
-}
-
-.actions-panel {
-  background: var(--color-bg-light-gray);
-  border-top: 1px solid var(--color-bg-light-gray);
-  box-shadow: inset 0 1px 0 var(--shadow-light);
-  padding: 12px 16px;
-}
-
-.panel-actions {
+.action-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.5rem;
   justify-content: center;
-}
-
-.panel-item {
-  padding: 10px 14px;
-  background: var(--color-bg-light-gray);
-  border: 1px solid var(--color-bg-light-gray);
-  border-radius: 8px;
-  color: var(--color-text-dark);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.panel-item:hover {
-  background: var(--color-bg-white);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px var(--shadow-light);
-}
-
-.panel-item.danger {
-  color: var(--color-red);
 }
 
 .loading-state {

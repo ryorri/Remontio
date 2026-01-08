@@ -3,7 +3,7 @@
     <div class="projects-container">
       <div class="projects-header">
         <h1 class="projects-title">Moje Projekty</h1>
-        <button class="btn btn-primary" @click="createNewProject">
+        <button class="btn btn-primary header-btn" @click="createNewProject">
           <i class="fas fa-plus"></i> Nowy Projekt
         </button>
       </div>
@@ -31,66 +31,58 @@
               <th>Status</th>
               <th>Utworzono</th>
               <th>Zamknięto</th>
+              <th>Akcje</th>
             </tr>
           </thead>
           <tbody>
-            <template v-for="project in projectsList" :key="project.id">
-              <tr class="project-row" @click="openProject(project.id)">
-                <td class="project-name">{{ project.name }}</td>
-                <td class="project-description">
-                  {{ project.description || 'Brak opisu' }}
-                </td>
-                <td>
-                  <span class="project-status" :class="`status-${project.status}`">
-                    {{ getStatusLabel(project.status) }}
-                  </span>
-                </td>
-                <td class="date-cell">
-                  {{ formatDate(project.createAt) }}
-                </td>
-                <td class="date-cell">
-                  {{ formatDate(project.closedAt) }}
-                </td>
-              </tr>
-              <tr class="toggle-arrow" @click.stop="toggleMenu(project.id)">
-                <td colspan="5">{{ openMenuId === project.id ? '▲' : '▼' }} Akcje</td>
-              </tr>
-              <tr v-if="openMenuId === project.id" class="actions-dropdown-row" @click.stop>
-                <td colspan="5">
-                  <div class="actions-panel">
-                    <div class="panel-actions">
-                      <button
-                        class="panel-item"
-                        @click="handleAction(() => onRoomList(project.id))"
-                      >
-                        Pokoje
-                      </button>
-                      <button
-                        class="panel-item"
-                        @click="handleAction(() => openProject(project.id))"
-                      >
-                        Otwórz
-                      </button>
-                      <button class="panel-item" @click="handleAction(() => onEdit(project.id))">
-                        Edytuj
-                      </button>
-                      <button
-                        class="panel-item"
-                        @click="handleAction(() => onChangeStatus(project.id))"
-                      >
-                        Zmień status
-                      </button>
-                      <button
-                        class="panel-item danger"
-                        @click="handleAction(() => onDelete(project.id))"
-                      >
-                        Usuń
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </template>
+            <tr v-for="project in projectsList" :key="project.id" class="project-row">
+              <td class="project-name" @click="openProject(project.id)">{{ project.name }}</td>
+              <td class="project-description" @click="openProject(project.id)">
+                {{ project.description || 'Brak opisu' }}
+              </td>
+              <td @click="openProject(project.id)">
+                <span class="project-status" :class="`status-${project.status}`">
+                  {{ getStatusLabel(project.status) }}
+                </span>
+              </td>
+              <td class="date-cell" @click="openProject(project.id)">
+                {{ formatDate(project.createAt) }}
+              </td>
+              <td class="date-cell" @click="openProject(project.id)">
+                {{ formatDate(project.closedAt) }}
+              </td>
+              <td>
+                <div class="action-buttons">
+                  <button
+                    class="btn btn-sm btn-primary"
+                    @click="openProject(project.id)"
+                    title="Otwórz"
+                  >
+                    <font-awesome-icon :icon="['fas', 'folder-open']" />
+                  </button>
+                  <button
+                    class="btn btn-sm btn-primary"
+                    @click="onRoomList(project.id)"
+                    title="Pokoje"
+                  >
+                    <font-awesome-icon :icon="['fas', 'door-open']" />
+                  </button>
+                  <button class="btn btn-sm btn-primary" @click="onEdit(project.id)" title="Edytuj">
+                    <font-awesome-icon :icon="['fas', 'edit']" />
+                  </button>
+                  <button
+                    class="btn btn-sm btn-warning"
+                    @click="onChangeStatus(project.id)"
+                    title="Zmień status"
+                  >
+                    <font-awesome-icon :icon="['fas', 'exchange-alt']" />
+                  </button>
+                  <button class="btn btn-sm btn-danger" @click="onDelete(project.id)" title="Usuń">
+                    <font-awesome-icon :icon="['fas', 'trash-can']" />
+                  </button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -101,16 +93,16 @@
 <script lang="ts" setup>
 import MainLayout from '@/views/layouts/MainLayout.vue'
 import { Backend } from '@/main'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import type { ProjectDataDTO } from '@/backend/BackendBase'
 import { getStatusLabel } from '@/helpers/statusEnumFormatter'
 import { getCurrentUserId } from '@/helpers/userHelpers'
 import { formatDate } from '@/helpers/dateFormatter'
 import { useRouter } from 'vue-router'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const projectsList = ref<ProjectDataDTO[]>([])
 const loading = ref(true)
-const openMenuId = ref<string | null>(null)
 const router = useRouter()
 
 const fetchProjects = async () => {
@@ -139,17 +131,7 @@ const openProject = (projectId: string | undefined) => {
   }
 }
 
-const toggleMenu = (projectId: string | undefined) => {
-  if (!projectId) return
-  openMenuId.value = openMenuId.value === projectId ? null : projectId
-}
-
-const handleAction = (action: () => void) => {
-  action()
-  openMenuId.value = null
-}
-
-// Placeholder action handlers
+// Action handlers
 const onEdit = (projectId: string | undefined) => {
   if (projectId) {
     router.push({
@@ -185,18 +167,8 @@ const onDelete = (projectId: string | undefined) => {
   }
 }
 
-// Close dropdown on outside click
-const handleOutsideClick = () => {
-  openMenuId.value = null
-}
-
 onMounted(async () => {
-  window.addEventListener('click', handleOutsideClick)
   await fetchProjects()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('click', handleOutsideClick)
 })
 </script>
 
@@ -282,7 +254,7 @@ onUnmounted(() => {
 
 .projects-table th {
   padding: 1rem;
-  text-align: left;
+  text-align: center;
   color: var(--color-text-white);
   font-weight: 600;
   text-transform: uppercase;
@@ -301,11 +273,12 @@ onUnmounted(() => {
   transition: all 0.2s ease;
 }
 
-.project-row {
-  cursor: pointer;
+.project-row:hover {
+  background: var(--color-bg-light-gray);
 }
 
 .project-name {
+  cursor: pointer;
   font-weight: 600;
   color: var(--color-primary-blue);
 }
@@ -316,10 +289,11 @@ onUnmounted(() => {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--color-text-medium);
+  cursor: pointer;
 }
 
-.date-cell,
-.owner-cell {
+.date-cell {
+  cursor: pointer;
   white-space: nowrap;
   color: var(--color-text-medium);
 }
@@ -330,59 +304,9 @@ onUnmounted(() => {
   width: 14px;
 }
 
-.owner-cell i {
-  color: var(--color-primary-purple);
-  margin-right: 0.5rem;
-}
-
-.toggle-arrow {
-  background: var(--gradient-primary);
-  text-align: center;
-  cursor: pointer;
-}
-
-.toggle-arrow td {
-  padding: 8px 12px;
-  color: var(--color-text-white);
-  font-weight: 600;
-}
-
-.actions-dropdown-row td {
-  padding: 0;
-  background: var(--color-bg-light-gray);
-}
-
-.actions-panel {
-  background: var(--color-bg-light-gray);
-  border-top: 1px solid var(--color-bg-light-gray);
-  box-shadow: inset 0 1px 0 var(--shadow-light);
-  padding: 12px 16px;
-}
-
-.panel-actions {
+.action-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.5rem;
   justify-content: center;
-}
-
-.panel-item {
-  padding: 10px 14px;
-  background: var(--color-bg-light-gray);
-  border: 1px solid var(--color-bg-light-gray);
-  border-radius: 8px;
-  color: var(--color-text-dark);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.panel-item:hover {
-  background: var(--color-bg-white);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px var(--shadow-light);
-}
-
-.panel-item.danger {
-  color: var(--color-red);
 }
 </style>

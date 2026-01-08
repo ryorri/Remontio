@@ -95,8 +95,7 @@
           <button type="button" class="btn btn-secondary" @click="closeModal">Anuluj</button>
           <button type="submit" class="btn btn-primary" :disabled="isSaving">
             <i class="fas fa-save"></i>
-            <span v-if="!isSaving">Utwórz zadanie</span>
-            <span v-else>Tworzenie...</span>
+            {{ isSaving ? 'Tworzenie...' : 'Utwórz zadanie' }}
           </button>
         </div>
         <div v-if="saveError" class="mt-3 text-sm" style="color: #dc2626">{{ saveError }}</div>
@@ -190,25 +189,33 @@ async function handleSubmit() {
   isSaving.value = true
   saveError.value = ''
 
-  try {
-    const dto: CreateTaskDTO = {
-      name: formData.value.name,
-      description: formData.value.description || undefined,
-      status:
-        formData.value.status !== undefined ? (formData.value.status as StatusEnum) : undefined,
-      priority:
-        formData.value.priority !== undefined
-          ? (formData.value.priority as PriorityEnum)
-          : undefined,
-      createAt: new Date(),
-      startAt: makeLocalMidday(formData.value.startAt),
-      closedAt: undefined,
-      roomId: props.roomId,
-      projectId: props.projectId,
-      userId: props.userId,
-      estimatedTime: makeLocalMidday(formData.value.estimatedTime),
-    }
+  const startAtDate = makeLocalMidday(formData.value.startAt)
+  const estimatedTimeDate = makeLocalMidday(formData.value.estimatedTime)
 
+  if (!startAtDate) {
+    saveError.value = 'Nieprawidłowa data rozpoczęcia.'
+    isSaving.value = false
+    return
+  }
+
+  const createAtDate = new Date(startAtDate.getTime() - 1000) // 1 sekunda przed startAt
+
+  const dto: CreateTaskDTO = {
+    name: formData.value.name,
+    description: formData.value.description || undefined,
+    status: formData.value.status !== undefined ? (formData.value.status as StatusEnum) : undefined,
+    priority:
+      formData.value.priority !== undefined ? (formData.value.priority as PriorityEnum) : undefined,
+    createAt: createAtDate,
+    startAt: startAtDate,
+    closedAt: undefined,
+    roomId: props.roomId,
+    projectId: props.projectId,
+    userId: props.userId,
+    estimatedTime: estimatedTimeDate,
+  }
+
+  try {
     const success = await Backend.createTask(dto)
     if (success) {
       emit('created')
@@ -217,8 +224,7 @@ async function handleSubmit() {
       saveError.value = 'Serwer zwrócił niepowodzenie.'
     }
   } catch (e: any) {
-    saveError.value = 'Nie udało się utworzyć zadania.'
-    console.error(e)
+    saveError.value = e?.message || e?.toString() || 'Nie udało się utworzyć zadania.'
   } finally {
     isSaving.value = false
   }

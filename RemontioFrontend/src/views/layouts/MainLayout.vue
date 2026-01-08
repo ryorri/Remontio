@@ -2,7 +2,10 @@
   <div class="main-layout">
     <header class="header">
       <div class="header-inner">
-        <h1 class="title">🏠 Remontio</h1>
+        <h1 class="title">
+          <font-awesome-icon :icon="['fas', 'home']" />
+          Remontio
+        </h1>
         <div class="user-info">
           <button @click="showAlertModal = true" class="btn-icon-alert" title="Powiadomienia">
             <font-awesome-icon icon="bell" />
@@ -11,9 +14,7 @@
             }}</span>
           </button>
           <span class="user-name">{{ userData.name }} {{ userData.surname }}</span>
-          <button type="submit" @click="handleLogout" class="btn btn-secondary btn-compact">
-            Logout
-          </button>
+          <button type="submit" @click="handleLogout" class="btn-logout">Wyloguj</button>
         </div>
       </div>
     </header>
@@ -79,55 +80,73 @@
           <ul class="nav-list">
             <li>
               <a @click="goToProjects()" class="cst-btn">
-                <span class="nav-icon">📋</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'folder']" />
+                </span>
                 <span class="nav-text">Projekty</span>
               </a>
             </li>
             <li>
               <a @click="goToRooms()" class="cst-btn">
-                <span class="nav-icon">📋</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'door-open']" />
+                </span>
                 <span class="nav-text">Pokoje</span>
               </a>
             </li>
             <li>
               <a @click="goToPlanning()" class="cst-btn">
-                <span class="nav-icon">✅</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'check-circle']" />
+                </span>
                 <span class="nav-text">Zadania</span>
               </a>
             </li>
             <li>
               <a @click="goToBudgets()" class="cst-btn">
-                <span class="nav-icon">💰</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'shopping-cart']" />
+                </span>
                 <span class="nav-text">Budżet</span>
               </a>
             </li>
             <li>
               <a @click="goToCalculators()" class="cst-btn">
-                <span class="nav-icon">🧮</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'calculator']" />
+                </span>
                 <span class="nav-text">Kalkulatory</span>
               </a>
             </li>
             <li>
               <a @click="goToGallery()" class="cst-btn">
-                <span class="nav-icon">📸</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'cube']" />
+                </span>
                 <span class="nav-text">Galeria</span>
               </a>
             </li>
             <li>
               <a @click="goToContacts()" class="cst-btn">
-                <span class="nav-icon">📸</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'address-book']" />
+                </span>
                 <span class="nav-text">Kontakty</span>
               </a>
             </li>
             <li>
               <a @click="goToAlerts()" class="cst-btn">
-                <span class="nav-icon">📸</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'bell']" />
+                </span>
                 <span class="nav-text">Powiadomienia</span>
               </a>
             </li>
             <li>
               <a @click="goToSettings()" class="cst-btn">
-                <span class="nav-icon">⚙️</span>
+                <span class="nav-icon">
+                  <font-awesome-icon :icon="['fas', 'globe']" />
+                </span>
                 <span class="nav-text">Ustawienia</span>
               </a>
             </li>
@@ -297,10 +316,23 @@ const goToAlertsAndCloseModal = () => {
   font-size: 0.95rem;
 }
 
-/* Compact button size that reuses global .btn styles */
-.btn-compact {
-  padding: 8px 14px;
+/* Logout button styled to match header composition */
+.btn-logout {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--color-text-white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .container {

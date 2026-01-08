@@ -99,8 +99,7 @@
             <button type="button" class="btn btn-secondary" @click="closeModal">Anuluj</button>
             <button type="submit" class="btn btn-primary" :disabled="isSaving || loadingTask">
               <i class="fas fa-save"></i>
-              <span v-if="!isSaving">Zapisz</span>
-              <span v-else>Zapisywanie...</span>
+              {{ isSaving ? 'Zapisywanie...' : 'Zapisz' }}
             </button>
           </div>
         </div>

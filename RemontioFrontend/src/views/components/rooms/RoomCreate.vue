@@ -1,12 +1,12 @@
 <template>
   <MainLayout>
-    <div class="rooms-container">
+    <div class="budgets-container">
       <div class="details-wrapper p-4" style="max-width: 980px; margin: 0 auto">
-        <h1 class="rooms-title mb-4 d-flex align-items-center gap-2">
+        <h1 class="budgets-title mb-4 d-flex align-items-center gap-2">
           <i class="fas fa-plus-circle" aria-hidden="true"></i>
           Nowy pokój
         </h1>
-        <form @submit.prevent="onSubmit" class="status-form">
+        <form @submit.prevent="onSubmit" class="budget-form">
           <div class="mb-3">
             <label class="form-label">Projekt *</label>
             <select
@@ -76,22 +76,11 @@
           </div>
 
           <div class="d-flex flex-wrap gap-3">
-            <button
-              type="submit"
-              class="btn btn-primary header-btn"
-              :disabled="submitting || !canSubmit"
-            >
-              <span v-if="!submitting"
-                ><i class="fas fa-save" aria-hidden="true"></i> Utwórz pokój</span
-              >
-              <span v-else>Tworzenie...</span>
+            <button type="submit" class="btn btn-primary" :disabled="submitting || !canSubmit">
+              <i class="fas fa-save" aria-hidden="true"></i>
+              {{ submitting ? 'Tworzenie...' : 'Utwórz pokój' }}
             </button>
-            <button
-              type="button"
-              class="btn btn-secondary header-btn"
-              @click="cancel"
-              :disabled="submitting"
-            >
+            <button type="button" class="btn btn-secondary" @click="cancel" :disabled="submitting">
               <i class="fas fa-arrow-left" aria-hidden="true"></i> Anuluj
             </button>
           </div>
@@ -191,4 +180,10 @@ async function onSubmit() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+</style>

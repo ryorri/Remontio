@@ -6,11 +6,11 @@
           <h1 class="details-title">Edytuj budżet: {{ budget.name }}</h1>
         </div>
         <div class="header-actions">
-          <button class="btn btn-primary header-btn" @click="saveChanges" :disabled="saving">
-            <font-awesome-icon :icon="['fas', 'bars']" /> Zapisz zmiany
+          <button class="btn btn-primary" @click="saveChanges" :disabled="saving">
+            <font-awesome-icon :icon="['fas', 'save']" /> Zapisz zmiany
           </button>
-          <button class="btn btn-danger header-btn" @click="goBack" :disabled="saving">
-            Anuluj
+          <button class="btn btn-secondary" @click="goBack" :disabled="saving">
+            <font-awesome-icon :icon="['fas', 'arrow-left']" /> Anuluj
           </button>
         </div>
       </div>

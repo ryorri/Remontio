@@ -17,6 +17,7 @@ import {
   faArrowRight,
   faArrowLeft,
   faFolder,
+  faFolderOpen,
   faDoorOpen,
   faCube,
   faRulerCombined,
@@ -31,6 +32,8 @@ import {
   faExclamationTriangle,
   faBell,
   faSpinner,
+  faExchangeAlt,
+  faFileExport,
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
@@ -49,6 +52,7 @@ library.add(
   faArrowRight,
   faArrowLeft,
   faFolder,
+  faFolderOpen,
   faDoorOpen,
   faCube,
   faRulerCombined,
@@ -63,6 +67,8 @@ library.add(
   faExclamationTriangle,
   faBell,
   faSpinner,
+  faExchangeAlt,
+  faFileExport,
   faGithub,
 )
 export { FontAwesomeIcon }

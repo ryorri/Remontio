@@ -93,7 +93,7 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" @click="$emit('close')" class="btn btn-primary">Anuluj</button>
+            <button type="button" @click="$emit('close')" class="btn btn-secondary">Anuluj</button>
             <button type="submit" class="btn btn-primary" :disabled="isUploading">
               <span v-if="isUploading">
                 <div class="spinner-small"></div>

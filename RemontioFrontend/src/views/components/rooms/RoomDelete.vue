@@ -20,20 +20,10 @@
             </div>
           </div>
           <div class="d-flex flex-wrap gap-3 mt-3">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              @click="goBack"
-              :disabled="isDeleting"
-            >
+            <button class="btn btn-secondary" type="button" @click="goBack" :disabled="isDeleting">
               <i class="fas fa-arrow-left" aria-hidden="true"></i> Anuluj
             </button>
-            <button
-              class="btn btn-danger"
-              type="button"
-              @click="onDelete"
-              :disabled="isDeleting"
-            >
+            <button class="btn btn-danger" type="button" @click="onDelete" :disabled="isDeleting">
               <i class="fas fa-trash" aria-hidden="true"></i> Usuń pokój
             </button>
           </div>
@@ -91,8 +81,6 @@ async function onDelete() {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-</style>
   cursor: not-allowed;
 }
 </style>

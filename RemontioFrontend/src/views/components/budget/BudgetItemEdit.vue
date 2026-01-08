@@ -85,17 +85,13 @@
             </div>
 
             <div class="d-flex flex-wrap gap-3">
-              <button
-                type="submit"
-                class="btn btn-primary header-btn"
-                :disabled="submitting || !canSubmit"
-              >
+              <button type="submit" class="btn btn-primary" :disabled="submitting || !canSubmit">
                 <i class="fas fa-save" aria-hidden="true"></i>
                 {{ submitting ? 'Zapisywanie...' : 'Zapisz zmiany' }}
               </button>
               <button
                 type="button"
-                class="btn btn-secondary header-btn"
+                class="btn btn-secondary"
                 @click="cancel"
                 :disabled="submitting"
               >

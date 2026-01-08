@@ -6,7 +6,7 @@
           <h1 class="contacts-title">Galeria Zdjęć</h1>
         </div>
         <div class="header-actions">
-          <button @click="showUploadModal = true" class="btn btn-primary header-btn">
+          <button @click="showUploadModal = true" class="btn btn-primary">
             <font-awesome-icon :icon="['fas', 'plus']" />
             Dodaj Zdjęcie
           </button>
@@ -88,8 +88,8 @@
             <p>Czy na pewno chcesz usunąć to zdjęcie? Ta operacja jest nieodwracalna.</p>
           </div>
           <div class="modal-footer">
-            <button @click="photoToDelete = null" class="btn btn-primary">Anuluj</button>
-            <button @click="deletePhoto" class="btn btn-primary">
+            <button @click="photoToDelete = null" class="btn btn-secondary">Anuluj</button>
+            <button @click="deletePhoto" class="btn btn-danger">
               <font-awesome-icon :icon="['fas', 'trash-can']" />
               Usuń
             </button>

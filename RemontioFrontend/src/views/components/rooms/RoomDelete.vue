@@ -21,7 +21,7 @@
           </div>
           <div class="d-flex flex-wrap gap-3 mt-3">
             <button
-              class="btn header-btn btn-primary"
+              class="btn btn-secondary"
               type="button"
               @click="goBack"
               :disabled="isDeleting"
@@ -29,7 +29,7 @@
               <i class="fas fa-arrow-left" aria-hidden="true"></i> Anuluj
             </button>
             <button
-              class="btn header-btn danger-btn"
+              class="btn btn-danger"
               type="button"
               @click="onDelete"
               :disabled="isDeleting"
@@ -87,17 +87,12 @@ async function onDelete() {
 }
 </script>
 <style scoped>
-.danger-btn {
-  background: #dc3545;
-  color: #fff;
-  border: none;
-  transition: background 0.2s ease;
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-.danger-btn:hover {
-  background: #c82333;
-}
-.danger-btn:disabled {
-  opacity: 0.7;
+</style>
   cursor: not-allowed;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <MainLayout>
-    <div class="projects-container">
-      <div class="projects-header d-flex align-items-center flex-wrap gap-3">
-        <h1 class="projects-title mb-3">Zmień status projektu</h1>
+    <div class="budgets-container">
+      <div class="budgets-header d-flex align-items-center flex-wrap gap-3">
+        <h1 class="budgets-title mb-3">Zmień status projektu</h1>
         <div
           v-if="project && project.status !== undefined"
           class="d-flex align-items-center gap-2 mb-3"
@@ -28,7 +28,7 @@
         <button class="btn btn-secondary" @click="goBack">Powrót</button>
       </div>
 
-      <form v-else class="status-form" @submit.prevent="submitChange">
+      <form v-else class="budget-form" @submit.prevent="submitChange">
         <div class="meta-grid mb-4">
           <div class="meta-item">
             <i class="bi bi-folder"></i>
@@ -88,17 +88,12 @@
         </div>
 
         <div class="d-flex gap-3 flex-wrap">
-          <button type="submit" class="btn btn-primary header-btn">
-            <span v-if="!isSubmitting"> Zapisz zmiany</span>
-            <span v-else>Zapisywanie...</span>
+          <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+            <i class="fas fa-save" aria-hidden="true"></i>
+            {{ isSubmitting ? 'Zapisywanie...' : 'Zapisz zmiany' }}
           </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary header-btn"
-            @click="goBack"
-            :disabled="isSubmitting"
-          >
-            Anuluj
+          <button type="button" class="btn btn-secondary" @click="goBack" :disabled="isSubmitting">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i> Anuluj
           </button>
         </div>
 
@@ -180,3 +175,11 @@ function goBack() {
   router.push({ name: 'ProjectDetails', params: { projectId } })
 }
 </script>
+
+<style scoped>
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+</style>

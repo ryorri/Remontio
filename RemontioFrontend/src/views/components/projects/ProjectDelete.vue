@@ -20,20 +20,10 @@
             </div>
           </div>
           <div class="d-flex flex-wrap gap-3 mt-3">
-            <button
-              class="btn header-btn btn-primary"
-              type="button"
-              @click="goBack"
-              :disabled="isDeleting"
-            >
+            <button class="btn btn-secondary" type="button" @click="goBack" :disabled="isDeleting">
               <i class="fas fa-arrow-left" aria-hidden="true"></i> Anuluj
             </button>
-            <button
-              class="btn header-btn danger-btn"
-              type="button"
-              @click="onDelete"
-              :disabled="isDeleting"
-            >
+            <button class="btn btn-danger" type="button" @click="onDelete" :disabled="isDeleting">
               <i class="fas fa-trash" aria-hidden="true"></i> Usuń projekt
             </button>
           </div>
@@ -89,17 +79,9 @@ async function onDelete() {
 </script>
 
 <style scoped>
-.danger-btn {
-  background: #dc3545;
-  color: #fff;
-  border: none;
-  transition: background 0.2s ease;
-}
-.danger-btn:hover {
-  background: #c82333;
-}
-.danger-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>

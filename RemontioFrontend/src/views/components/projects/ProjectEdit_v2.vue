@@ -19,13 +19,13 @@
             <h1 class="details-title">Edytuj projekt</h1>
           </div>
           <div class="header-actions">
-            <button class="btn btn-outline-secondary header-btn" @click="goBack">
+            <button class="btn btn-secondary" @click="goBack">
               <i class="fas fa-arrow-left"></i> Anuluj
             </button>
-            <button class="btn btn-primary header-btn" @click="onSave" :disabled="saving">
+            <button class="btn btn-primary" @click="onSave" :disabled="saving">
               <i class="fas fa-save"></i> Zapisz
             </button>
-            <button class="btn header-btn danger" @click="onDelete" :disabled="deleting">
+            <button class="btn btn-danger" @click="onDelete" :disabled="deleting">
               <i class="fas fa-trash"></i> Usuń
             </button>
           </div>
@@ -72,7 +72,7 @@
 
           <div class="content-section" style="display: flex; gap: 12px">
             <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-            <button type="button" class="btn btn-outline-secondary" @click="goBack">Anuluj</button>
+            <button type="button" class="btn btn-secondary" @click="goBack">Anuluj</button>
           </div>
         </form>
       </div>

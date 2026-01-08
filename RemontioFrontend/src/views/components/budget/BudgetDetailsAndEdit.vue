@@ -7,10 +7,10 @@
           <span class="badge">Utworzono: {{ formatDate(budget.createAt) }}</span>
         </div>
         <div class="header-actions">
-          <button class="btn btn-success header-btn" @click="goToAddItem">
+          <button class="btn btn-success" @click="goToAddItem">
             <font-awesome-icon :icon="['fas', 'plus']" /> Dodaj pozycję
           </button>
-          <button class="btn btn-primary header-btn" @click="goToEdit">
+          <button class="btn btn-primary" @click="goToEdit">
             <font-awesome-icon :icon="['fas', 'edit']" /> Edytuj
           </button>
         </div>

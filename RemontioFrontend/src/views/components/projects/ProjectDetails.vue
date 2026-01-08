@@ -23,7 +23,7 @@
             <button class="btn btn-primary header-btn" @click="goBack">Powrót</button>
             <button class="btn btn-primary header-btn" @click="onEdit">Edytuj</button>
             <button class="btn btn-primary header-btn" @click="onChangeStatus">Zmień status</button>
-            <button class="btn btn-primary header-btn danger" @click="onDelete">Usuń</button>
+            <button class="btn btn-danger" @click="onDelete">Usuń</button>
           </div>
         </div>
 

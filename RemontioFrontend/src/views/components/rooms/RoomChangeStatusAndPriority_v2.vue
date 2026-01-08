@@ -1,8 +1,8 @@
 <template>
   <MainLayout>
-    <div class="rooms-container">
-      <div class="rooms-header d-flex align-items-center flex-wrap gap-3">
-        <h1 class="rooms-title mb-3">Zmień status i priorytet pokoju</h1>
+    <div class="budgets-container">
+      <div class="budgets-header d-flex align-items-center flex-wrap gap-3">
+        <h1 class="budgets-title mb-3">Zmień status i priorytet pokoju</h1>
         <div v-if="room && room.status !== undefined" class="d-flex align-items-center gap-2 mb-3">
           <span :class="['project-status', 'status-' + room.status]">{{
             getStatusLabel(room.status)
@@ -22,7 +22,7 @@
         <p>{{ loadError }}</p>
         <button class="btn btn-secondary" @click="goBack">Powrót</button>
       </div>
-      <form v-else class="status-form" @submit.prevent="submitChange">
+      <form v-else class="budget-form" @submit.prevent="submitChange">
         <div class="meta-grid mb-4">
           <div class="meta-item">
             <i class="fas fa-door-open"></i>
@@ -79,16 +79,12 @@
           </div>
         </div>
         <div class="d-flex gap-3 flex-wrap">
-          <button type="submit" class="btn btn-primary header-btn">
-            <span v-if="!isSubmitting">Zapisz zmiany</span><span v-else>Zapisywanie...</span>
+          <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+            <i class="fas fa-save" aria-hidden="true"></i>
+            {{ isSubmitting ? 'Zapisywanie...' : 'Zapisz zmiany' }}
           </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary header-btn"
-            @click="goBack"
-            :disabled="isSubmitting"
-          >
-            Anuluj
+          <button type="button" class="btn btn-secondary" @click="goBack" :disabled="isSubmitting">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i> Anuluj
           </button>
         </div>
         <div v-if="submitError" class="mt-3 alert alert-danger" role="alert">{{ submitError }}</div>
@@ -175,6 +171,12 @@ function goBack() {
 }
 </script>
 <style scoped>
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .priority-option.active {
   outline: 2px solid var(--color-primary-blue);
   border-radius: 8px;

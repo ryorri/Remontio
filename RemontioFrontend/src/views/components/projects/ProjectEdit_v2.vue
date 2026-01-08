@@ -25,7 +25,7 @@
             <button class="btn btn-primary header-btn" @click="onSave" :disabled="saving">
               <i class="fas fa-save"></i> Zapisz
             </button>
-            <button class="btn header-btn danger" @click="onDelete" :disabled="deleting">
+            <button class="btn header-btn danger-btn" @click="onDelete" :disabled="deleting">
               <i class="fas fa-trash"></i> Usuń
             </button>
           </div>

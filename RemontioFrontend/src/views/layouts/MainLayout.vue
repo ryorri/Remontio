@@ -11,7 +11,7 @@
             }}</span>
           </button>
           <span class="user-name">{{ userData.name }} {{ userData.surname }}</span>
-          <button type="submit" @click="authStore.logout" class="btn btn-secondary btn-compact">
+          <button type="submit" @click="handleLogout" class="btn btn-secondary btn-compact">
             Logout
           </button>
         </div>
@@ -170,6 +170,11 @@ const year = new Date().getFullYear()
 const showMenu = ref(true)
 const showAlertModal = ref(false)
 const userData = getUserData()
+
+const handleLogout = async () => {
+  authStore.logout()
+  router.push({ name: 'LoginPage' })
+}
 
 // Initialize alerts
 onMounted(async () => {

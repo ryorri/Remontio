@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.ContactsDTO;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -28,7 +29,7 @@ namespace UnitTests.Controller
         {
             _contactServiceMock.Setup(s => s.CreateContactAsync(It.IsAny<CreateContactDTO>())).ReturnsAsync(true);
 
-            var dto = new CreateContactDTO { Name = "c", ContactDetails = "123", UserId = "u" };
+            var dto = new CreateContactDTO { Name = "c", ContactDetails = "123", UserId = "u", Spec = SpecEnum.Electrician };
             var result = await _controller.CreateContact(dto);
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
@@ -41,7 +42,7 @@ namespace UnitTests.Controller
         {
             _contactServiceMock.Setup(s => s.CreateContactAsync(It.IsAny<CreateContactDTO>())).ThrowsAsync(new Exception("fail"));
 
-            var dto = new CreateContactDTO { Name = "c", ContactDetails = "123", UserId = "u" };
+            var dto = new CreateContactDTO { Name = "c", ContactDetails = "123", UserId = "u", Spec = SpecEnum.Electrician };
             var result = await _controller.CreateContact(dto);
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
@@ -53,7 +54,7 @@ namespace UnitTests.Controller
         [Test]
         public async Task EditContact_ReturnsOk_OnSuccess()
         {
-            var dto = new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u" };
+            var dto = new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u", Spec = SpecEnum.Electrician };
             _contactServiceMock.Setup(s => s.UpdateContactAsync(dto)).ReturnsAsync(true);
 
             var result = await _controller.EditContact(dto);
@@ -68,7 +69,7 @@ namespace UnitTests.Controller
         {
             _contactServiceMock.Setup(s => s.UpdateContactAsync(It.IsAny<ContactDataDTO>())).ThrowsAsync(new Exception("err"));
 
-            var dto = new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u" };
+            var dto = new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u", Spec = SpecEnum.Electrician };
             var result = await _controller.EditContact(dto);
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
@@ -99,7 +100,7 @@ namespace UnitTests.Controller
         [Test]
         public async Task GetContactById_ReturnsOk_OnSuccess()
         {
-            var contact = new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u" };
+            var contact = new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u", Spec = SpecEnum.Electrician };
             _contactServiceMock.Setup(s => s.GetContactAsync("1")).ReturnsAsync(contact);
 
             var result = await _controller.GetContactById("1");
@@ -122,7 +123,7 @@ namespace UnitTests.Controller
         [Test]
         public async Task GetContactList_ReturnsOk_OnSuccess()
         {
-            var list = new List<ContactDataDTO> { new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u" } };
+            var list = new List<ContactDataDTO> { new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u", Spec = SpecEnum.Electrician } };
             _contactServiceMock.Setup(s => s.GetAllContactsAsync()).ReturnsAsync(list);
 
             var result = await _controller.GetContactList();
@@ -145,7 +146,7 @@ namespace UnitTests.Controller
         [Test]
         public async Task GetContactListByUserId_ReturnsOk_OnSuccess()
         {
-            var list = new List<ContactDataDTO> { new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u" } };
+            var list = new List<ContactDataDTO> { new ContactDataDTO { Id = "1", Name = "c", ContactDetails = "123", CreatedDate = DateTime.UtcNow, UserId = "u", Spec = SpecEnum.Electrician } };
             _contactServiceMock.Setup(s => s.GetAllContactsByUserIdAsync("u")).ReturnsAsync(list);
 
             var result = await _controller.GetContactListByUserId("u");

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace Infrastructure.Services
 {
@@ -41,7 +42,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -58,13 +59,15 @@ namespace Infrastructure.Services
                 {
                     budget.Name = budgetDTO.Name;
                     budget.Description = budgetDTO.Description;
+                    budget.Spent = budgetDTO.Spent;
+
                 }
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -86,7 +89,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -99,7 +102,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -112,7 +115,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -126,7 +129,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -140,7 +143,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -153,7 +156,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -170,39 +173,55 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
-        public async Task<bool> AddItemAsync(string budgetId, string name, float price, float total, float estimatedPrice)
+        public async Task<bool> AddItemAsync(string budgetId, CreateBudgetItemDTO itemDTO)
         {
             try
             {
                 var budgetGuid = GuidValidator.ValidateGuid(budgetId);
-                var budget = await _dbContext.Budgets.Include(b => b.Items).FirstOrDefaultAsync(b => b.Id == budgetGuid);
+                var budget = await _dbContext.Budgets
+                    .FirstOrDefaultAsync(b => b.Id == budgetGuid);
+                    
                 if (budget == null)
                     return false;
 
-                var createDto = new CreateBudgetItemDTO
+                var newItem = new BudgetItem
                 {
-                    Name = name,
-                    Price = price,
-                    Total = total,
-                    EstimatetPrice = estimatedPrice,
-                    IsCompleted = false
+                    Id = Guid.NewGuid(),
+                    Name = itemDTO.Name,
+                    Description = itemDTO.Description,
+                    Category = itemDTO.Category,
+                    Price = itemDTO.Price,
+                    Total = itemDTO.Total,
+                    EstimatedPrice = itemDTO.EstimatedPrice,
+                    IsCompleted = itemDTO.IsCompleted,
+                    BudgetId = budgetGuid
                 };
 
-                var newItem = _mapper.Map<BudgetItem>(createDto);
-                newItem.Id = Guid.NewGuid();
-                budget.Items.Add(newItem);
-
-                await RecalculateTotals(budget);
+                await _dbContext.BudgetItems.AddAsync(newItem);
                 await _dbContext.SaveChangesAsync();
+
+                // Reload budget with items for recalculation
+                budget = await _dbContext.Budgets
+                    .Include(b => b.Items)
+                    .FirstOrDefaultAsync(b => b.Id == budgetGuid);
+                    
+                if (budget != null)
+                {
+                    budget.Total = budget.Items.Sum(i => i.Total);
+                    budget.EstimatedPrice = budget.Items.Sum(i => i.EstimatedPrice);
+                    budget.Spent = budget.Items.Where(i => i.IsCompleted).Sum(i => i.Total);
+                    await _dbContext.SaveChangesAsync();
+                }
+
                 return true;
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -227,7 +246,49 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> UpdateItemAsync(string budgetId, BudgetItemDataDTO itemDTO)
+        {
+            try
+            {
+                var budgetGuid = GuidValidator.ValidateGuid(budgetId);
+                var itemGuid = GuidValidator.ValidateGuid(itemDTO.Id);
+
+                var item = await _dbContext.BudgetItems.FirstOrDefaultAsync(i => i.Id == itemGuid && i.BudgetId == budgetGuid);
+                if (item == null)
+                    return false;
+
+                item.Name = itemDTO.Name;
+                item.Description = itemDTO.Description;
+                item.Category = itemDTO.Category;
+                item.Price = itemDTO.Price;
+                item.Total = itemDTO.Total;
+                item.EstimatedPrice = itemDTO.EstimatedPrice;
+                item.IsCompleted = itemDTO.IsCompleted;
+
+                await _dbContext.SaveChangesAsync();
+
+                // Reload budget with items for recalculation
+                var budget = await _dbContext.Budgets
+                    .Include(b => b.Items)
+                    .FirstOrDefaultAsync(b => b.Id == budgetGuid);
+                    
+                if (budget != null)
+                {
+                    budget.Total = budget.Items.Sum(i => i.Total);
+                    budget.EstimatedPrice = budget.Items.Sum(i => i.EstimatedPrice);
+                    budget.Spent = budget.Items.Where(i => i.IsCompleted).Sum(i => i.Total);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -251,7 +312,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -271,7 +332,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -290,7 +351,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
@@ -301,7 +362,7 @@ namespace Infrastructure.Services
                 var budgetGuid = GuidValidator.ValidateGuid(budgetId);
                 var listGuid = GuidValidator.ValidateGuid(shoppingListId);
 
-                var budget = await _dbContext.Budgets.Include(b => b.Items).FirstOrDefaultAsync(b => b.Id == budgetGuid);
+                var budget = await _dbContext.Budgets.FirstOrDefaultAsync(b => b.Id == budgetGuid);
                 if (budget == null)
                     return false;
 
@@ -312,33 +373,47 @@ namespace Infrastructure.Services
                 float actualTotal = shoppingList.Items.Sum(i => i.Price * i.Quantity);
                 float estimated = actualTotal;
 
-                var createDto = new CreateBudgetItemDTO
+                var newItem = new BudgetItem
                 {
-                    Name = $"ShoppingList: {shoppingList.Name}",
+                    Id = Guid.NewGuid(),
+                    Name = shoppingList.Name,
+                    Description = string.Empty,
+                    Category = BudgetItemCategory.Other,
                     Price = 0,
                     Total = snapshot ? actualTotal : 0,
-                    EstimatetPrice = snapshot ? estimated : 0,
-                    IsCompleted = false
+                    EstimatedPrice = snapshot ? estimated : 0,
+                    IsCompleted = false,
+                    BudgetId = budgetGuid
                 };
 
-                var newItem = _mapper.Map<BudgetItem>(createDto);
-                newItem.Id = Guid.NewGuid();
-                budget.Items.Add(newItem);
-
-                await RecalculateTotals(budget);
+                await _dbContext.BudgetItems.AddAsync(newItem);
                 await _dbContext.SaveChangesAsync();
+
+                // Reload budget with items for recalculation
+                budget = await _dbContext.Budgets
+                    .Include(b => b.Items)
+                    .FirstOrDefaultAsync(b => b.Id == budgetGuid);
+                    
+                if (budget != null)
+                {
+                    budget.Total = budget.Items.Sum(i => i.Total);
+                    budget.EstimatedPrice = budget.Items.Sum(i => i.EstimatedPrice);
+                    budget.Spent = budget.Items.Where(i => i.IsCompleted).Sum(i => i.Total);
+                    await _dbContext.SaveChangesAsync();
+                }
+
                 return true;
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}", ex);
             }
         }
 
         private Task RecalculateTotals(Budget budget)
         {
             budget.Total = budget.Items.Sum(i => i.Total);
-            budget.EstimatedPrice = budget.Items.Sum(i => i.EstimatetPrice);
+            budget.EstimatedPrice = budget.Items.Sum(i => i.EstimatedPrice);
             budget.Spent = budget.Items.Where(i => i.IsCompleted).Sum(i => i.Total);
             return Task.CompletedTask;
         }

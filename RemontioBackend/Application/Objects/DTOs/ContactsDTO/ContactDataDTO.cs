@@ -1,4 +1,5 @@
 using System;
+using Domain.Enums;
 
 namespace Application.Objects.DTOs.ContactsDTO
 {
@@ -10,6 +11,8 @@ namespace Application.Objects.DTOs.ContactsDTO
         public required string ContactDetails { get; set; }
         public required DateTime CreatedDate { get; set; }
         public bool IsPrivate { get; set; }
+        public required SpecEnum Spec { get; set; }
+
         public required string UserId { get; set; }
     }
 }

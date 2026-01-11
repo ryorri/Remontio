@@ -1,17 +1,11 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.TableConfigurations
 {
     public class TaskTableConfig : IEntityTypeConfiguration<Tasks>
     {
-
         public void Configure(EntityTypeBuilder<Tasks> builder)
         {
             builder.HasKey(p => p.Id);

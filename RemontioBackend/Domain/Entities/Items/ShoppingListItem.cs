@@ -13,5 +13,8 @@ namespace Domain.Entities.Items
         public int Quantity { get; set; }
         public float Price { get; set; }
         public bool IsBought { get; set; }
+
+        public Guid ShoppingListId { get; set; }  // FK
+        public ShoppingList ShoppingList { get; set; } // Nav
     }
 }

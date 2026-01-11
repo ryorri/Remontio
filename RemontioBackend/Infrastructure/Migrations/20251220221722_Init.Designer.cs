@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RemontioDbContext))]
-    [Migration("20251108201255_Init")]
+    [Migration("20251220221722_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -116,6 +116,11 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
@@ -142,6 +147,44 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Calculations");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Contacts", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContactDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPrivate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Spec")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("Domain.Entities.Floor", b =>
@@ -173,10 +216,17 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BudgetId")
+                    b.Property<Guid>("BudgetId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<float>("EstimatetPrice")
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("EstimatedPrice")
                         .HasColumnType("real");
 
                     b.Property<bool>("IsCompleted")
@@ -196,7 +246,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("BudgetId");
 
-                    b.ToTable("BudgetItem");
+                    b.ToTable("BudgetItem", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Items.ShoppingListItem", b =>
@@ -210,7 +260,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
@@ -218,14 +269,14 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("ShoppingListId")
+                    b.Property<Guid>("ShoppingListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ShoppingListId");
 
-                    b.ToTable("ShoppingListItem");
+                    b.ToTable("ShoppingListItems");
                 });
 
             modelBuilder.Entity("Domain.Entities.Photos", b =>
@@ -724,7 +775,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Budgets")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -751,12 +802,23 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Calculations")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");
 
                     b.Navigation("Room");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Contacts", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -774,16 +836,24 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Items.BudgetItem", b =>
                 {
-                    b.HasOne("Domain.Entities.Budget", null)
+                    b.HasOne("Domain.Entities.Budget", "Budget")
                         .WithMany("Items")
-                        .HasForeignKey("BudgetId");
+                        .HasForeignKey("BudgetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Budget");
                 });
 
             modelBuilder.Entity("Domain.Entities.Items.ShoppingListItem", b =>
                 {
-                    b.HasOne("Domain.Entities.ShoppingList", null)
+                    b.HasOne("Domain.Entities.ShoppingList", "ShoppingList")
                         .WithMany("Items")
-                        .HasForeignKey("ShoppingListId");
+                        .HasForeignKey("ShoppingListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ShoppingList");
                 });
 
             modelBuilder.Entity("Domain.Entities.Photos", b =>
@@ -818,7 +888,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Projects")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -829,7 +899,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Project", "Project")
                         .WithMany("Rooms")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.User", "User")
@@ -860,7 +930,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("ShoppingLists")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");

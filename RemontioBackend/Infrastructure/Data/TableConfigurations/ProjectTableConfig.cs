@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.TableConfigurations
 {
@@ -21,13 +16,18 @@ namespace Infrastructure.Data.TableConfigurations
                   .IsRequired()
                   .HasConversion<string>();
 
-
-
             builder.HasOne(p => p.User)
-                    .WithMany(u => u.Projects)
-                    .HasForeignKey(p => p.UserId);
+                   .WithMany(u => u.Projects)
+                   .HasForeignKey(p => p.UserId)
+                   .OnDelete(DeleteBehavior.NoAction);
+
+            // Ensure cascade delete for dependent collections when project removed
+            builder.Navigation(p => p.Rooms).AutoInclude(false);
+            builder.Navigation(p => p.Tasks).AutoInclude(false);
+            builder.Navigation(p => p.Calculations).AutoInclude(false);
+            builder.Navigation(p => p.ShoppingLists).AutoInclude(false);
+            builder.Navigation(p => p.Budgets).AutoInclude(false);
+            builder.Navigation(p => p.Photos).AutoInclude(false);
         }
-    
-    
     }
 }

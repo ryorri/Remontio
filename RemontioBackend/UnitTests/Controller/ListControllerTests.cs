@@ -216,7 +216,7 @@ namespace UnitTests.Controller
         {
             _listServiceMock.Setup(s => s.AddItemAsync("1", "item", 2, 5f)).ReturnsAsync(true);
 
-            var result = await _controller.AddItem("1", "item", 2, 5f);
+            var result = await _controller.AddShoppingListItem("1", "item", 2, 5f);
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -228,7 +228,7 @@ namespace UnitTests.Controller
         {
             _listServiceMock.Setup(s => s.AddItemAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<float>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.AddItem("1", "item", 2, 5f);
+            var result = await _controller.AddShoppingListItem("1", "item", 2, 5f);
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
@@ -238,7 +238,7 @@ namespace UnitTests.Controller
         {
             _listServiceMock.Setup(s => s.RemoveItemAsync("1", "i1")).ReturnsAsync(true);
 
-            var result = await _controller.RemoveItem("1", "i1");
+            var result = await _controller.RemoveShoppingListItem("1", "i1");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -250,7 +250,7 @@ namespace UnitTests.Controller
         {
             _listServiceMock.Setup(s => s.RemoveItemAsync(It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.RemoveItem("1", "i1");
+            var result = await _controller.RemoveShoppingListItem("1", "i1");
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
@@ -282,7 +282,7 @@ namespace UnitTests.Controller
         {
             _listServiceMock.Setup(s => s.ClearItemsAsync("1")).ReturnsAsync(true);
 
-            var result = await _controller.ClearItems("1");
+            var result = await _controller.ClearShoppingListItems("1");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -294,7 +294,7 @@ namespace UnitTests.Controller
         {
             _listServiceMock.Setup(s => s.ClearItemsAsync(It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.ClearItems("1");
+            var result = await _controller.ClearShoppingListItems("1");
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }

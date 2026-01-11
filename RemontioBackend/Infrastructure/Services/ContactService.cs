@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace Infrastructure.Services
 {
@@ -31,7 +32,7 @@ namespace Infrastructure.Services
             try
             {
                 var entity = _mapper.Map<Contacts>(contactDTO);
-                // Auto-set CreatedDate on creation regardless of client input
+
                 entity.CreatedDate = DateTime.UtcNow;
 
                 await _dbContext.Contacts.AddAsync(entity);
@@ -40,7 +41,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
 
@@ -59,6 +60,7 @@ namespace Infrastructure.Services
                     contact.Name = contactDTO.Name;
                     contact.Description = contactDTO.Description;
                     contact.ContactDetails = contactDTO.ContactDetails;
+                    
                 }
 
                 await _dbContext.SaveChangesAsync();
@@ -66,7 +68,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
 
@@ -88,7 +90,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
 
@@ -103,7 +105,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
 
@@ -119,7 +121,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
 
@@ -135,7 +137,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
 
@@ -154,7 +156,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                throw new ArgumentException($"Error: ${ex}");
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
     }

@@ -1,12 +1,13 @@
-﻿using Application.Interfaces.DatabaseInterfaces;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces.DatabaseInterfaces;
+using Domain.Entities;
+using Domain.Entities.Items;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -25,6 +26,8 @@ namespace Infrastructure.Data
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Alerts> Alerts { get; set; }
         public DbSet<Contacts> Contacts { get; set; }
+        public DbSet<ShoppingListItem> ShoppingListItems { get; set; }
+        public DbSet<BudgetItem> BudgetItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

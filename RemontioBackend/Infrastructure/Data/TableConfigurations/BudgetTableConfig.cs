@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.TableConfigurations
 {
@@ -19,10 +14,15 @@ namespace Infrastructure.Data.TableConfigurations
             builder.Property(p => p.CreateAt).IsRequired();
             builder.Property(p => p.EstimatedPrice).IsRequired();
 
+            builder.HasMany(b => b.Items)
+                .WithOne(i => i.Budget)
+                .HasForeignKey(i => i.BudgetId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.HasOne(p => p.User)
                 .WithMany(u => u.Budgets)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(p => p.Room)
                     .WithMany(u => u.Budgets)

@@ -13,7 +13,7 @@ namespace Infrastructure.Extensions
         {
             int n = points.Count;
 
-            if(n < 3)
+            if (n < 3)
                 throw new ArgumentException("At least three points are required to calculate area of a polygon.");
 
             double area = 0;

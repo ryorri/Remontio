@@ -184,6 +184,30 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Contacts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ContactDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Spec = table.Column<int>(type: "int", nullable: false),
+                    IsPrivate = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contacts_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
@@ -202,8 +226,7 @@ namespace Infrastructure.Migrations
                         name: "FK_Projects_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -232,7 +255,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Rooms_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,7 +281,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Budgets_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Budgets_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -275,6 +300,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Value = table.Column<float>(type: "real", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -288,7 +314,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Calculations_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Calculations_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -378,7 +405,8 @@ namespace Infrastructure.Migrations
                         name: "FK_ShoppingLists_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ShoppingLists_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -455,11 +483,13 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Category = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     Total = table.Column<float>(type: "real", nullable: false),
-                    EstimatetPrice = table.Column<float>(type: "real", nullable: false),
+                    EstimatedPrice = table.Column<float>(type: "real", nullable: false),
                     IsCompleted = table.Column<bool>(type: "bit", nullable: false),
-                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    BudgetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -468,28 +498,30 @@ namespace Infrastructure.Migrations
                         name: "FK_BudgetItem_Budgets_BudgetId",
                         column: x => x.BudgetId,
                         principalTable: "Budgets",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingListItem",
+                name: "ShoppingListItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<float>(type: "real", nullable: false),
                     IsBought = table.Column<bool>(type: "bit", nullable: false),
-                    ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ShoppingListId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingListItem", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingListItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ShoppingListItem_ShoppingLists_ShoppingListId",
+                        name: "FK_ShoppingListItems_ShoppingLists_ShoppingListId",
                         column: x => x.ShoppingListId,
                         principalTable: "ShoppingLists",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -572,6 +604,11 @@ namespace Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Contacts_UserId",
+                table: "Contacts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Floors_RoomId",
                 table: "Floors",
                 column: "RoomId");
@@ -607,8 +644,8 @@ namespace Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingListItem_ShoppingListId",
-                table: "ShoppingListItem",
+                name: "IX_ShoppingListItems_ShoppingListId",
+                table: "ShoppingListItems",
                 column: "ShoppingListId");
 
             migrationBuilder.CreateIndex(
@@ -675,13 +712,16 @@ namespace Infrastructure.Migrations
                 name: "Calculations");
 
             migrationBuilder.DropTable(
+                name: "Contacts");
+
+            migrationBuilder.DropTable(
                 name: "Floors");
 
             migrationBuilder.DropTable(
                 name: "Photos");
 
             migrationBuilder.DropTable(
-                name: "ShoppingListItem");
+                name: "ShoppingListItems");
 
             migrationBuilder.DropTable(
                 name: "Tasks");

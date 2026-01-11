@@ -31,6 +31,7 @@ namespace Presentation.Controllers
             }
         }
 
+
         [HttpPost("log-in")]
         public async Task<ActionResult<UserDataDTO>> LogIn(string username, string password)
         {
@@ -125,14 +126,13 @@ namespace Presentation.Controllers
 
         }
 
-        [Authorize]
         [HttpPut("change-user-password")]
-        public async Task<ActionResult<bool>> ChangeUserPassword(string id, string oldPassword, string newPassword)
+        public async Task<ActionResult<bool>> ChangeUserPassword(string email, string oldPassword, string newPassword)
         {
 
             try
             {
-                var result = await _userService.ChangePasswordAsync(id, oldPassword, newPassword);
+                var result = await _userService.ChangePasswordAsync(email, oldPassword, newPassword);
                 return Ok(result);
             }
             catch (Exception ex)

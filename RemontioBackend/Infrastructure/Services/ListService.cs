@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.ListDTO;
+using Application.Objects.DTOs.ListItemDTO;
 using Application.Validators;
 using AutoMapper;
 using Domain.Entities;
@@ -176,21 +177,26 @@ namespace Infrastructure.Services
             try
             {
                 var guid = GuidValidator.ValidateGuid(listId);
-                var list = await _dbContext.ShoppingLists.FirstOrDefaultAsync(x => x.Id == guid);
-                if (list == null)
+                var exists = await _dbContext.ShoppingLists.AnyAsync(x => x.Id == guid);
+                if (!exists)
                     return false;
 
-                list.Items.Add(new ShoppingListItem
+                var item = new ShoppingListItem
                 {
                     Id = Guid.NewGuid(),
                     Name = name,
                     Quantity = quantity,
                     Price = price,
-                    IsBought = false
-                });
+                    IsBought = false,
+                    ShoppingListId = guid
+                };
 
+
+                await _dbContext.ShoppingListItems.AddAsync(item);
                 await _dbContext.SaveChangesAsync();
                 return true;
+
+
             }
             catch (Exception ex)
             {
@@ -205,15 +211,13 @@ namespace Infrastructure.Services
                 var listGuid = GuidValidator.ValidateGuid(listId);
                 var itemGuid = GuidValidator.ValidateGuid(itemId);
 
-                var list = await _dbContext.ShoppingLists.FirstOrDefaultAsync(x => x.Id == listGuid);
-                if (list == null)
+                var item = await _dbContext.ShoppingListItems
+                    .FirstOrDefaultAsync(i => i.Id == itemGuid);
+
+                if (item == null)
                     return false;
 
-                var item = list.Items.FirstOrDefault(i => i.Id == itemGuid);
-                if (item != null)
-                {
-                    list.Items.Remove(item);
-                }
+                _dbContext.ShoppingListItems.Remove(item);
 
                 await _dbContext.SaveChangesAsync();
                 return true;
@@ -231,11 +235,12 @@ namespace Infrastructure.Services
                 var listGuid = GuidValidator.ValidateGuid(listId);
                 var itemGuid = GuidValidator.ValidateGuid(itemId);
 
-                var list = await _dbContext.ShoppingLists.FirstOrDefaultAsync(x => x.Id == listGuid);
-                if (list == null)
+                var listExists = await _dbContext.ShoppingLists.AnyAsync(x => x.Id == listGuid);
+                if (!listExists)
                     return false;
 
-                var item = list.Items.FirstOrDefault(i => i.Id == itemGuid);
+                var item = await _dbContext.ShoppingListItems
+                    .FirstOrDefaultAsync(i => i.Id == itemGuid && i.ShoppingListId == listGuid);
                 if (item != null)
                 {
                     item.IsBought = isBought;
@@ -262,6 +267,23 @@ namespace Infrastructure.Services
                 list.Items.Clear();
                 await _dbContext.SaveChangesAsync();
                 return true;
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<ListItemDataDTO>> GetListItemsByListID(string listId)
+        {
+            try
+            {
+                var guid = GuidValidator.ValidateGuid(listId);
+                var items = await _dbContext.ShoppingListItems
+                    .Where(i => i.ShoppingListId == guid)
+                    .ToListAsync();
+
+                return _mapper.Map<List<ListItemDataDTO>>(items);
             }
             catch (Exception ex)
             {

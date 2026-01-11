@@ -12,6 +12,9 @@ namespace Application.Validators.UserValidator
                 .NotEmpty().WithMessage("Name is required.")
                 .MaximumLength(200);
 
+            RuleFor(x => x.Spec)
+                .NotEmpty().WithMessage("Specialisation is required.");
+
             RuleFor(x => x.Description)
                 .MaximumLength(1000);
 

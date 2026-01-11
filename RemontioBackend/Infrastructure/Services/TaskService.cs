@@ -80,7 +80,7 @@ namespace Infrastructure.Services
                 var entity = _mapper.Map<Tasks>(taskDTO);
                 entity.CreateAt = DateTime.UtcNow;
                 await _dbContext.Tasks.AddAsync(entity);
-                await _dbContext.SaveChangesAsync();
+                    await _dbContext.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
@@ -168,6 +168,7 @@ namespace Infrastructure.Services
                                             .Include(x => x.User)
                                             .FirstOrDefaultAsync(x => x.Id.ToString() == taskId);
 
+               
                 return _mapper.Map<TaskDataDTO>(task);
             }
             catch (Exception ex)
@@ -186,8 +187,18 @@ namespace Infrastructure.Services
 
                 if (task != null)
                 {
+                    
                     task.Name = taskDTO.Name;
                     task.Description = taskDTO.Description;
+                    task.Status = taskDTO.Status;
+                    task.Priority = taskDTO.Priority;
+                    task.StartAt = taskDTO.StartAt;
+                    task.ClosedAt = taskDTO.ClosedAt;
+                    task.EstimatedTime = taskDTO.EstimatedTime;
+
+                    task.ProjectId = GuidValidator.ValidateGuid(taskDTO.ProjectId);
+                    task.RoomId = GuidValidator.ValidateGuid(taskDTO.RoomId);
+                    task.UserId = taskDTO.UserId;
                 }
 
                 await _dbContext.SaveChangesAsync();

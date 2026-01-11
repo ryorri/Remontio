@@ -17,17 +17,14 @@ namespace Application.Interfaces.ServiceInterfaces
         Task<List<BudgetDataDTO>> GetAllBudgetsByProjectIdAsync(string projectId);
         Task<List<BudgetDataDTO>> GetAllBudgetsByRoomIdAsync(string roomId);
         Task<BudgetDataDTO> GetBudgetAsync(string budgetId);
-
-        // Items
         Task<List<BudgetItemDataDTO>> GetBudgetItemsAsync(string budgetId);
 
-        Task<bool> AddItemAsync(string budgetId, string name, float price, float total, float estimatedPrice);
+        Task<bool> AddItemAsync(string budgetId, CreateBudgetItemDTO itemDTO);
+        Task<bool> UpdateItemAsync(string budgetId, BudgetItemDataDTO itemDTO);
         Task<bool> RemoveItemAsync(string budgetId, string itemId);
         Task<bool> MarkItemCompletedAsync(string budgetId, string itemId, bool isCompleted);
         Task<bool> ClearItemsAsync(string budgetId);
         Task<bool> RecalculateBudgetAsync(string budgetId);
-
-        // Adds a shopping list as a single aggregated budget item. If snapshot is true, store current totals; if false, expect dynamic recalculation logic.
         Task<bool> AddShoppingListAsItemAsync(string budgetId, string shoppingListId, bool snapshot);
     }
 }

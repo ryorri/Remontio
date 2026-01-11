@@ -17,6 +17,8 @@ using Application.Objects.DTOs.BudgetDTO;
 using Application.Objects.DTOs.BudgetItemDTO;
 using Domain.Entities.Items;
 using Application.Objects.DTOs.ContactsDTO;
+using Application.Objects.DTOs.ListItemDTO;
+using Application.Objects.DTOs.CalculationsDTO;
 
 namespace Application.Mapping
 {
@@ -152,7 +154,7 @@ namespace Application.Mapping
 
             #endregion
 
-            #region PhotosMapping
+            #region TasksMapping
 
             CreateMap<CreateTaskDTO, Tasks>();
             CreateMap<TaskDataDTO, Tasks>();
@@ -183,6 +185,24 @@ namespace Application.Mapping
                         foreach (var proj in src)
                         {
                             result.Add(context.Mapper.Map<ListDataDTO>(proj));
+                        }
+                        return result;
+                    });
+
+            #endregion
+
+            #region ListItemMapping
+
+            CreateMap<CreateListItemDTO, ShoppingListItem>();
+            CreateMap<ListItemDataDTO, ShoppingListItem>();
+            CreateMap<ShoppingListItem, ListItemDataDTO>();
+            CreateMap<List<ShoppingListItem>, List<ListItemDataDTO>>()
+                    .ConvertUsing((src, dest, context) =>
+                    {
+                        var result = new List<ListItemDataDTO>();
+                        foreach (var proj in src)
+                        {
+                            result.Add(context.Mapper.Map<ListItemDataDTO>(proj));
                         }
                         return result;
                     });
@@ -237,6 +257,24 @@ namespace Application.Mapping
                     foreach (var item in src)
                     {
                         result.Add(context.Mapper.Map<ContactDataDTO>(item));
+                    }
+                    return result;
+                });
+
+            #endregion
+
+            #region CalculationsMapping
+
+            CreateMap<CreateCalculationDTO, Calculations>();
+            CreateMap<CalculationDataDTO, Calculations>();
+            CreateMap<Calculations, CalculationDataDTO>();
+            CreateMap<List<Calculations>, List<CalculationDataDTO>>()
+                .ConvertUsing((src, dest, context) =>
+                {
+                    var result = new List<CalculationDataDTO>();
+                    foreach (var item in src)
+                    {
+                        result.Add(context.Mapper.Map<CalculationDataDTO>(item));
                     }
                     return result;
                 });

@@ -1,4 +1,5 @@
 ﻿using Application.Objects.DTOs.ListDTO;
+using Application.Objects.DTOs.ListItemDTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace Application.Interfaces.ServiceInterfaces
         Task<List<ListDataDTO>> GetAllListsByProjectIdAsync(string projectId);
         Task<List<ListDataDTO>> GetAllListsByRoomIdAsync(string roomId);
         Task<ListDataDTO> GetListAsync(string listId);
+        Task<List<ListItemDataDTO>> GetListItemsByListID(string listId);
+
 
         Task<bool> AddItemAsync(string listId, string name, int quantity, float price);
         Task<bool> RemoveItemAsync(string listId, string itemId);

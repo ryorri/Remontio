@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Interfaces.AdditionalInterfaces;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.RoomDTO;
 using Domain.Enums;
@@ -227,18 +226,12 @@ namespace UnitTests.Controller
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
 
-        private class FakePoint : IPoint
-        {
-            public float X { get; set; }
-            public float Y { get; set; }
-        }
-
         [Test]
         public async Task AddWall_ReturnsOk_OnSuccess()
         {
-            _roomServiceMock.Setup(s => s.AddWallAsync("1", It.IsAny<List<IPoint>>(), "wall")).ReturnsAsync(true);
+            _roomServiceMock.Setup(s => s.AddWallAsync("1", It.IsAny<List<PointDTO>>(), "wall")).ReturnsAsync(true);
 
-            var result = await _controller.AddWall("1", new List<IPoint> { new FakePoint { X = 1, Y = 2 } }, "wall");
+            var result = await _controller.AddWall("1", new List<PointDTO> { new PointDTO { X = 1, Y = 2 } }, "wall");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -248,9 +241,9 @@ namespace UnitTests.Controller
         [Test]
         public async Task AddWall_ReturnsBadRequest_OnException()
         {
-            _roomServiceMock.Setup(s => s.AddWallAsync(It.IsAny<string>(), It.IsAny<List<IPoint>>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+            _roomServiceMock.Setup(s => s.AddWallAsync(It.IsAny<string>(), It.IsAny<List<PointDTO>>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.AddWall("1", new List<IPoint> { new FakePoint { X = 1, Y = 2 } }, "wall");
+            var result = await _controller.AddWall("1", new List<PointDTO> { new PointDTO { X = 1, Y = 2 } }, "wall");
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
@@ -302,9 +295,9 @@ namespace UnitTests.Controller
         [Test]
         public async Task AddFloor_ReturnsOk_OnSuccess()
         {
-            _roomServiceMock.Setup(s => s.AddFloorAsync("1", It.IsAny<List<IPoint>>(), "floor")).ReturnsAsync(true);
+            _roomServiceMock.Setup(s => s.AddFloorAsync("1", It.IsAny<List<PointDTO>>(), "floor")).ReturnsAsync(true);
 
-            var result = await _controller.AddFloor("1", new List<IPoint> { new FakePoint { X = 3, Y = 4 } }, "floor");
+            var result = await _controller.AddFloor("1", new List<PointDTO> { new PointDTO { X = 3, Y = 4 } }, "floor");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -314,9 +307,9 @@ namespace UnitTests.Controller
         [Test]
         public async Task AddFloor_ReturnsBadRequest_OnException()
         {
-            _roomServiceMock.Setup(s => s.AddFloorAsync(It.IsAny<string>(), It.IsAny<List<IPoint>>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
+            _roomServiceMock.Setup(s => s.AddFloorAsync(It.IsAny<string>(), It.IsAny<List<PointDTO>>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.AddFloor("1", new List<IPoint> { new FakePoint { X = 3, Y = 4 } }, "floor");
+            var result = await _controller.AddFloor("1", new List<PointDTO> { new PointDTO { X = 3, Y = 4 } }, "floor");
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }

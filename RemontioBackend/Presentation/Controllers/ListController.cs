@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.ListDTO;
+using Application.Objects.DTOs.ListItemDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -110,6 +111,21 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
+        [HttpGet("get-item-list-by-list-id")]
+        public async Task<ActionResult<List<ListItemDataDTO>>> GetItemListByListId(string listId)
+        {
+            try
+            {
+                var result = await _listService.GetListItemsByListID(listId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
         [HttpDelete("delete-list")]
         public async Task<ActionResult<bool>> DeleteList(string listId)
         {
@@ -140,8 +156,8 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpPost("add-item")]
-        public async Task<ActionResult<bool>> AddItem(string listId, string name, int quantity, float price)
+        [HttpPost("add-list-item")]
+        public async Task<ActionResult<bool>> AddShoppingListItem(string listId, string name, int quantity, float price)
         {
             try
             {
@@ -155,8 +171,8 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpDelete("remove-item")]
-        public async Task<ActionResult<bool>> RemoveItem(string listId, string itemId)
+        [HttpDelete("remove-list-item")]
+        public async Task<ActionResult<bool>> RemoveShoppingListItem(string listId, string itemId)
         {
             try
             {
@@ -170,7 +186,7 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpPut("mark-item-bought")]
+        [HttpPut("mark-list-item-bought")]
         public async Task<ActionResult<bool>> MarkItemBought(string listId, string itemId, bool isBought)
         {
             try
@@ -185,8 +201,8 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpDelete("clear-items")]
-        public async Task<ActionResult<bool>> ClearItems(string listId)
+        [HttpDelete("clear-list-items")]
+        public async Task<ActionResult<bool>> ClearShoppingListItems(string listId)
         {
             try
             {

@@ -10,6 +10,7 @@ namespace Domain.Entities
     public class Calculations
     {
         public Guid Id { get; set; }
+        public string Name { get; set; } = string.Empty;
         public float Value { get; set; }
         public CalculationsTypeEnum Type { get; set; }
 

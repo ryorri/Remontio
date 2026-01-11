@@ -18,10 +18,12 @@ namespace Application.Interfaces.ServiceInterfaces
         Task<List<RoomDataDTO>> GetAllRoomsByProjectIdAsync(string projectId);
         Task<RoomDataDTO> GetRoomAsync(string roomId);
         Task<bool> ChangeRoomStatusAsync(string roomId, string status);
-        Task<bool> AddWallAsync(string roomId, List<IPoint> points, string wallName);
+        Task<bool> AddWallAsync(string roomId, List<PointDTO> points, string wallName);
         Task<bool> RemoveWallFromRoomAsync(string roomId, string wallId);
         Task<bool> RemoveAllWallFromRoomAsync(string roomId);
-        Task<bool> AddFloorAsync(string roomId, List<IPoint> points, string floorName);
+        Task<List<WallDTO>> GetWallsByRoomIdAsync(string roomId);
+        Task<bool> AddFloorAsync(string roomId, List<PointDTO> points, string floorName);
         Task<bool> RemoveFloorFromRoomAsync(string roomId, string floorId);
+        Task<List<FloorDTO>> GetFloorsByRoomIdAsync(string roomId);
     }
 }

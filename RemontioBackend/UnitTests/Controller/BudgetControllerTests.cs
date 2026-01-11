@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Application.Interfaces.ServiceInterfaces;
 using Application.Objects.DTOs.BudgetDTO;
 using Application.Objects.DTOs.BudgetItemDTO;
+using Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -285,7 +286,7 @@ namespace UnitTests.Controller
         {
             var items = new List<BudgetItemDataDTO>
             {
-                new BudgetItemDataDTO { Id = "i1", Name = "n1", Price = 10f, Total = 10f, EstimatetPrice = 12f, IsCompleted = false }
+                new BudgetItemDataDTO { Id = "i1", Name = "n1", Description = "", Category = BudgetItemCategory.Other, Price = 10f, Total = 10f, EstimatedPrice = 12f, IsCompleted = false }
             };
             _budgetServiceMock.Setup(s => s.GetBudgetItemsAsync("1")).ReturnsAsync(items);
 
@@ -309,11 +310,21 @@ namespace UnitTests.Controller
         [Test]
         public async Task AddItem_ReturnsOk_OnSuccess()
         {
+            var createDto = new CreateBudgetItemDTO
+            {
+                Name = "name",
+                Description = "",
+                Category = BudgetItemCategory.Other,
+                Price = 10f,
+                Total = 10f,
+                EstimatedPrice = 12f,
+                IsCompleted = false
+            };
             _budgetServiceMock
-                .Setup(s => s.AddItemAsync("1", "name", 10f, 10f, 12f))
+                .Setup(s => s.AddItemAsync("1", createDto))
                 .ReturnsAsync(true);
 
-            var result = await _controller.AddItem("1", "name", 10f, 10f, 12f);
+            var result = await _controller.AddBudgetItem("1", createDto);
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -324,10 +335,21 @@ namespace UnitTests.Controller
         public async Task AddItem_ReturnsBadRequest_OnException()
         {
             _budgetServiceMock
-                .Setup(s => s.AddItemAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<float>(), It.IsAny<float>(), It.IsAny<float>()))
+                .Setup(s => s.AddItemAsync(It.IsAny<string>(), It.IsAny<CreateBudgetItemDTO>()))
                 .ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.AddItem("1", "name", 10f, 10f, 12f);
+            var createDto = new CreateBudgetItemDTO
+            {
+                Name = "name",
+                Description = "",
+                Category = BudgetItemCategory.Other,
+                Price = 10f,
+                Total = 10f,
+                EstimatedPrice = 12f,
+                IsCompleted = false
+            };
+
+            var result = await _controller.AddBudgetItem("1", createDto);
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
@@ -337,7 +359,7 @@ namespace UnitTests.Controller
         {
             _budgetServiceMock.Setup(s => s.RemoveItemAsync("1", "i1")).ReturnsAsync(true);
 
-            var result = await _controller.RemoveItem("1", "i1");
+            var result = await _controller.RemoveBudgetItem("1", "i1");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -349,7 +371,51 @@ namespace UnitTests.Controller
         {
             _budgetServiceMock.Setup(s => s.RemoveItemAsync(It.IsAny<string>(), It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.RemoveItem("1", "i1");
+            var result = await _controller.RemoveBudgetItem("1", "i1");
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+        [Test]
+        public async Task UpdateItem_ReturnsOk_OnSuccess()
+        {
+            var updateDto = new BudgetItemDataDTO
+            {
+                Id = "i1",
+                Name = "Updated Item",
+                Description = "Updated description",
+                Category = BudgetItemCategory.Labor,
+                Price = 15f,
+                Total = 15f,
+                EstimatedPrice = 18f,
+                IsCompleted = false
+            };
+            _budgetServiceMock.Setup(s => s.UpdateItemAsync("1", updateDto)).ReturnsAsync(true);
+
+            var result = await _controller.UpdateBudgetItem("1", updateDto);
+
+            Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+            var ok = result.Result as OkObjectResult;
+            Assert.That(ok!.Value, Is.EqualTo(true));
+        }
+
+        [Test]
+        public async Task UpdateItem_ReturnsBadRequest_OnException()
+        {
+            var updateDto = new BudgetItemDataDTO
+            {
+                Id = "i1",
+                Name = "Updated Item",
+                Description = "Updated description",
+                Category = BudgetItemCategory.Labor,
+                Price = 15f,
+                Total = 15f,
+                EstimatedPrice = 18f,
+                IsCompleted = false
+            };
+            _budgetServiceMock.Setup(s => s.UpdateItemAsync(It.IsAny<string>(), It.IsAny<BudgetItemDataDTO>())).ThrowsAsync(new Exception("err"));
+
+            var result = await _controller.UpdateBudgetItem("1", updateDto);
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
@@ -381,7 +447,7 @@ namespace UnitTests.Controller
         {
             _budgetServiceMock.Setup(s => s.ClearItemsAsync("1")).ReturnsAsync(true);
 
-            var result = await _controller.ClearItems("1");
+            var result = await _controller.ClearBudgetItems("1");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -393,7 +459,7 @@ namespace UnitTests.Controller
         {
             _budgetServiceMock.Setup(s => s.ClearItemsAsync(It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.ClearItems("1");
+            var result = await _controller.ClearBudgetItems("1");
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
@@ -403,7 +469,7 @@ namespace UnitTests.Controller
         {
             _budgetServiceMock.Setup(s => s.RecalculateBudgetAsync("1")).ReturnsAsync(true);
 
-            var result = await _controller.Recalculate("1");
+            var result = await _controller.RecalculateBudget("1");
 
             Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
             var ok = result.Result as OkObjectResult;
@@ -415,7 +481,7 @@ namespace UnitTests.Controller
         {
             _budgetServiceMock.Setup(s => s.RecalculateBudgetAsync(It.IsAny<string>())).ThrowsAsync(new Exception("err"));
 
-            var result = await _controller.Recalculate("1");
+            var result = await _controller.RecalculateBudget("1");
 
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }

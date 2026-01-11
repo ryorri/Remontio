@@ -23,14 +23,14 @@ namespace Infrastructure.Services
             _calc = calc;
         }
     
-        public async Task<bool> AddFloorAsync(string roomId, List<IPoint> points, string floorName = "")
+        public async Task<bool> AddFloorAsync(string roomId, List<PointDTO> points, string floorName = "")
         {
             if (roomId == null)
                 throw new ArgumentNullException(nameof(roomId));
 
             try
             {
-                var calculatedArea = _calc.CalculatePolygonArea(points);
+                var calculatedArea = _calc.CalculatePolygonArea(points.Cast<IPoint>().ToList());
 
                 var floorDTO = new FloorDTO
                 {
@@ -53,7 +53,7 @@ namespace Infrastructure.Services
             }
         }
 
-        public async  Task<bool> AddWallAsync(string roomId, List<IPoint> points, string wallName ="")
+        public async  Task<bool> AddWallAsync(string roomId, List<PointDTO> points, string wallName ="")
         {
 
             if (roomId == null)
@@ -61,7 +61,7 @@ namespace Infrastructure.Services
 
             try
             {
-                var calculatedArea = _calc.CalculatePolygonArea(points);
+                var calculatedArea = _calc.CalculatePolygonArea(points.Cast<IPoint>().ToList());
 
                 var wallDTO = new WallDTO
                 {
@@ -96,6 +96,16 @@ namespace Infrastructure.Services
                 if (room != null)
                 {
                     room.Status = Enum.Parse<StatusEnum>(status, true);
+
+                    if (room.Status == StatusEnum.Done || room.Status == StatusEnum.Aborted)
+                    {
+                        room.ClosedAt = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        room.ClosedAt = new DateTime();
+                    }
+
                 }
                 await _dbContext.SaveChangesAsync();
 
@@ -137,10 +147,29 @@ namespace Infrastructure.Services
             {
                 var guid = GuidValidator.ValidateGuid(roomId);
 
-                var room = await _dbContext.Rooms.FindAsync(guid);
+                var room = await _dbContext.Rooms
+                               .Include(r => r.Tasks)
+                               .Include(r => r.Calculations)
+                               .Include(r => r.ShoppingLists)
+                               .Include(r => r.Budgets)
+                               .Include(r => r.Photos)
+                               .Include(r => r.Walls)
+                               .Include(r => r.Floors)
+                               .FirstOrDefaultAsync(r => r.Id == guid);
+                if (room != null) 
+                {
 
-                if (room != null)
+                    _dbContext.Tasks.RemoveRange(room.Tasks);
+                    _dbContext.Calculations.RemoveRange(room.Calculations);
+                    _dbContext.ShoppingLists.RemoveRange(room.ShoppingLists);
+                    _dbContext.Budgets.RemoveRange(room.Budgets);
+                    _dbContext.Photos.RemoveRange(room.Photos);
+                    _dbContext.Walls.RemoveRange(room.Walls);
+                    _dbContext.Floors.RemoveRange(room.Floors);
+
                     _dbContext.Rooms.Remove(room);
+                }
+                    
 
                 await _dbContext.SaveChangesAsync();
 
@@ -320,6 +349,48 @@ namespace Infrastructure.Services
             catch (Exception ex)
             {
                 throw new ArgumentException($"Error: ${ex}");
+            }
+        }
+
+        public async Task<List<WallDTO>> GetWallsByRoomIdAsync(string roomId)
+        {
+            if (roomId == null)
+                throw new ArgumentNullException(nameof(roomId));
+
+            try
+            {
+                var guid = GuidValidator.ValidateGuid(roomId);
+
+                var walls = await _dbContext.Walls
+                                            .Where(w => w.RoomId == guid)
+                                            .ToListAsync();
+
+                return _mapper.Map<List<WallDTO>>(walls);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: {ex.Message}");
+            }
+        }
+
+        public async Task<List<FloorDTO>> GetFloorsByRoomIdAsync(string roomId)
+        {
+            if (roomId == null)
+                throw new ArgumentNullException(nameof(roomId));
+
+            try
+            {
+                var guid = GuidValidator.ValidateGuid(roomId);
+
+                var floors = await _dbContext.Floors
+                                             .Where(f => f.RoomId == guid)
+                                             .ToListAsync();
+
+                return _mapper.Map<List<FloorDTO>>(floors);
+            }
+            catch (Exception ex)
+            {
+                throw new ArgumentException($"Error: {ex.Message}");
             }
         }
     }

@@ -29,7 +29,7 @@
             ></textarea>
           </div>
 
-          <div class="row g-3 mb-3">
+          <!--<div class="row g-3 mb-3">
             <div class="col-12 col-md-4">
               <label class="form-label">Szacowana cena (PLN)</label>
               <input
@@ -42,7 +42,7 @@
                 placeholder="0.00"
               />
             </div>
-          </div>
+          </div>-->
 
           <div class="mb-3">
             <label class="form-label">Projekt *</label>
@@ -152,7 +152,7 @@ async function onSubmit() {
       createAt: new Date(),
       total: 0,
       spent: 0,
-      estimatedPrice: estimatedPrice.value,
+      estimatedPrice: 0,
       projectId: projectId.value,
       roomId: roomId.value,
       userId: getCurrentUserId(),

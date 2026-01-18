@@ -3097,12 +3097,34 @@ export class Client {
       })
     } else if (status !== 200 && status !== 204) {
       return response.text().then((_responseText) => {
-        return throwException(
-          'An unexpected server error occurred.',
-          status,
-          _responseText,
-          _headers,
-        )
+        let errorMessage = 'An unexpected server error occurred.'
+        try {
+          const errorData = JSON.parse(_responseText)
+          if (errorData) {
+            // Obsługa błędów walidacji z FluentValidator/ASP.NET Core
+            if (errorData.errors && typeof errorData.errors === 'object') {
+              const errorMessages: string[] = []
+              for (const key in errorData.errors) {
+                const messages = errorData.errors[key]
+                if (Array.isArray(messages)) {
+                  errorMessages.push(...messages)
+                } else if (typeof messages === 'string') {
+                  errorMessages.push(messages)
+                }
+              }
+              if (errorMessages.length > 0) {
+                errorMessage = errorMessages.join(' ')
+              }
+            } else if (errorData.message) {
+              errorMessage = errorData.message
+            } else if (errorData.title) {
+              errorMessage = errorData.title
+            }
+          }
+        } catch {
+          // Jeśli parsowanie się nie uda, użyj domyślnej wiadomości
+        }
+        return throwException(errorMessage, status, _responseText, _headers)
       })
     }
     return Promise.resolve<boolean>(null as any)

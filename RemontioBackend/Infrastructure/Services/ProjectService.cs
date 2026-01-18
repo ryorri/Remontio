@@ -51,10 +51,25 @@ namespace Infrastructure.Services
             {
                 var guid = GuidValidator.ValidateGuid(projectId);
 
-                var project = await _dbContext.Projects.FindAsync(guid);
+                var project = await _dbContext.Projects
+                                                .Include(p => p.Rooms)
+                                                .Include(p => p.Tasks)
+                                                .Include(p => p.Calculations)
+                                                .Include(p => p.ShoppingLists)
+                                                .Include(p => p.Budgets)
+                                                .Include(p => p.Photos)
+                                                .FirstOrDefaultAsync(p => p.Id == guid);
 
-                if(project != null)
-                     _dbContext.Projects.Remove(project);
+                if (project != null) {
+                    _dbContext.Tasks.RemoveRange(project.Tasks);
+                    _dbContext.Calculations.RemoveRange(project.Calculations);
+                    _dbContext.ShoppingLists.RemoveRange(project.ShoppingLists);
+                    _dbContext.Budgets.RemoveRange(project.Budgets);
+                    _dbContext.Photos.RemoveRange(project.Photos);
+                    _dbContext.Rooms.RemoveRange(project.Rooms);
+                    _dbContext.Projects.Remove(project);
+                }
+                     
 
                 await _dbContext.SaveChangesAsync();
 
@@ -144,6 +159,15 @@ namespace Infrastructure.Services
                 if (project != null)
                 {
                     project.Status = Enum.Parse<StatusEnum>(status, true);
+                    
+                    if (project.Status == StatusEnum.Done || project.Status == StatusEnum.Aborted)
+                    {
+                        project.ClosedAt = DateTime.UtcNow;
+                    }
+                    else
+                    {
+                        project.ClosedAt = new DateTime();
+                    }
 
                 }
                 await _dbContext.SaveChangesAsync();

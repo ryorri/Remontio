@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Enums;
 
 namespace Domain.Entities
 {
@@ -13,7 +14,9 @@ namespace Domain.Entities
         public string Description { get; set; } =string.Empty;
         public string ContactDetails {  get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }
+        public SpecEnum Spec { get; set; }
         public bool IsPrivate { get; set; }
+
 
         public string UserId { get; set; } =string.Empty ;
         public User? User { get; set; } // added navigation

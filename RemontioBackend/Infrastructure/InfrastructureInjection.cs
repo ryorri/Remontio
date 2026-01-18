@@ -41,6 +41,7 @@ namespace Infrastructure
             services.AddScoped<IListService, ListService>();
             services.AddScoped<IBudgetService, BudgetService>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<ICalculatorService, CalculatorService>();
 
             #endregion
 

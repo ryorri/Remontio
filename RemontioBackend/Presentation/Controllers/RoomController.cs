@@ -139,7 +139,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpPost("add-wall")]
-        public async Task<ActionResult<bool>> AddWall(string roomId, [FromBody] List<IPoint> points, string wallName = "")
+        public async Task<ActionResult<bool>> AddWall(string roomId, [FromBody] List<PointDTO> points, string wallName = "")
         {
             try
             {
@@ -184,7 +184,7 @@ namespace Presentation.Controllers
 
         [Authorize]
         [HttpPost("add-floor")]
-        public async Task<ActionResult<bool>> AddFloor(string roomId, [FromBody] List<IPoint> points, string floorName = "")
+        public async Task<ActionResult<bool>> AddFloor(string roomId, [FromBody] List<PointDTO> points, string floorName = "")
         {
             try
             {
@@ -204,6 +204,36 @@ namespace Presentation.Controllers
             try
             {
                 var result = await _roomService.RemoveFloorFromRoomAsync(roomId, floorId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("get-walls-by-room-id")]
+        public async Task<ActionResult<List<WallDTO>>> GetWallsByRoomId(string roomId)
+        {
+            try
+            {
+                var result = await _roomService.GetWallsByRoomIdAsync(roomId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("get-floors-by-room-id")]
+        public async Task<ActionResult<List<FloorDTO>>> GetFloorsByRoomId(string roomId)
+        {
+            try
+            {
+                var result = await _roomService.GetFloorsByRoomIdAsync(roomId);
                 return Ok(result);
             }
             catch (Exception ex)

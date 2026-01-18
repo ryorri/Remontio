@@ -27,9 +27,9 @@ namespace Infrastructure.Services
             _tokenService = tokenService;
         }
 
-        public async Task<bool> ChangePasswordAsync(string id, string oldPassword, string newPassword)
+        public async Task<bool> ChangePasswordAsync(string email, string oldPassword, string newPassword)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
                 throw new Exception("User not found");
             else

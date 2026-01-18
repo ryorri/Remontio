@@ -24,15 +24,6 @@
           <label class="form-label">Opis</label>
           <textarea class="form-control" rows="4" v-model="form.description"></textarea>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Szacowana cena (PLN)</label>
-          <input
-            type="number"
-            step="0.01"
-            class="form-control"
-            v-model.number="form.estimatedPrice"
-          />
-        </div>
       </div>
     </div>
 

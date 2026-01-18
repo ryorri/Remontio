@@ -5,6 +5,7 @@
 .vscode/
 TestResults/
 *.trx
+*.docx
 *.log
 *.tmp
 *.swp

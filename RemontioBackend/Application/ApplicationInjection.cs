@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace Application
 {
@@ -12,6 +13,9 @@ namespace Application
             services.AddAutoMapper(cfg => cfg.AddProfile<MappingProfile>());
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            services.AddFluentValidationAutoValidation()
+                    .AddFluentValidationClientsideAdapters();
         }
     }
 }

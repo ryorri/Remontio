@@ -10,7 +10,8 @@ namespace Application.Objects.DTOs.TaskDTO
         public required DateTime CreateAt { get; set; } = DateTime.UtcNow;
         public DateTime StartAt { get; set; }
         public DateTime ClosedAt { get; set; }
-        
+        public DateTime EstimatedTime { get; set; }
+
         public required Guid RoomId { get; set; }
         public required Guid ProjectId { get; set; }
         public required string UserId { get; set; }

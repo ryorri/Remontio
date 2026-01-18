@@ -10,6 +10,8 @@ namespace Domain.Enums
     {
         Walls,
         Floor,
+        Wall_defect,
+        Paint,
         Other,
     }
 }

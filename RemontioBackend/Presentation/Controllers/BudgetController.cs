@@ -157,12 +157,12 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpPost("add-item")]
-        public async Task<ActionResult<bool>> AddItem(string budgetId, string name, float price, float total, float estimatedPrice)
+        [HttpPost("add-budget-item")]
+        public async Task<ActionResult<bool>> AddBudgetItem(string budgetId, [FromBody] CreateBudgetItemDTO itemDTO)
         {
             try
             {
-                var result = await _budgetService.AddItemAsync(budgetId, name, price, total, estimatedPrice);
+                var result = await _budgetService.AddItemAsync(budgetId, itemDTO);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -172,12 +172,27 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpDelete("remove-item")]
-        public async Task<ActionResult<bool>> RemoveItem(string budgetId, string itemId)
+        [HttpDelete("remove-budget-item")]
+        public async Task<ActionResult<bool>> RemoveBudgetItem(string budgetId, string itemId)
         {
             try
             {
                 var result = await _budgetService.RemoveItemAsync(budgetId, itemId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPut("update-budget-item")]
+        public async Task<ActionResult<bool>> UpdateBudgetItem(string budgetId, [FromBody] BudgetItemDataDTO itemDTO)
+        {
+            try
+            {
+                var result = await _budgetService.UpdateItemAsync(budgetId, itemDTO);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -202,8 +217,8 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpDelete("clear-items")]
-        public async Task<ActionResult<bool>> ClearItems(string budgetId)
+        [HttpDelete("clear-budget-items")]
+        public async Task<ActionResult<bool>> ClearBudgetItems(string budgetId)
         {
             try
             {
@@ -217,8 +232,8 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpPut("recalculate")]
-        public async Task<ActionResult<bool>> Recalculate(string budgetId)
+        [HttpPut("budget-recalculate")]
+        public async Task<ActionResult<bool>> RecalculateBudget(string budgetId)
         {
             try
             {

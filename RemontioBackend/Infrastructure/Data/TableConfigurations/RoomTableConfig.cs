@@ -1,11 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Data.TableConfigurations
 {
@@ -21,16 +16,11 @@ namespace Infrastructure.Data.TableConfigurations
                  .IsRequired()
                  .HasConversion<string>();
 
-
-
-
+            // Cascade project -> rooms
             builder.HasOne(p => p.Project)
                    .WithMany(u => u.Rooms)
                    .HasForeignKey(p => p.ProjectId)
-                   .OnDelete(DeleteBehavior.NoAction);
-                   
-
+                   .OnDelete(DeleteBehavior.Cascade);
         }
-    
     }
 }

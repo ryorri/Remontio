@@ -16,6 +16,8 @@ namespace Application.Objects.DTOs.TaskDTO
         public DateTime StartAt { get; set; }
         public DateTime ClosedAt { get; set; }
 
+        public DateTime EstimatedTime { get; set; }
+
         public required string RoomId { get; set; }
 
         public required string ProjectId { get; set; }
